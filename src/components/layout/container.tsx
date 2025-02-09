@@ -7,7 +7,7 @@ interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
-  ({ className, asChild = false, ...props }: ContainerProps, ref) => {
+  ({ className, ...props }: ContainerProps, ref) => {
     const Comp = 'div'; // asChild ? Slot : 'div';
 
     return (
