@@ -1,16 +1,18 @@
 import Link from 'next/link';
 import { createMetadata } from '@/utils/seo';
 import { PROJECTS } from '@/constants/projects';
+import { config } from '@/config';
+import { Container } from '@/components/layout/container';
 
 export const metadata = createMetadata({
   title: 'Projects',
-  // description: 'TODO',
+  description: `${config.name}'s personal projects and experiments, featuring accessible and intuitive web applications that showcase modern full-stack development.`,
   canonicalUrlRelative: '/projects',
 });
 
 export default function Projects() {
   return (
-    <div>
+    <Container>
       <h1 className='text-2xl'>Projects:</h1>
       <ul>
         {PROJECTS.map(project => (
@@ -19,6 +21,6 @@ export default function Projects() {
           </li>
         ))}
       </ul>
-    </div>
+    </Container>
   );
 }
