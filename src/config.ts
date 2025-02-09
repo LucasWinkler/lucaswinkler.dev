@@ -7,7 +7,7 @@ const getBaseUrl = (): string => {
     return 'http://localhost:3000';
   }
 
-  return `https://${config.domainName}`;
+  return `https://lucaswinkler.dev`;
 };
 
 export const config = {
@@ -18,4 +18,4 @@ export const config = {
   domainName: 'lucaswinkler.dev',
   baseUrl: getBaseUrl(),
   twitterHandle: '@LucasJWinkler',
-};
+} as const;
