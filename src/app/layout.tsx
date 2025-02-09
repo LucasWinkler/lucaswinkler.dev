@@ -21,6 +21,13 @@ export default function RootLayout({
     <html lang='en'>
       <head>
         <link rel='preconnect' href='https://rsms.me/' />
+        <link
+          rel='preload'
+          as='style'
+          type='text/css'
+          crossOrigin='anonymous'
+          href='https://rsms.me/inter/inter.css'
+        />
         <link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
       </head>
       <body className='antialiased'>
