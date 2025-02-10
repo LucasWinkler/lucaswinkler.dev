@@ -3,6 +3,17 @@ import { Footer } from '@/components/layout/footer';
 import { createMetadata } from '@/lib/seo';
 import { config } from '@/config';
 import '@/styles/globals.css';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  axes: ['opsz'],
+  display: 'swap',
+  variable: '--font-inter',
+  weight: 'variable',
+  adjustFontFallback: true,
+  fallback: ['system-ui', 'Avenir', 'Helvetica', 'Arial', 'sans-serif'],
+});
 
 export const metadata = createMetadata({
   title: {
@@ -18,18 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
-      <head>
-        <link rel='preconnect' href='https://rsms.me/' />
-        <link
-          rel='preload'
-          as='style'
-          type='text/css'
-          href='https://rsms.me/inter/inter.css'
-        />
-        <link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
-      </head>
-      <body className='antialiased'>
+    <html lang='en' className={`${inter.variable} --font-inter`}>
+      <body className={`antialiased`}>
         <Header />
         {children}
         <Footer />

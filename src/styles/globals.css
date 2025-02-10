@@ -22,13 +22,7 @@
   --color-heading-light: var(--heading-light);
   --color-subheading-light: var(--subheading-light);
 
-  /* Fonts */
-  --font-inter-fallback: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --font-inter-variable: InterVariable, system-ui, Avenir, Helvetica, Arial,
-    sans-serif;
-  --font-inter-display: InterDisplay, system-ui, Avenir, Helvetica, Arial,
-    sans-serif;
-
+  /* Easing */
   --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
 }
@@ -146,21 +140,13 @@
     color: var(--foreground-dark);
     background: var(--background-dark);
 
-    font-family: var(--font-inter-fallback);
+    font-family: var(--font-inter);
     font-variation-settings: 'opsz' 14;
     font-feature-settings:
       'liga' 1,
       'calt' 1;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
-  }
-}
-
-@supports (font-variation-settings: normal) {
-  @layer base {
-    body {
-      font-family: var(--font-inter-variable);
-    }
   }
 }
 
@@ -198,17 +184,12 @@
 }
 
 @utility font-heading {
-  font-family: var(--font-inter-display);
   font-variation-settings: 'opsz' 32;
   font-feature-settings:
     'liga' 1,
     'calt' 1,
     'ss01' 1,
     'cv01' 1;
-
-  @supports (font-variation-settings: normal) {
-    font-family: var(--font-inter-variable);
-  }
 }
 
 /* Keep at bottom because it messes with the code editor UI due to no {} (I assume) */
