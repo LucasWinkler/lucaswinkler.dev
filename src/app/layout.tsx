@@ -1,8 +1,8 @@
-import { Navbar } from '@/components/layout/navbar';
+import { Header } from '@/components/layout/header/header';
 import { Footer } from '@/components/layout/footer';
-import { createMetadata } from '@/utils/seo';
+import { createMetadata } from '@/lib/seo';
 import { config } from '@/config';
-import './globals.css';
+import '@/styles/globals.css';
 
 export const metadata = createMetadata({
   title: {
@@ -25,13 +25,12 @@ export default function RootLayout({
           rel='preload'
           as='style'
           type='text/css'
-          crossOrigin='anonymous'
           href='https://rsms.me/inter/inter.css'
         />
         <link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
       </head>
       <body className='antialiased'>
-        <Navbar />
+        <Header />
         {children}
         <Footer />
       </body>

@@ -11,11 +11,13 @@ const getBaseUrl = (): string => {
 };
 
 export const config = {
+  baseUrl: getBaseUrl(),
+  domainName: 'lucaswinkler.dev',
   appName: 'Lucas Winkler - Full-Stack Developer',
   appShortName: 'Lucas Winkler',
   appDescription:
     'Lucas Winkler is a full-stack developer who builds accessible and intuitive web experiences.',
-  domainName: 'lucaswinkler.dev',
-  baseUrl: getBaseUrl(),
+  name: 'Lucas Winkler',
+  contactEmail: 'hello@lucaswinkler.dev',
   twitterHandle: '@LucasJWinkler',
 } as const;

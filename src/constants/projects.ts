@@ -2,8 +2,8 @@ import { Project } from '@/types/project';
 
 export const PROJECTS: Project[] = [
   {
-    title: 'Project One',
-    slug: 'project-one',
+    title: 'PoiToGo',
+    slug: 'poitogo',
     description:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
     image:
@@ -15,8 +15,8 @@ export const PROJECTS: Project[] = [
     },
   },
   {
-    title: 'Project Two',
-    slug: 'project-two',
+    title: 'Online Learning Platform',
+    slug: 'online-learning-platform',
     description:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
     image:
@@ -27,10 +27,9 @@ export const PROJECTS: Project[] = [
       github: '#',
     },
   },
-
   {
-    title: 'Project Three',
-    slug: 'project-three',
+    title: 'Audiophile Ecommerce',
+    slug: 'audiophile-ecommerce',
     description:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
     image:
