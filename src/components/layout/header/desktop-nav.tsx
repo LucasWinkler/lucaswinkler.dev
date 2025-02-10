@@ -1,6 +1,5 @@
 'use client';
 
-import { ComponentRef, forwardRef } from 'react';
 import Link from 'next/link';
 import {
   NavigationMenu,
