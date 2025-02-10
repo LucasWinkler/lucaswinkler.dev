@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { createMetadata } from '@/utils/seo';
+import { createMetadata } from '@/lib/seo';
 import { PROJECTS } from '@/constants/projects';
 import { config } from '@/config';
 import { Container } from '@/components/layout/container';

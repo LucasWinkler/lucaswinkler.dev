@@ -18,5 +18,6 @@ export const config = {
   appDescription:
     'Lucas Winkler is a full-stack developer who builds accessible and intuitive web experiences.',
   name: 'Lucas Winkler',
+  contactEmail: 'hello@lucaswinkler.dev',
   twitterHandle: '@LucasJWinkler',
 } as const;
