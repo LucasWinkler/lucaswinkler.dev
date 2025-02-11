@@ -1,9 +1,9 @@
 import type { Link, LinkWithIcon } from '@/types/link';
 import { PROJECTS } from './projects';
-import { Github, Linkedin, Twitter } from 'lucide-react';
+import { Github, Linkedin } from 'lucide-react';
+import { X } from '@/components/icons/x-icon';
 
-const MAX_PROJECTS = 3;
-
+export const MAX_PROJECTS = 3;
 export const MAX_SUBLINKS = 5;
 
 export const NAV_LINKS: Link[] = [
@@ -40,10 +40,14 @@ export const SOCIAL_LINKS: LinkWithIcon[] = [
     href: 'https://www.linkedin.com/in/lucas-winkler/',
     icon: Linkedin,
   },
-
   {
     label: 'X',
     href: 'https://x.com/lucasjwinkler',
-    icon: Twitter,
+    icon: X,
   },
+  // {
+  //   label: 'Email',
+  //   href: 'mailto:hello@lucaswinkler.dev',
+  //   icon: Mail,
+  // },
 ] as const;
