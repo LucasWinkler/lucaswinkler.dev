@@ -8,11 +8,11 @@ export const Hero = () => {
     <section className="relative overflow-hidden pt-[calc(var(--header-height)/2+4rem)] pb-16 sm:pt-[calc(var(--header-height)/2+6rem)] sm:pb-24 md:pt-[calc(var(--header-height)/2+8rem)] md:pb-32 xl:pt-[calc(var(--header-height)/2+10rem)] xl:pb-40">
       <BackgroundEffect />
       <Container className="grid items-center md:grid-cols-[1fr,auto]">
-        <h1 className="font-heading 2xs:text-4xl mb-3 text-2xl font-bold tracking-tight text-white sm:text-5xl md:mb-4 md:text-6xl lg:text-7xl xl:text-8xl">
+        <h1 className="font-heading 2xs:text-4xl mb-3 text-2xl font-bold tracking-tight text-white sm:text-5xl md:mb-4 md:text-7xl lg:text-8xl">
           Hi, I&apos;m Lucas —
           <br /> a full-stack developer.
         </h1>
-        <p className="2xs:text-lg text-foreground-dark-secondary mb-5 text-base leading-normal md:mb-6 md:text-xl xl:text-2xl">
+        <p className="2xs:text-lg text-foreground-dark-secondary mb-5 text-base leading-normal md:mb-6 md:text-xl xl:text-xl">
           I build web apps that are user-focused, fast and intuitive.
           <br />
           Currently based in Ontario, Canada.
