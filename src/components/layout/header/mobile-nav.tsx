@@ -12,15 +12,16 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { NAV_LINKS, SOCIAL_LINKS } from "@/constants/links";
-import { Mail, Menu } from "lucide-react";
+import { Check, Copy, Mail, Menu } from "lucide-react";
 import { ArrowTopRightIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { config } from "@/config";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 
 export const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
   const translateAmount = 12;
 
   useEffect(() => {
@@ -32,6 +33,16 @@ export const MobileNav = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(config.contactEmail);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy email:", err);
+    }
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -175,22 +186,34 @@ export const MobileNav = () => {
           </div>
 
           <div className="border-border/60 bg-background border-t p-6">
-            <SheetClose asChild>
-              <Button
-                className="group/cta w-full"
-                variant="default"
-                type="button"
-                asChild
-              >
-                <Link href="/projects">
-                  Get in touch
-                  <ArrowTopRightIcon
-                    className="transition-transform duration-300 group-hover/cta:rotate-45"
-                    aria-hidden="true"
-                  />
-                </Link>
-              </Button>
-            </SheetClose>
+            <Button
+              className="group/cta w-full"
+              variant="default"
+              type="button"
+              onClick={handleCopyEmail}
+            >
+              <span className="mr-2">
+                {copied ? "Email copied!" : "Copy email"}
+              </span>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={copied ? "check" : "copy"}
+                  initial={{ opacity: 0, scale: 0.5, rotate: -90 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.5, rotate: 90 }}
+                  transition={{
+                    duration: 0.2,
+                    ease: [0.23, 1, 0.32, 1],
+                  }}
+                >
+                  {copied ? (
+                    <Check className="h-4 w-4" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </Button>
 
             <SheetFooter className="border-border/60 mt-6 border-t pt-6">
               <ul className="flex items-center gap-3">
@@ -206,16 +229,6 @@ export const MobileNav = () => {
                     </Link>
                   </li>
                 ))}
-                <li>
-                  <Link
-                    className="border-border hover:bg-accent/50 flex size-9 items-center justify-center rounded-full border transition-all duration-200 ease-out"
-                    href={`mailto:${config.contactEmail}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Mail className="size-4" />
-                  </Link>
-                </li>
               </ul>
             </SheetFooter>
           </div>
