@@ -6,7 +6,7 @@ import { Container } from "../container";
 import { DesktopNav } from "./desktop-nav";
 import { MobileNav } from "./mobile-nav";
 import { cn } from "@/lib/utils";
-import { Logo } from "@/components/ui/logo";
+import { Logo } from "@/components/common/logo";
 
 export const Header = () => {
   const [isVisible, setIsVisible] = useState(true);

@@ -4,6 +4,7 @@ import { createMetadata } from "@/lib/seo";
 import { config } from "@/config";
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
+import { GlobalCursor } from "@/components/common/global-cursor";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} --font-inter`}>
       <body className="dark overflow-x-hidden antialiased">
+        <GlobalCursor />
         <Header />
         <main className="relative">{children}</main>
         <Footer />

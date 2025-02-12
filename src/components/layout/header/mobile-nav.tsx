@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -69,36 +70,38 @@ export const MobileNav = () => {
                         whileHover="hover"
                         initial="initial"
                       >
-                        <Link href={href} className="relative block">
-                          <div className="relative flex items-center justify-between">
-                            <motion.div
-                              className="text-lg font-medium tracking-wide"
-                              variants={{
-                                initial: { x: 0 },
-                                hover: { x: translateAmount },
-                              }}
-                              transition={{
-                                duration: 0.2,
-                                ease: [0.32, 0.72, 0, 1],
-                              }}
-                            >
-                              {label}
-                            </motion.div>
-                            <motion.div
-                              className="text-muted-foreground absolute right-0"
-                              variants={{
-                                initial: { opacity: 0, x: translateAmount },
-                                hover: { opacity: 1, x: 0 },
-                              }}
-                              transition={{
-                                duration: 0.2,
-                                ease: [0.32, 0.72, 0, 1],
-                              }}
-                            >
-                              <CaretRightIcon className="size-4" />
-                            </motion.div>
-                          </div>
-                        </Link>
+                        <SheetClose asChild>
+                          <Link href={href} className="relative block">
+                            <div className="relative flex items-center justify-between">
+                              <motion.div
+                                className="text-lg font-medium tracking-wide"
+                                variants={{
+                                  initial: { x: 0 },
+                                  hover: { x: translateAmount },
+                                }}
+                                transition={{
+                                  duration: 0.2,
+                                  ease: [0.32, 0.72, 0, 1],
+                                }}
+                              >
+                                {label}
+                              </motion.div>
+                              <motion.div
+                                className="text-muted-foreground absolute right-0"
+                                variants={{
+                                  initial: { opacity: 0, x: translateAmount },
+                                  hover: { opacity: 1, x: 0 },
+                                }}
+                                transition={{
+                                  duration: 0.2,
+                                  ease: [0.32, 0.72, 0, 1],
+                                }}
+                              >
+                                <CaretRightIcon className="size-4" />
+                              </motion.div>
+                            </div>
+                          </Link>
+                        </SheetClose>
                       </motion.div>
 
                       {sublinks && sublinks.links.length > 0 && (
@@ -110,50 +113,56 @@ export const MobileNav = () => {
                               initial="initial"
                               className="pl-2"
                             >
-                              <Link
-                                href={sublink.href}
-                                className="hover:text-foreground text-muted-foreground relative flex items-center justify-between py-2 text-sm font-medium tracking-wide transition-colors"
-                              >
-                                <div className="flex items-center gap-2.5">
+                              {" "}
+                              <SheetClose asChild>
+                                <Link
+                                  href={sublink.href}
+                                  className="hover:text-foreground text-muted-foreground relative flex items-center justify-between py-2 text-sm font-medium tracking-wide transition-colors"
+                                >
+                                  <div className="flex items-center gap-2.5">
+                                    <motion.div
+                                      className="text-muted-foreground h-px w-3 bg-current opacity-60"
+                                      variants={{
+                                        initial: { width: 12 },
+                                        hover: { width: 18, opacity: 1 },
+                                      }}
+                                      transition={{
+                                        duration: 0.2,
+                                        ease: [0.32, 0.72, 0, 1],
+                                      }}
+                                      aria-hidden="true"
+                                    />
+                                    <motion.span
+                                      variants={{
+                                        initial: { x: 0 },
+                                        hover: { x: translateAmount / 2 },
+                                      }}
+                                      transition={{
+                                        duration: 0.2,
+                                        ease: [0.32, 0.72, 0, 1],
+                                      }}
+                                    >
+                                      {sublink.label}
+                                    </motion.span>
+                                  </div>
                                   <motion.div
-                                    className="text-muted-foreground h-px w-3 bg-current opacity-60"
+                                    className="text-muted-foreground"
                                     variants={{
-                                      initial: { width: 12 },
-                                      hover: { width: 18, opacity: 1 },
-                                    }}
-                                    transition={{
-                                      duration: 0.2,
-                                      ease: [0.32, 0.72, 0, 1],
-                                    }}
-                                    aria-hidden="true"
-                                  />
-                                  <motion.span
-                                    variants={{
-                                      initial: { x: 0 },
-                                      hover: { x: translateAmount / 2 },
+                                      initial: {
+                                        opacity: 0,
+                                        x: translateAmount,
+                                      },
+                                      hover: { opacity: 1, x: 0 },
                                     }}
                                     transition={{
                                       duration: 0.2,
                                       ease: [0.32, 0.72, 0, 1],
                                     }}
                                   >
-                                    {sublink.label}
-                                  </motion.span>
-                                </div>
-                                <motion.div
-                                  className="text-muted-foreground"
-                                  variants={{
-                                    initial: { opacity: 0, x: translateAmount },
-                                    hover: { opacity: 1, x: 0 },
-                                  }}
-                                  transition={{
-                                    duration: 0.2,
-                                    ease: [0.32, 0.72, 0, 1],
-                                  }}
-                                >
-                                  <CaretRightIcon className="size-3" />
-                                </motion.div>
-                              </Link>
+                                    <CaretRightIcon className="size-3" />
+                                  </motion.div>
+                                </Link>
+                              </SheetClose>
                             </motion.li>
                           ))}
                         </ul>
@@ -166,20 +175,22 @@ export const MobileNav = () => {
           </div>
 
           <div className="border-border/60 bg-background border-t p-6">
-            <Button
-              className="group/cta w-full"
-              variant="default"
-              type="button"
-              asChild
-            >
-              <Link href="/projects">
-                Get in touch
-                <ArrowTopRightIcon
-                  className="transition-transform duration-300 group-hover/cta:rotate-45"
-                  aria-hidden="true"
-                />
-              </Link>
-            </Button>
+            <SheetClose asChild>
+              <Button
+                className="group/cta w-full"
+                variant="default"
+                type="button"
+                asChild
+              >
+                <Link href="/projects">
+                  Get in touch
+                  <ArrowTopRightIcon
+                    className="transition-transform duration-300 group-hover/cta:rotate-45"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Button>
+            </SheetClose>
 
             <SheetFooter className="border-border/60 mt-6 border-t pt-6">
               <ul className="flex items-center gap-3">
@@ -188,6 +199,8 @@ export const MobileNav = () => {
                     <Link
                       className="border-border hover:bg-accent/50 flex size-9 items-center justify-center rounded-full border transition-all duration-200 ease-out"
                       href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <Icon className="size-4" />
                     </Link>
@@ -197,6 +210,8 @@ export const MobileNav = () => {
                   <Link
                     className="border-border hover:bg-accent/50 flex size-9 items-center justify-center rounded-full border transition-all duration-200 ease-out"
                     href={`mailto:${config.contactEmail}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <Mail className="size-4" />
                   </Link>
