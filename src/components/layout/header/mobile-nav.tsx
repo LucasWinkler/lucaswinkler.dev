@@ -12,8 +12,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { NAV_LINKS, SOCIAL_LINKS } from "@/constants/links";
-import { Check, Copy, Mail, Menu } from "lucide-react";
-import { ArrowTopRightIcon, CaretRightIcon } from "@radix-ui/react-icons";
+import { Check, Copy, Menu } from "lucide-react";
+import { CaretRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { config } from "@/config";
