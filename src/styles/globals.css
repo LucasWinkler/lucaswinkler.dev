@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin 'tailwindcss-animate';
 
@@ -12,7 +12,7 @@
   --color-foreground-dark: var(--foreground-dark);
   --color-foreground-dark-secondary: var(--foreground-dark-secondary);
   --color-foreground-dark-tertiary: var(--foreground-dark-tertiary);
-  --color-foreground-dark-socials: var(--foreground-dark-socials);
+  --color-foreground-dark-quaternary: var(--foreground-dark-quaternary);
   --color-heading-dark: var(--heading-dark);
   --color-subheading-dark: var(--subheading-dark);
 
@@ -25,6 +25,12 @@
   /* Easing */
   --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Breakpoints */
+  --breakpoint-xs: 22.5rem;
+  --breakpoint-2xs: 30rem;
+
+  --header-height: 4rem;
 }
 
 :root {
@@ -33,7 +39,7 @@
   --foreground-dark: #e5e5e7;
   --foreground-dark-secondary: #95979e;
   --foreground-dark-tertiary: #c9cbcf;
-  --foreground-dark-socials: #303236;
+  --foreground-dark-quaternary: #303236;
   --heading-dark: #ffffff;
   --subheading-dark: #ffffff;
 
@@ -141,10 +147,10 @@
     background: var(--background-dark);
 
     font-family: var(--font-inter);
-    font-variation-settings: 'opsz' 14;
+    font-variation-settings: "opsz" 14;
     font-feature-settings:
-      'liga' 1,
-      'calt' 1;
+      "liga" 1,
+      "calt" 1;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
   }
@@ -184,12 +190,9 @@
 }
 
 @utility font-heading {
-  font-variation-settings: 'opsz' 32;
-  font-feature-settings:
-    'liga' 1,
-    'calt' 1,
-    'ss01' 1,
-    'cv01' 1;
+  font-variation-settings: "opsz" 32;
+  /* 'ss01' 1,
+    'cv01' 1 */
 }
 
 /* Keep at bottom because it messes with the code editor UI due to no {} (I assume) */

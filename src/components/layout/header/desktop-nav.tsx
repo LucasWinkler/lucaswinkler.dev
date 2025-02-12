@@ -1,21 +1,27 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
+import Link from "next/link";
 import {
   NavigationMenu,
   NavigationMenuContent,
+  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu';
-import { MAX_SUBLINKS, NAV_CTA, NAV_LINKS } from '@/constants/links';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/navigation-menu";
+import { MAX_SUBLINKS, NAV_CTA, NAV_LINKS } from "@/constants/links";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 
 export const DesktopNav = () => {
   return (
-    <NavigationMenu className='dark hidden md:flex'>
+    <NavigationMenu
+      role="navigation"
+      className="dark text-foreground-dark-tertiary hidden md:flex"
+    >
       <NavigationMenuList>
         {NAV_LINKS.map(({ href, label, sublinks }) => {
           const hasSublinks = sublinks && sublinks.links.length > 0;
@@ -24,37 +30,56 @@ export const DesktopNav = () => {
             <NavigationMenuItem key={href}>
               {hasSublinks ? (
                 <>
-                  <NavigationMenuTrigger className='bg-transparent hover:bg-transparent'>
+                  <NavigationMenuTrigger
+                    aria-label={`Open ${label} dropdown menu`}
+                    className="font-normal"
+                  >
                     {label}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className='grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
-                      <li className='row-span-3'>
+                    <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                      <li className="row-span-3">
                         <NavigationMenuLink asChild>
-                          <a
-                            className='flex group/nav-sublink h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md hover:from-muted/60 transition-colors ease-out duration-150'
-                            href={href}>
-                            <div className='mb-2 mt-4 text-lg font-medium group-hover/nav-sublink:scale-95 transition-transform ease-out duration-150'>
+                          <Link
+                            aria-label={`Go to ${sublinks.label} page`}
+                            className="group/nav-sublink from-muted/50 to-muted hover:from-muted/60 flex h-full w-full flex-col justify-end rounded-md bg-gradient-to-b p-6 no-underline transition-colors duration-150 ease-out outline-none select-none focus:shadow-md"
+                            href={href}
+                          >
+                            <span
+                              aria-describedby={`sublink-description-${label.toLowerCase()}`}
+                              className="mt-4 mb-2 text-lg font-medium transition-transform duration-150 ease-out group-hover/nav-sublink:scale-95"
+                            >
                               {sublinks.label}
-                            </div>
+                            </span>
                             {sublinks.description && (
-                              <p className='text-sm leading-tight text-muted-foreground group-hover/nav-sublink:scale-95 transition-transform ease-out duration-150'>
+                              <p
+                                id={`sublink-description-${label.toLowerCase()}`}
+                                className="text-foreground-dark-secondary text-sm leading-tight transition-transform duration-150 ease-out group-hover/nav-sublink:scale-95"
+                              >
                                 {sublinks.description}
                               </p>
                             )}
-                          </a>
+                          </Link>
                         </NavigationMenuLink>
                       </li>
-                      {sublinks.links.slice(0, MAX_SUBLINKS).map(sublink => (
-                        <li className='col-span-1' key={sublink.href}>
+                      {sublinks.links.slice(0, MAX_SUBLINKS).map((sublink) => (
+                        <li className="col-span-1" key={sublink.href}>
                           <NavigationMenuLink asChild>
                             <Link
+                              aria-label={`Go to ${sublink.label} page`}
                               href={sublink.href}
-                              className='block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground'>
-                              <div className='text-sm font-medium leading-none'>
+                              className="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block space-y-1 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none"
+                            >
+                              <span
+                                aria-describedby={`sublink-description-${sublink.label.toLowerCase()}`}
+                                className="text-sm leading-none font-medium"
+                              >
                                 {sublink.label}
-                              </div>
-                              <p className='line-clamp-2 text-sm leading-snug text-muted-foreground'>
+                              </span>
+                              <p
+                                id={`sublink-description-${sublink.label.toLowerCase()}`}
+                                className="text-foreground-dark-secondary line-clamp-2 text-sm leading-snug"
+                              >
                                 {sublink.description}
                               </p>
                             </Link>
@@ -67,7 +92,8 @@ export const DesktopNav = () => {
               ) : (
                 <Link href={href} legacyBehavior passHref>
                   <NavigationMenuLink
-                    className={cn('px-10', navigationMenuTriggerStyle())}>
+                    className={cn("px-10", navigationMenuTriggerStyle())}
+                  >
                     {label}
                   </NavigationMenuLink>
                 </Link>
@@ -77,11 +103,23 @@ export const DesktopNav = () => {
         })}
         <NavigationMenuItem>
           <Link href={NAV_CTA.href} legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              {NAV_CTA.label}
-            </NavigationMenuLink>
+            <Button
+              className="group/cta"
+              variant="default"
+              type="button"
+              asChild
+            >
+              <Link href={NAV_CTA.href}>
+                {NAV_CTA.label}
+                <ArrowTopRightIcon
+                  className="transition-transform duration-300 group-hover/cta:rotate-45"
+                  aria-hidden="true"
+                />
+              </Link>
+            </Button>
           </Link>
         </NavigationMenuItem>
+        <NavigationMenuIndicator />
       </NavigationMenuList>
     </NavigationMenu>
   );

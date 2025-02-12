@@ -7,7 +7,7 @@ import { createLucideIcon } from 'lucide-react';
  * @param {Object} props - Lucide icons props and any valid SVG attribute
  * @returns {JSX.Element} JSX Element
  */
-const X = createLucideIcon('XBrand', [
+const X = createLucideIcon('BrandX', [
   [
     'path',
     {

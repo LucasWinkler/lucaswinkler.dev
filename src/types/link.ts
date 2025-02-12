@@ -1,16 +1,19 @@
 import type { ElementType } from 'react';
 
-export interface Link {
+export interface LinkBase {
   label: string;
   href: string;
+}
+
+export type NavLink = LinkBase & {
   description?: string;
   sublinks?: {
     label: string;
     description?: string;
-    links: Link[];
+    links: NavLink[];
   };
-}
+};
 
-export type LinkWithIcon = Link & {
+export type SocialLink = LinkBase & {
   icon: ElementType;
 };
