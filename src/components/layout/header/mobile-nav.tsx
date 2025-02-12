@@ -167,7 +167,7 @@ export const MobileNav = () => {
 
           <div className="border-border/60 bg-background border-t p-6">
             <Button
-              className="group/cta"
+              className="group/cta w-full"
               variant="default"
               type="button"
               asChild
