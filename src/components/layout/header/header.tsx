@@ -36,9 +36,10 @@ export const Header = () => {
       animate={{ y: isVisible ? 0 : -100 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
       className={cn(
-        "sticky top-0 z-50 h-[var(--header-height)] w-full",
-        hasScrolled &&
-          "bg-background-dark supports-[backdrop-filter]:bg-background-dark/80 supports-[backdrop-filter]:backdrop-blur supports-[backdrop-filter]:backdrop-saturate-150",
+        "sticky top-0 z-50 h-[var(--header-height)] w-full transition-all duration-500",
+        hasScrolled
+          ? "bg-background-dark supports-[backdrop-filter]:bg-background-dark/80 shadow-lg supports-[backdrop-filter]:backdrop-blur supports-[backdrop-filter]:backdrop-saturate-150"
+          : "bg-transparent shadow-transparent",
       )}
     >
       <Container className="relative flex h-full w-full items-center justify-between gap-4">
