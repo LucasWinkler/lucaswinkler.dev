@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { motion as m } from "motion/react";
 import { Container } from "../container";
 import { DesktopNav } from "./desktop-nav";
