@@ -3,9 +3,31 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 
+const BackgroundEffect = () => {
+  return (
+    <div className="absolute inset-0 -z-10">
+      <Container className="relative h-full">
+        <div className="absolute inset-0">
+          <div className="absolute top-[100px] -left-[100px] h-[400px] w-[400px] transform-gpu rounded-full bg-gradient-to-tr from-purple-500/[0.12] via-purple-500/[0.08] to-transparent blur-[120px]" />
+          <div className="absolute top-[50px] right-[50px] h-[300px] w-[300px] transform-gpu rounded-full bg-gradient-to-bl from-indigo-500/[0.15] via-indigo-500/[0.1] to-transparent blur-[130px] sm:h-[500px] sm:w-[500px]" />
+          <div className="absolute top-[150px] right-[100px] h-[250px] w-[250px] transform-gpu rounded-full bg-gradient-to-tr from-blue-500/[0.15] via-blue-500/[0.1] to-transparent blur-[130px] sm:h-[400px] sm:w-[400px]" />
+        </div>
+        <div
+          className="absolute inset-0 opacity-[0.2]"
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.2) 1px, transparent 0)`,
+            backgroundSize: "32px 32px",
+          }}
+        />
+      </Container>
+    </div>
+  );
+};
+
 export const Hero = () => {
   return (
-    <section className="py-16 sm:py-24 md:py-32">
+    <section className="relative py-16 sm:py-24 md:py-32">
+      <BackgroundEffect />
       <Container>
         <h1 className="font-heading 2xs:text-4xl mb-3 text-2xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
           Hi, I'm Lucas —
@@ -25,7 +47,7 @@ export const Hero = () => {
             asChild
           >
             <Link href="/projects">
-              View my work
+              See my work
               <ArrowTopRightIcon
                 className="transition-transform duration-300 group-hover/cta:rotate-45"
                 aria-hidden="true"
@@ -33,8 +55,13 @@ export const Hero = () => {
             </Link>
           </Button>
           <Button className="group/cta" variant="ghost" type="button" asChild>
-            <Link href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-              View my resume
+            <Link
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open resume in new tab"
+            >
+              See my resume
               <ArrowTopRightIcon
                 className="transition-transform duration-300 group-hover/cta:rotate-45"
                 aria-hidden="true"
