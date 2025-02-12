@@ -1,16 +1,16 @@
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { config } from '@/config';
-import { PROJECTS } from '@/constants/projects';
-import { createMetadata } from '@/lib/seo';
-import { Container } from '@/components/layout/container';
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { config } from "@/config";
+import { PROJECTS } from "@/constants/projects";
+import { createMetadata } from "@/lib/seo";
+import { Container } from "@/components/layout/container";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
 export const generateStaticParams = async () => {
-  return PROJECTS.map(project => ({
+  return PROJECTS.map((project) => ({
     slug: project.slug,
   }));
 };
@@ -20,7 +20,7 @@ export const generateMetadata = async ({
 }: Props): Promise<Metadata> => {
   const { slug } = await params;
 
-  const project = PROJECTS.find(project => project.slug === slug);
+  const project = PROJECTS.find((project) => project.slug === slug);
   if (!project) {
     notFound();
   }
@@ -34,11 +34,15 @@ export const generateMetadata = async ({
 
 export default async function Project({ params }: Props) {
   const { slug } = await params;
-  const project = PROJECTS.find(project => project.slug === slug);
+  const project = PROJECTS.find((project) => project.slug === slug);
 
   if (!project) {
     notFound();
   }
 
-  return <Container>Project: {slug}</Container>;
+  return (
+    <Container className="pt-[calc(var(--header-height)/2+4rem)] pb-16 sm:pt-[calc(var(--header-height)/2+6rem)] sm:pb-24 md:pt-[calc(var(--header-height)/2+8rem)] md:pb-32 xl:pt-[calc(var(--header-height)/2+10rem)] xl:pb-40">
+      Project: {slug}
+    </Container>
+  );
 }

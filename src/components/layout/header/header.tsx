@@ -36,7 +36,7 @@ export const Header = () => {
       animate={{ y: isVisible ? 0 : -100 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
       className={cn(
-        "sticky top-0 z-50 h-[var(--header-height)] w-full transition-all duration-500",
+        "fixed top-0 right-0 left-0 z-50 h-[var(--header-height)] w-full transition-all duration-500",
         hasScrolled
           ? "bg-background-dark supports-[backdrop-filter]:bg-background-dark/80 shadow-lg supports-[backdrop-filter]:backdrop-blur supports-[backdrop-filter]:backdrop-saturate-150"
           : "bg-transparent shadow-transparent",

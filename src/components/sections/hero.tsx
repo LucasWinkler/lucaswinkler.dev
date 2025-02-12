@@ -5,7 +5,7 @@ import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 
 export const Hero = () => {
   return (
-    <section className="relative -mt-[calc(var(--header-height))/2] py-16 sm:py-24 md:py-32 xl:py-40">
+    <section className="relative overflow-hidden pt-[calc(var(--header-height)/2+4rem)] pb-16 sm:pt-[calc(var(--header-height)/2+6rem)] sm:pb-24 md:pt-[calc(var(--header-height)/2+8rem)] md:pb-32 xl:pt-[calc(var(--header-height)/2+10rem)] xl:pb-40">
       <BackgroundEffect />
       <Container className="grid items-center md:grid-cols-[1fr,auto]">
         <h1 className="font-heading 2xs:text-4xl mb-3 text-2xl font-bold tracking-tight text-white sm:text-5xl md:mb-4 md:text-6xl lg:text-7xl xl:text-8xl">
