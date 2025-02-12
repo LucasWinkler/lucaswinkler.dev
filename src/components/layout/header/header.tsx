@@ -7,6 +7,7 @@ import { Container } from "../container";
 import { DesktopNav } from "./desktop-nav";
 import { MobileNav } from "./mobile-nav";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/ui/logo";
 
 export const Header = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -41,14 +42,7 @@ export const Header = () => {
       )}
     >
       <Container className="relative flex h-full w-full items-center justify-between gap-4">
-        <Link
-          className="font-medium tracking-widest text-white uppercase"
-          href="/"
-          aria-label="Logo"
-          aria-description="Link to the home page"
-        >
-          Lucas Winkler
-        </Link>
+        <Logo />
         <DesktopNav />
         <MobileNav />
       </Container>
