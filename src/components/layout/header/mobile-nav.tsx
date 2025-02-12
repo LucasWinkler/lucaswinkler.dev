@@ -37,14 +37,14 @@ export const MobileNav = () => {
       <SheetTrigger asChild>
         <Button
           aria-label="Open mobile navigation menu"
-          className="dark -mr-[0.625rem] h-[var(--header-height)] cursor-pointer bg-transparent hover:bg-transparent md:hidden"
+          className="-mr-[0.625rem] h-[var(--header-height)] cursor-pointer bg-transparent hover:bg-transparent md:hidden"
           variant="ghost"
           size="icon"
         >
           <Menu />
         </Button>
       </SheetTrigger>
-      <SheetContent className="dark flex flex-col p-0">
+      <SheetContent className="flex flex-col p-0">
         <div className="flex min-h-full flex-col">
           <div className="flex-1 overflow-y-auto">
             <div className="p-6">
@@ -166,16 +166,20 @@ export const MobileNav = () => {
           </div>
 
           <div className="border-border/60 bg-background border-t p-6">
-            <Link
-              href="/contact"
-              className="bg-foreground text-background hover:bg-foreground/90 group flex w-full items-center justify-center gap-2 rounded-md px-4 py-2.5 font-medium transition-colors"
+            <Button
+              className="group/cta"
+              variant="default"
+              type="button"
+              asChild
             >
-              <span>Get in touch</span>
-              <ArrowTopRightIcon
-                className="size-4 transition-transform duration-300 group-hover:rotate-45"
-                aria-hidden="true"
-              />
-            </Link>
+              <Link href="/projects">
+                Get in touch
+                <ArrowTopRightIcon
+                  className="transition-transform duration-300 group-hover/cta:rotate-45"
+                  aria-hidden="true"
+                />
+              </Link>
+            </Button>
 
             <SheetFooter className="border-border/60 mt-6 border-t pt-6">
               <ul className="flex items-center gap-3">

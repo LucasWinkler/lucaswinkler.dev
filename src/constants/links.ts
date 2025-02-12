@@ -21,12 +21,8 @@ export const NAV_LINKS: NavLink[] = [
     },
   },
   { label: "About", href: "/about" },
+  { label: "Get in touch", href: "/contact" },
 ] as const;
-
-export const NAV_CTA: NavLink = {
-  label: "Get in touch",
-  href: "/contact",
-};
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {

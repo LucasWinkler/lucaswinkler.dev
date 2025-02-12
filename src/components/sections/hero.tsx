@@ -17,10 +17,11 @@ export const Hero = () => {
           <br />
           Currently based in Ontario, Canada.
         </p>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <Button
-            className="group/cta"
-            variant="secondary"
+            className="group/cta xs:w-auto w-full"
+            variant="default"
+            size="lg"
             type="button"
             asChild
           >
@@ -32,7 +33,13 @@ export const Hero = () => {
               />
             </Link>
           </Button>
-          <Button className="group/cta" variant="ghost" type="button" asChild>
+          <Button
+            className="group/cta xs:w-auto w-full"
+            variant="ghostInverted"
+            size="lg"
+            type="button"
+            asChild
+          >
             <Link
               href="/resume.pdf"
               target="_blank"

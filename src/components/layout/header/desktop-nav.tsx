@@ -11,16 +11,14 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { MAX_SUBLINKS, NAV_CTA, NAV_LINKS } from "@/constants/links";
+import { MAX_SUBLINKS, NAV_LINKS } from "@/constants/links";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 
 export const DesktopNav = () => {
   return (
     <NavigationMenu
       role="navigation"
-      className="dark text-foreground-dark-tertiary hidden md:flex"
+      className="text-foreground-dark-tertiary hidden md:flex"
     >
       <NavigationMenuList>
         {NAV_LINKS.map(({ href, label, sublinks }) => {
@@ -101,25 +99,6 @@ export const DesktopNav = () => {
             </NavigationMenuItem>
           );
         })}
-        <NavigationMenuItem className="ml-2">
-          <Link href={NAV_CTA.href} legacyBehavior passHref>
-            <Button
-              className="group/cta"
-              variant="default"
-              type="button"
-              asChild
-            >
-              <Link href={NAV_CTA.href}>
-                {NAV_CTA.label}
-                <ArrowTopRightIcon
-                  className="transition-transform duration-300 group-hover/cta:rotate-45"
-                  aria-hidden="true"
-                />
-              </Link>
-            </Button>
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuIndicator />
       </NavigationMenuList>
     </NavigationMenu>
   );
