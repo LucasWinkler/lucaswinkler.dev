@@ -9,7 +9,7 @@ export const Hero = () => {
       <BackgroundEffect />
       <Container className="grid items-center md:grid-cols-[1fr,auto]">
         <h1 className="font-heading 2xs:text-4xl mb-3 text-2xl font-bold tracking-tight text-white sm:text-5xl md:mb-4 md:text-6xl lg:text-7xl xl:text-8xl">
-          Hi, I'm Lucas —
+          Hi, I&apos;m Lucas —
           <br /> a full-stack developer.
         </h1>
         <p className="2xs:text-lg text-foreground-dark-secondary mb-5 text-base leading-normal md:mb-6 md:text-xl xl:text-2xl">

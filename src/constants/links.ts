@@ -1,13 +1,11 @@
 import type { NavLink, SocialLink } from "@/types/link";
 import { PROJECTS } from "./projects";
 import { Github, Linkedin } from "lucide-react";
-import { X } from "@/components/icons/x-icon";
 
 export const MAX_PROJECTS = 3;
 export const MAX_SUBLINKS = 5;
 
 export const NAV_LINKS: NavLink[] = [
-  // { label: 'Home', href: '/' },
   {
     label: "Projects",
     href: "/projects",
@@ -21,7 +19,7 @@ export const NAV_LINKS: NavLink[] = [
       })),
     },
   },
-  // { label: 'About', href: '/about' },
+  { label: "About", href: "/about" },
 ] as const;
 
 export const NAV_CTA: NavLink = {

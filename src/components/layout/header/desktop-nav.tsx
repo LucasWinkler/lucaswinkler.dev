@@ -101,7 +101,7 @@ export const DesktopNav = () => {
             </NavigationMenuItem>
           );
         })}
-        <NavigationMenuItem>
+        <NavigationMenuItem className="ml-2">
           <Link href={NAV_CTA.href} legacyBehavior passHref>
             <Button
               className="group/cta"
