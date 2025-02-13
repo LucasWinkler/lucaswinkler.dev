@@ -40,7 +40,7 @@ export const Hero = () => {
             type="button"
             asChild
           >
-            <Link
+            <a
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
@@ -51,7 +51,7 @@ export const Hero = () => {
                 className="transition-transform duration-300 group-hover/cta:rotate-45"
                 aria-hidden="true"
               />
-            </Link>
+            </a>
           </Button>
         </div>
       </Container>
