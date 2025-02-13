@@ -35,7 +35,7 @@ export const Hero = () => {
           </Button>
           <Button
             className="group/cta xs:w-auto w-full"
-            variant="ghostInverted"
+            variant="glass"
             size="lg"
             type="button"
             asChild

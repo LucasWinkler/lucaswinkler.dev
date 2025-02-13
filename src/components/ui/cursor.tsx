@@ -42,7 +42,6 @@ export function Cursor({
   const cursorRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(!attachToParent);
 
-  // Update cursor position handler
   const updatePosition = useCallback(
     (e: MouseEvent) => {
       cursorX.set(e.clientX);
@@ -52,12 +51,10 @@ export function Cursor({
     [cursorX, cursorY, onPositionChange],
   );
 
-  // Handle cursor visibility
   const handleVisibilityChange = useCallback((visible: boolean) => {
     setIsVisible(visible);
   }, []);
 
-  // Handle parent mouse events
   const handleParentMouseEnter = useCallback(() => {
     if (hideDefaultCursor && cursorRef.current?.parentElement) {
       cursorRef.current.parentElement.style.cursor = "none";
@@ -72,7 +69,6 @@ export function Cursor({
     handleVisibilityChange(false);
   }, [handleVisibilityChange]);
 
-  // Set up cursor movement tracking
   useEffect(() => {
     if (!attachToParent && hideDefaultCursor) {
       document.body.style.cursor = "none";

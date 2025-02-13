@@ -83,8 +83,8 @@ export function GlobalCursor() {
     >
       <motion.div
         animate={{
-          width: cursorVariant !== "default" ? 80 : 16,
-          height: cursorVariant !== "default" ? 32 : 16,
+          width: cursorVariant !== "default" ? 80 : 0,
+          height: cursorVariant !== "default" ? 32 : 0,
         }}
         className="flex items-center justify-center rounded-full bg-white"
       >
