@@ -49,7 +49,7 @@ export const MobileNav = () => {
       <SheetTrigger asChild>
         <Button
           aria-label="Open mobile navigation menu"
-          className="-mr-[0.625rem] h-[var(--header-height)] cursor-pointer bg-transparent hover:bg-transparent md:hidden"
+          className="-mr-[0.625rem] h-[var(--header-height)] bg-transparent hover:bg-transparent md:hidden"
           variant="ghost"
           size="icon"
         >
