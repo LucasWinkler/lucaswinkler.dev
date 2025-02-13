@@ -58,7 +58,6 @@ export function GlobalCursor() {
     }
   }, [isVisible, isTouch]);
 
-  // Don't render anything on touch devices
   if (isTouch || !isVisible) return null;
 
   return (

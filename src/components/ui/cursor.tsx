@@ -84,7 +84,6 @@ export function Cursor({
     };
   }, [attachToParent, hideDefaultCursor, updatePosition]);
 
-  // Set up parent element event listeners
   useEffect(() => {
     const parent = cursorRef.current?.parentElement;
 
