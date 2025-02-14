@@ -4,7 +4,6 @@ import { createMetadata } from "@/lib/seo";
 import { config } from "@/config";
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
-import { GlobalCursor } from "@/components/common/global-cursor";
 
 const inter = Inter({
   subsets: ["latin"],
