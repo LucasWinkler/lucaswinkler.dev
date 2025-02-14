@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import { cn } from "@/lib/utils";
 
 interface LogoProps {
@@ -10,7 +9,8 @@ export const Logo = ({ className }: LogoProps) => {
   return (
     <Link
       className={cn(
-        "font-medium tracking-widest text-white uppercase",
+        "font-medium tracking-wider text-white uppercase",
+        "transition-opacity duration-200 hover:opacity-80",
         className,
       )}
       href="/"
