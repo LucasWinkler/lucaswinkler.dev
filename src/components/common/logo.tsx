@@ -9,7 +9,7 @@ export const Logo = ({ className }: LogoProps) => {
   return (
     <Link
       className={cn(
-        "font-medium tracking-wider text-white uppercase",
+        "font-medium tracking-wide text-white uppercase",
         "transition-opacity duration-200 hover:opacity-80",
         className,
       )}
