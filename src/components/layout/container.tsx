@@ -13,7 +13,7 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(
     return (
       <Comp
         className={cn(
-          "container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8",
+          "container mx-auto max-w-6xl px-6 sm:px-8 lg:px-10",
           className,
         )}
         ref={ref}
