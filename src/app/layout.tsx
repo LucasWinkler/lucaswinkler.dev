@@ -32,7 +32,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} --font-inter`}>
       <body className="dark overflow-x-hidden antialiased">
-        <GlobalCursor />
         <Header />
         <main className="relative">{children}</main>
         <Footer />

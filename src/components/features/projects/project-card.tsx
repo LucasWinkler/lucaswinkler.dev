@@ -1,29 +1,45 @@
 "use client";
 
-import { useCursorVariant } from "@/hooks/use-cursor-variant";
+import { Cursor } from "@/components/ui/cursor";
 import { Project } from "@/types/project";
-import Link from "next/link";
+import { useTouchDevice } from "@/hooks/use-touch-device";
+import { useCursor } from "@/hooks/use-cursor";
+import { ProjectCursor } from "./project-cursor";
+import { ProjectCardContent } from "./project-card-content";
 
 interface ProjectCardProps {
   project: Project;
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const cursorHandlers = useCursorVariant("view");
+  const isTouchDevice = useTouchDevice();
+  const { isHovering, targetRef, handlePositionChange } = useCursor();
+
+  if (isTouchDevice) {
+    return <ProjectCardContent project={project} />;
+  }
 
   return (
-    <Link href={`/projects/${project.slug}`}>
-      <div
-        className="group relative rounded-lg border border-zinc-200 bg-white p-6 transition-all hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
-        {...cursorHandlers}
+    <div ref={targetRef}>
+      <Cursor
+        attachToParent
+        variants={{
+          initial: { scale: 0.3, opacity: 0 },
+          animate: { scale: 1, opacity: 1 },
+          exit: { scale: 0.3, opacity: 0 },
+        }}
+        springConfig={{
+          bounce: 0.001,
+        }}
+        transition={{
+          ease: "easeInOut",
+          duration: 0.15,
+        }}
+        onPositionChange={handlePositionChange}
       >
-        <h3 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
-          {project.title}
-        </h3>
-        <p className="mt-2 text-zinc-600 dark:text-zinc-400">
-          {project.description}
-        </p>
-      </div>
-    </Link>
+        <ProjectCursor isHovering={isHovering} />
+      </Cursor>
+      <ProjectCardContent project={project} />
+    </div>
   );
 }

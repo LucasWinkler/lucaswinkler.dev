@@ -1,21 +1,29 @@
 import { Container } from "@/components/layout/container";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { ArrowTopRightIcon } from "@radix-ui/react-icons";
+import { ArrowRightIcon } from "@radix-ui/react-icons";
+import { Badge } from "../ui/badge";
 
 export const Hero = () => {
   return (
-    <section className="relative overflow-hidden pt-[calc(var(--header-height)/2+4rem)] pb-16 sm:pt-[calc(var(--header-height)/2+6rem)] sm:pb-24 md:pt-[calc(var(--header-height)/2+8rem)] md:pb-32 xl:pt-[calc(var(--header-height)/2+10rem)] xl:pb-40">
+    <section className="relative -mt-[var(--header-height)] overflow-hidden pt-[var(--header-height)]">
       <BackgroundEffect />
-      <Container className="grid items-center md:grid-cols-[1fr,auto]">
-        <h1 className="font-heading 2xs:text-4xl mb-3 text-2xl font-bold tracking-tight text-white sm:text-5xl md:mb-4 md:text-7xl lg:text-8xl">
+      <Container className="grid items-center py-16 sm:py-20 md:grid-cols-[1fr,auto]">
+        <Badge variant="status" className="mb-6">
+          <span className="relative mr-1 flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+          </span>
+          Available for opportunities
+        </Badge>
+
+        <h1 className="font-heading 2xs:text-[3rem] mb-8 text-[2.5rem] leading-[1.05] font-bold text-white sm:text-[4rem] md:text-7xl lg:text-8xl">
           Hi, I&apos;m Lucas —
           <br /> a full-stack developer.
         </h1>
-        <p className="2xs:text-lg text-foreground-dark-secondary mb-5 text-base leading-normal md:mb-6 md:text-xl xl:text-xl">
-          I build web apps that are user-focused, fast and intuitive.
-          <br />
-          Currently based in Ontario, Canada.
+        <p className="2xs:text-lg text-foreground-dark-tertiary mb-8 max-w-[48ch] text-base md:text-xl xl:text-xl">
+          I build web apps that are user-focused, fast and intuitive. Currently
+          based in Ontario, Canada.
         </p>
         <div className="flex flex-wrap items-center gap-4">
           <Button
@@ -25,18 +33,12 @@ export const Hero = () => {
             type="button"
             asChild
           >
-            <Link href="/projects">
-              See my work
-              <ArrowTopRightIcon
-                className="transition-transform duration-300 group-hover/cta:rotate-45"
-                aria-hidden="true"
-              />
-            </Link>
+            <Link href="/projects">See my work</Link>
           </Button>
           <Button
             className="group/cta xs:w-auto w-full"
-            variant="glass"
-            size="lg"
+            variant="ghost"
+            size="sm"
             type="button"
             asChild
           >
@@ -47,8 +49,8 @@ export const Hero = () => {
               aria-label="Open resume in new tab"
             >
               See my resume
-              <ArrowTopRightIcon
-                className="transition-transform duration-300 group-hover/cta:rotate-45"
+              <ArrowRightIcon
+                className="ease-snappy transition-transform duration-300 group-hover/cta:translate-x-1"
                 aria-hidden="true"
               />
             </a>
