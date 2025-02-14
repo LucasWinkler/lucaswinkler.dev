@@ -16,7 +16,7 @@ export const config = {
   appName: "Lucas Winkler Portfolio",
   appShortName: "Lucas Winkler",
   appDescription:
-    "Lucas Winkler is a Full-Stack Developer based in Ontario, Canada who builds accessible and intuitive web experiences.",
+    "Lucas Winkler is a Full-Stack Developer from Ontario, Canada, crafting accessible, intuitive, and well-designed web experiences.",
   name: "Lucas Winkler",
   contactEmail: "hello@lucaswinkler.dev",
   twitterHandle: "@LucasJWinkler",
