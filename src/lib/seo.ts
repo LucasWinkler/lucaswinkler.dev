@@ -1,5 +1,5 @@
-import { config } from '@/config';
-import type { Metadata } from 'next';
+import { config } from "@/config";
+import type { Metadata } from "next";
 
 type MetadataConfig = Metadata & {
   canonicalUrlRelative?: string;
@@ -17,13 +17,13 @@ export const createMetadata = ({
   return {
     title: title || config.appName,
     description: description || config.appDescription,
-    applicationName: config.appShortName,
+    applicationName: config.appName,
     keywords: keywords,
     metadataBase: new URL(config.baseUrl),
     openGraph: {
-      type: 'website',
+      type: "website",
       url: openGraph?.url || canonicalUrlRelative || config.baseUrl,
-      locale: 'en_CA',
+      locale: "en_CA",
       title: openGraph?.title || title || config.appName,
       siteName: openGraph?.siteName || config.appShortName,
       description:
@@ -34,14 +34,14 @@ export const createMetadata = ({
           width: 1200,
           height: 630,
           // TODO: Replace when the hero section is complete
-          alt: 'Text saying Lucas Winkler, Full-Stack Developer',
-          type: 'image/png',
+          alt: "Text saying Lucas Winkler, Full-Stack Developer",
+          type: "image/png",
         },
       ],
     },
     twitter: {
       creator: config.twitterHandle,
-      card: 'summary_large_image',
+      card: "summary_large_image",
     },
     ...(canonicalUrlRelative && {
       alternates: {

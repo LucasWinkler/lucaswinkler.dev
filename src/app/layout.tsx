@@ -1,9 +1,9 @@
+import { Inter } from "next/font/google";
+import { config } from "@/config";
+import { createMetadata } from "@/lib/seo";
 import { Header } from "@/components/layout/header/header";
 import { Footer } from "@/components/layout/footer";
-import { createMetadata } from "@/lib/seo";
-import { config } from "@/config";
 import "@/styles/globals.css";
-import { Inter } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],
