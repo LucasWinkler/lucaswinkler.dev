@@ -44,7 +44,7 @@ export function Cursor({
       cursorX.set(window.innerWidth / 2);
       cursorY.set(window.innerHeight / 2);
     }
-  }, []);
+  }, [cursorX, cursorY]);
 
   useEffect(() => {
     if (!attachToParent) {
