@@ -1,11 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
+import { motion } from "motion/react";
+
+const MotionButton = motion(Button);
 
 export const CTAs = () => {
   return (
     <div className="flex flex-wrap items-center gap-4">
-      <Button
+      <MotionButton
+        whileTap={{ scale: 0.95 }}
         className="group/cta xs:w-auto w-full"
         variant="default"
         size="lg"
@@ -13,8 +19,9 @@ export const CTAs = () => {
         asChild
       >
         <Link href="/projects">See my work</Link>
-      </Button>
-      <Button
+      </MotionButton>
+      <MotionButton
+        whileTap={{ scale: 0.95 }}
         className="group/cta xs:w-auto w-full"
         variant="ghost"
         size="sm"
@@ -33,7 +40,7 @@ export const CTAs = () => {
             aria-hidden="true"
           />
         </a>
-      </Button>
+      </MotionButton>
     </div>
   );
 };
