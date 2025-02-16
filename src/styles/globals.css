@@ -2,6 +2,8 @@
 
 @plugin 'tailwindcss-animate';
 
+@custom-variant dark (&:is(.dark *));
+
 @theme {
   /* Colours for shadcn/ui */
   --color-background: var(--background);
@@ -187,21 +189,8 @@
     background-color: var(--foreground-light);
   }
 }
-
 @utility font-heading {
   font-variation-settings: "opsz" 32;
   /* 'ss01' 1,
     'cv01' 1 */
-}
-
-/* Keep at bottom because it messes with the code editor UI due to no {} (I assume) */
-@custom-variant dark (&:is(.dark *));
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
 }
