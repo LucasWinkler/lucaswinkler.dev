@@ -9,7 +9,13 @@ import { motion, AnimatePresence } from "motion/react";
 
 const MotionButton = motion.create(Button);
 
-export const CTA = () => {
+export interface CTAProps {
+  eyebrow: string;
+  heading: string;
+  description: string;
+}
+
+export const CTA = ({ eyebrow, heading, description }: CTAProps) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = async () => {
@@ -40,17 +46,13 @@ export const CTA = () => {
           <div className="relative px-6 py-10 sm:px-12 sm:py-14 md:py-16">
             <div className="mx-auto max-w-2xl text-center">
               <span className="mb-3 inline-block text-xs leading-tight tracking-[0.2em] text-purple-400/80 uppercase sm:mb-4 sm:text-sm">
-                Get in touch
+                {eyebrow}
               </span>
               <h2 className="font-heading text-foreground-dark 2xs:text-[2.25rem] mb-4 text-[1.75rem] leading-[1.1] font-bold tracking-tight sm:mb-6 sm:text-4xl sm:tracking-normal md:mb-8 md:text-5xl lg:text-6xl lg:tracking-[-0.02em]">
-                Let&apos;s build
-                <br />
-                something together
+                {heading}
               </h2>
               <p className="text-foreground-dark-secondary mx-auto mb-8 max-w-[50ch] text-base sm:text-lg md:text-xl">
-                I&apos;m actively seeking opportunities to contribute to cool
-                projects. Whether you have a position available or would like to
-                connect, I&apos;d love to hear from you.
+                {description}
               </p>
               <div className="flex justify-center">
                 <MotionButton

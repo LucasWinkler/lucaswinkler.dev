@@ -3,7 +3,7 @@ import { BackgroundEffect } from "@/components/features/hero/background-effect";
 import { CTAs } from "@/components/features/hero/ctas";
 import { AvailabilityBadge } from "@/components/features/hero/availability-badge";
 
-interface HeroProps {
+export interface HeroProps {
   title: React.ReactNode;
   description: React.ReactNode;
   isAvailable: boolean;

@@ -3,24 +3,22 @@ import { Projects } from "@/components/sections/projects";
 import { About } from "@/components/sections/about";
 import { Skills } from "@/components/sections/skills";
 import { CTA } from "@/components/sections/cta";
+import {
+  HERO_CONTENT,
+  PROJECTS_CONTENT,
+  ABOUT_CONTENT,
+  SKILLS_CONTENT,
+  CTA_CONTENT,
+} from "@/constants/home-content";
 
 export default function Home() {
   return (
     <>
-      <Hero
-        title={
-          <>
-            Hi, I&apos;m Lucas —
-            <br /> a full-stack developer.
-          </>
-        }
-        description="I build web apps that are user-focused, fast and intuitive. Currently based in Ontario, Canada."
-        isAvailable={true}
-      />
-      <Projects />
-      <About />
-      <Skills />
-      <CTA />
+      <Hero {...HERO_CONTENT} />
+      <Projects {...PROJECTS_CONTENT} />
+      <About {...ABOUT_CONTENT} />
+      <Skills {...SKILLS_CONTENT} />
+      <CTA {...CTA_CONTENT} />
     </>
   );
 }
