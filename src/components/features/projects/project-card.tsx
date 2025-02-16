@@ -10,12 +10,18 @@ interface ProjectCardProps {
   project: Project;
   isReversed?: boolean;
   priority?: boolean;
+  isHovering?: boolean;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
 export const ProjectCard = ({
   project,
   isReversed = false,
   priority = false,
+  isHovering = false,
+  onMouseEnter,
+  onMouseLeave,
 }: ProjectCardProps) => {
   return (
     <li
@@ -28,6 +34,8 @@ export const ProjectCard = ({
         aria-label={`View ${project.title} details`}
         href={`/projects/${project.slug}`}
         className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900/90 to-slate-800/90 lg:w-7/12"
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
         <ProjectImage image={project.image} priority={priority} />
       </Link>

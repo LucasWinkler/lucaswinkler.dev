@@ -1,16 +1,42 @@
+"use client";
+
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { PROJECTS } from "@/constants/projects";
 import { ProjectCard } from "@/components/features/projects/project-card";
+import { useTouchDevice } from "@/hooks/use-touch-device";
+import { Cursor } from "@/components/ui/cursor";
+import { ProjectCursor } from "@/components/features/projects/project-cursor";
+import { useState } from "react";
+import { AnimatePresence } from "motion/react";
+import { cn } from "@/lib/utils";
 
 export const Projects = () => {
+  const [isHovering, setIsHovering] = useState(false);
+  const isTouchDevice = useTouchDevice();
+
+  const handleMouseEnter = () => setIsHovering(true);
+  const handleMouseLeave = () => setIsHovering(false);
+
   return (
     <section
       id="projects"
-      className="scroll-mt-[var(--header-height)] py-12 sm:py-16 md:py-20"
+      className={cn(
+        "scroll-mt-[var(--header-height)] py-12 sm:py-16 md:py-20",
+        isHovering && "cursor-none",
+      )}
     >
+      {!isTouchDevice && (
+        <Cursor
+          springConfig={{
+            bounce: 0.001,
+          }}
+        >
+          <AnimatePresence>{isHovering && <ProjectCursor />}</AnimatePresence>
+        </Cursor>
+      )}
       <Container>
         <div className="mx-auto max-w-2xl text-center">
           <span className="mb-3 inline-block text-xs leading-tight tracking-[0.2em] text-purple-400/80 uppercase sm:mb-4 sm:text-sm">
@@ -31,10 +57,13 @@ export const Projects = () => {
               project={project}
               isReversed={index % 2 !== 0}
               priority={index === 0}
+              isHovering={isHovering}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             />
           ))}
         </ul>
-        <div className="mt-16 text-center sm:mt-20">
+        <div className="mt-12 text-center sm:mt-16">
           <Button asChild variant="ghost" size="lg" className="group">
             <Link href="/projects" className="inline-flex items-center gap-2">
               View all projects

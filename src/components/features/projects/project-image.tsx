@@ -1,11 +1,5 @@
-"use client";
-
 import Image from "next/image";
-import { Cursor } from "@/components/ui/cursor";
-import { useTouchDevice } from "@/hooks/use-touch-device";
-import { useCursor } from "@/hooks/use-cursor";
 import type { Project } from "@/types/project";
-import { ProjectCursor } from "./project-cursor";
 
 interface ProjectImageProps {
   image: Project["image"];
@@ -16,35 +10,8 @@ export const ProjectImage = ({
   image,
   priority = false,
 }: ProjectImageProps) => {
-  const { isHovering, targetRef, handlePositionChange } = useCursor();
-  const isTouchDevice = useTouchDevice();
-
   return (
-    <div
-      className="relative aspect-[16/9] md:aspect-[2/1] lg:aspect-[16/9]"
-      ref={!isTouchDevice ? targetRef : undefined}
-    >
-      {!isTouchDevice && (
-        <Cursor
-          attachToParent
-          variants={{
-            initial: { scale: 0.3, opacity: 0 },
-            animate: { scale: 1, opacity: 1 },
-            exit: { scale: 0.3, opacity: 0 },
-          }}
-          springConfig={{
-            bounce: 0.001,
-          }}
-          transition={{
-            ease: "easeInOut",
-            duration: 0.15,
-          }}
-          onPositionChange={handlePositionChange}
-        >
-          <ProjectCursor isHovering={isHovering} />
-        </Cursor>
-      )}
-
+    <div className="relative aspect-[16/9] md:aspect-[2/1] lg:aspect-[16/9]">
       <div aria-hidden="true" className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-blue-500/10" />
         <div
@@ -55,7 +22,6 @@ export const ProjectImage = ({
           }}
         />
       </div>
-
       <Image
         src={image.src || "/images/project-placeholder.webp"}
         alt={image.alt}

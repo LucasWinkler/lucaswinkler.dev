@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+
+import React, { useEffect, useState } from "react";
 import {
   motion,
   SpringOptions,
@@ -15,48 +16,35 @@ export type CursorProps = {
   children: React.ReactNode;
   className?: string;
   springConfig?: SpringOptions;
-  attachToParent?: boolean;
   transition?: Transition;
   variants?: {
     initial: Variant;
     animate: Variant;
     exit: Variant;
   };
-  onPositionChange?: (x: number, y: number) => void;
 };
 
 export function Cursor({
   children,
   className,
   springConfig,
-  attachToParent,
   variants,
   transition,
-  onPositionChange,
 }: CursorProps) {
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
-  const cursorRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(!attachToParent);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       cursorX.set(window.innerWidth / 2);
       cursorY.set(window.innerHeight / 2);
-    }
-  }, [cursorX, cursorY]);
-
-  useEffect(() => {
-    if (!attachToParent) {
-      document.body.style.cursor = "none";
-    } else {
-      document.body.style.cursor = "auto";
+      setIsVisible(true);
     }
 
     const updatePosition = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
-      onPositionChange?.(e.clientX, e.clientY);
     };
 
     document.addEventListener("mousemove", updatePosition);
@@ -64,43 +52,13 @@ export function Cursor({
     return () => {
       document.removeEventListener("mousemove", updatePosition);
     };
-  }, [cursorX, cursorY, onPositionChange, attachToParent]);
+  }, [cursorX, cursorY]);
 
   const cursorXSpring = useSpring(cursorX, springConfig || { duration: 0 });
   const cursorYSpring = useSpring(cursorY, springConfig || { duration: 0 });
 
-  useEffect(() => {
-    const handleVisibilityChange = (visible: boolean) => {
-      setIsVisible(visible);
-    };
-
-    const currentRef = cursorRef.current;
-    if (attachToParent && currentRef) {
-      const parent = currentRef.parentElement;
-      if (parent) {
-        const onEnter = () => {
-          parent.style.cursor = "none";
-          handleVisibilityChange(true);
-        };
-        const onLeave = () => {
-          parent.style.cursor = "auto";
-          handleVisibilityChange(false);
-        };
-
-        parent.addEventListener("mouseenter", onEnter);
-        parent.addEventListener("mouseleave", onLeave);
-
-        return () => {
-          parent.removeEventListener("mouseenter", onEnter);
-          parent.removeEventListener("mouseleave", onLeave);
-        };
-      }
-    }
-  }, [attachToParent]);
-
   return (
     <motion.div
-      ref={cursorRef}
       className={cn("pointer-events-none fixed top-0 left-0 z-50", className)}
       style={{
         x: cursorXSpring,
