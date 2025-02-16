@@ -33,7 +33,6 @@ export const createMetadata = ({
           url: `/og.png`,
           width: 1200,
           height: 630,
-          // TODO: Replace when the hero section is complete
           alt: "Text saying Lucas Winkler, Full-Stack Developer",
           type: "image/png",
         },
