@@ -3,7 +3,7 @@ import { Technology } from "@/types/technology";
 export const technologies: Technology[] = [
   {
     name: "React",
-    description: "A JavaScript library",
+    description: "JavaScript library",
     icon: "/icons/react.svg",
     color: "#61DAFB",
   },
@@ -59,7 +59,7 @@ export const technologies: Technology[] = [
     name: "Prisma",
     description: "TypeScript ORM",
     icon: "/icons/prisma.svg",
-    color: "#ffffff",
+    color: "#5a67d8",
   },
   {
     name: "Drizzle ORM",
