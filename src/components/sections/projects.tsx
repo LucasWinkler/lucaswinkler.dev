@@ -13,6 +13,8 @@ import { AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types/project";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 export interface ProjectsProps {
   eyebrow: string;
   heading: string;
@@ -73,14 +75,16 @@ export const Projects = ({
             />
           ))}
         </ul>
-        <div className="mt-12 text-center sm:mt-16">
-          <Button asChild variant="ghost" size="lg" className="group">
-            <Link href="/projects" className="inline-flex items-center gap-2">
-              View all projects
-              <ArrowRight className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
-            </Link>
-          </Button>
-        </div>
+        {!isProduction && (
+          <div className="mt-12 text-center sm:mt-16">
+            <Button asChild variant="ghost" size="lg" className="group">
+              <Link href="/projects" className="inline-flex items-center gap-2">
+                View all projects
+                <ArrowRight className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
+              </Link>
+            </Button>
+          </div>
+        )}
       </Container>
     </section>
   );

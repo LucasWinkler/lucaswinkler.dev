@@ -25,7 +25,7 @@ export const About = ({ eyebrow, heading, description }: AboutProps) => {
               sizes="(min-width: 1024px) 288px, (min-width: 640px) 224px, 192px"
             />
           </div>
-          <div className="text-center lg:text-left">
+          <div className="text-center lg:text-start">
             <span className="mb-3 inline-block text-xs leading-tight tracking-[0.2em] text-purple-400/80 uppercase sm:mb-4 sm:text-sm">
               {eyebrow}
             </span>

@@ -6,6 +6,8 @@ import type { Project } from "@/types/project";
 import { ProjectImage } from "./project-image";
 import { Badge } from "@/components/ui/badge";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 interface ProjectCardProps {
   project: Project;
   isReversed?: boolean;
@@ -30,7 +32,7 @@ export const ProjectCard = ({
     >
       <Link
         aria-label={`View ${project.title} details`}
-        href={`/projects/${project.slug}`}
+        href={!isProduction ? `/projects/${project.slug}` : project.links.demo}
         className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900/90 to-slate-800/90 lg:w-7/12"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
@@ -46,7 +48,9 @@ export const ProjectCard = ({
         <div className="mb-4 flex items-center justify-between">
           <Link
             aria-label={`View ${project.title} details`}
-            href={`/projects/${project.slug}`}
+            href={
+              !isProduction ? `/projects/${project.slug}` : project.links.demo
+            }
             className="group hover:text-foreground/80 inline-flex items-center gap-2 transition-colors"
           >
             <h3 className="font-heading text-2xl font-bold sm:text-3xl">
