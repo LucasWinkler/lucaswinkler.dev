@@ -13,7 +13,7 @@ const getBaseUrl = (): string => {
 export const config = {
   baseUrl: getBaseUrl(),
   domainName: "lucaswinkler.dev",
-  appName: "Lucas Winkler – Portfolio",
+  appName: "Lucas Winkler",
   appShortName: "Lucas Winkler",
   appDescription:
     "Lucas Winkler is a Full-Stack Developer from Ontario, Canada, crafting accessible, intuitive, and well-designed web experiences.",
