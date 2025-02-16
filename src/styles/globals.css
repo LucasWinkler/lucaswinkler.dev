@@ -13,8 +13,6 @@
   --color-foreground-dark-secondary: var(--foreground-dark-secondary);
   --color-foreground-dark-tertiary: var(--foreground-dark-tertiary);
   --color-foreground-dark-quaternary: var(--foreground-dark-quaternary);
-  --color-heading-dark: var(--heading-dark);
-  --color-subheading-dark: var(--subheading-dark);
 
   /* Colours for the light sections */
   --color-background-light: var(--background-light);
@@ -40,8 +38,6 @@
   --foreground-dark-secondary: #95979e;
   --foreground-dark-tertiary: #c9cbcf;
   --foreground-dark-quaternary: #303236;
-  --heading-dark: #ffffff;
-  --subheading-dark: #ffffff;
 
   /* Colours for the light sections */
   --background-light: #f9fafa;
