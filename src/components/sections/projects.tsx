@@ -57,7 +57,6 @@ export const Projects = () => {
               project={project}
               isReversed={index % 2 !== 0}
               priority={index === 0}
-              isHovering={isHovering}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             />

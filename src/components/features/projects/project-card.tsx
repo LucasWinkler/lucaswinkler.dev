@@ -10,7 +10,6 @@ interface ProjectCardProps {
   project: Project;
   isReversed?: boolean;
   priority?: boolean;
-  isHovering?: boolean;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 }
@@ -19,7 +18,6 @@ export const ProjectCard = ({
   project,
   isReversed = false,
   priority = false,
-  isHovering = false,
   onMouseEnter,
   onMouseLeave,
 }: ProjectCardProps) => {
