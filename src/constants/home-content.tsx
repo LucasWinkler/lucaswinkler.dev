@@ -34,7 +34,7 @@ export const ABOUT_CONTENT: AboutProps = {
 };
 
 export const SKILLS_CONTENT: SkillsProps = {
-  eyebrow: "Developer toolkit",
+  eyebrow: "Featured tech",
   heading: "Tools and technologies",
   description:
     "I've worked with a variety of technologies over the years. Here's a collection that I use to build modern web apps.",
