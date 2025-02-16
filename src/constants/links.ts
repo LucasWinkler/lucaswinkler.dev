@@ -19,8 +19,8 @@ export const NAV_LINKS: NavLink[] = [
     //   })),
     // },
   },
-  { label: "About", href: "/#about" },
   { label: "Skills", href: "/#skills" },
+  { label: "About", href: "/#about" },
   { label: "Get in touch", href: "/#cta" },
 ] as const;
 

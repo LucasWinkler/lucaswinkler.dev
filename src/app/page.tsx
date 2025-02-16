@@ -16,8 +16,8 @@ export default function Home() {
     <>
       <Hero {...HERO_CONTENT} />
       <Projects {...PROJECTS_CONTENT} />
-      <About {...ABOUT_CONTENT} />
       <Skills {...SKILLS_CONTENT} />
+      <About {...ABOUT_CONTENT} />
       <CTA {...CTA_CONTENT} />
     </>
   );
