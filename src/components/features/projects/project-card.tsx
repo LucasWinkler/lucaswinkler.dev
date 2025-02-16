@@ -9,11 +9,13 @@ import { Badge } from "@/components/ui/badge";
 interface ProjectCardProps {
   project: Project;
   isReversed?: boolean;
+  priority?: boolean;
 }
 
 export const ProjectCard = ({
   project,
   isReversed = false,
+  priority = false,
 }: ProjectCardProps) => {
   return (
     <li
@@ -27,7 +29,7 @@ export const ProjectCard = ({
         href={`/projects/${project.slug}`}
         className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900/90 to-slate-800/90 lg:w-7/12"
       >
-        <ProjectImage image={project.image} />
+        <ProjectImage image={project.image} priority={priority} />
       </Link>
       <div
         className={cn(

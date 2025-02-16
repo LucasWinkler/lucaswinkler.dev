@@ -17,7 +17,8 @@ export const About = () => {
                 alt="Lucas Winkler"
                 fill
                 className="object-cover object-[80%_top]"
-                priority
+                unoptimized
+                sizes="(min-width: 1024px) 288px, (min-width: 640px) 224px, 192px"
               />
             </div>
             <div className="text-center lg:text-left">

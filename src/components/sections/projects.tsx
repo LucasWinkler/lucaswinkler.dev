@@ -30,6 +30,7 @@ export const Projects = () => {
               key={project.slug}
               project={project}
               isReversed={index % 2 !== 0}
+              priority={index === 0}
             />
           ))}
         </ul>
