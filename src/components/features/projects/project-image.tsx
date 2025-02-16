@@ -9,10 +9,9 @@ import { ProjectCursor } from "./project-cursor";
 
 interface ProjectImageProps {
   image: Project["image"];
-  alt: Project["title"];
 }
 
-export const ProjectImage = ({ image, alt }: ProjectImageProps) => {
+export const ProjectImage = ({ image }: ProjectImageProps) => {
   const { isHovering, targetRef, handlePositionChange } = useCursor();
   const isTouchDevice = useTouchDevice();
 
