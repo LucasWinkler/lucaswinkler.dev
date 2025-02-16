@@ -17,7 +17,7 @@
 <h3 align="center">lucaswinkler.dev - v4</h3>
 
   <p align="center">
-    The fourth iteration of <a href="https://www.lucaswinkler.dev">lucaswinkler.dev</a> build with <a href="https://nextjs.org/">Next.js</a> and hosted on <a href="https://vercel.com">Vercel</a>
+    The fourth iteration of <a href="https://www.lucaswinkler.dev">lucaswinkler.dev</a> built with <a href="https://nextjs.org/">Next.js</a> and hosted on <a href="https://vercel.com">Vercel</a>
     <br />
     <br />
     <br />
