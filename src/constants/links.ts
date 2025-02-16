@@ -19,8 +19,9 @@ export const NAV_LINKS: NavLink[] = [
       })),
     },
   },
-  { label: "About", href: "/about" },
-  { label: "Get in touch", href: "/contact" },
+  { label: "About", href: "/#about" },
+  { label: "Skills", href: "/#skills" },
+  { label: "Get in touch", href: "/#cta" },
 ] as const;
 
 export const SOCIAL_LINKS: SocialLink[] = [
@@ -34,14 +35,4 @@ export const SOCIAL_LINKS: SocialLink[] = [
     href: "https://www.linkedin.com/in/lucas-winkler/",
     icon: Linkedin,
   },
-  // {
-  //   label: 'X',
-  //   href: 'https://x.com/lucasjwinkler',
-  //   icon: X,
-  // },
-  // {
-  //   label: 'Email',
-  //   href: 'mailto:hello@lucaswinkler.dev',
-  //   icon: Mail,
-  // },
 ] as const;

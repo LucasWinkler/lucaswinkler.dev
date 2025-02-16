@@ -87,13 +87,12 @@ export const DesktopNav = () => {
                   </NavigationMenuContent>
                 </>
               ) : (
-                <Link href={href} legacyBehavior passHref>
-                  <NavigationMenuLink
-                    className={cn("px-10", navigationMenuTriggerStyle())}
-                  >
-                    {label}
-                  </NavigationMenuLink>
-                </Link>
+                <NavigationMenuLink
+                  asChild
+                  className={cn("px-10", navigationMenuTriggerStyle())}
+                >
+                  <Link href={href}>{label}</Link>
+                </NavigationMenuLink>
               )}
             </NavigationMenuItem>
           );
