@@ -1,5 +1,6 @@
 import { Hero } from "@/components/sections/hero";
 import { Projects } from "@/components/sections/projects";
+import { About } from "@/components/sections/about";
 import { Skills } from "@/components/sections/skills";
 import { CTA } from "@/components/sections/cta";
 
@@ -17,6 +18,7 @@ export default function Home() {
         isAvailable={true}
       />
       <Projects />
+      <About />
       <Skills />
       <CTA />
     </>
