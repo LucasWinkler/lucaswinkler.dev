@@ -1,43 +1,55 @@
-import { Project } from '@/types/project';
+import { Project } from "@/types/project";
 
 export const PROJECTS: Project[] = [
   {
-    title: 'PoiToGo',
-    slug: 'poitogo',
+    title: "PoiToGo",
+    slug: "poitogo",
     description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
-    image:
-      'https://placehold.co/900x600/f4f4f5/71717a?text=Project+One&font=raleway',
-    tags: ['React', 'TypeScript', 'Tailwind CSS'],
+      "A web app that lets users discover and save points of interest. Features include custom list creation, nearby search, user profiles, and social sharing capabilities.",
+    image: {
+      src: "/images/poitogo.webp",
+      alt: "PoiToGo",
+    },
+    tags: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "PostgreSQL",
+      "Drizzle ORM",
+    ],
     links: {
-      demo: '#',
-      github: '#',
+      demo: "https://poitogo.vercel.app/",
+      source: "https://github.com/LucasWinkler/poitogo",
     },
   },
   {
-    title: 'Online Learning Platform',
-    slug: 'online-learning-platform',
+    title: "Online Learning Platform",
+    slug: "online-learning-platform",
     description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
-    image:
-      'https://placehold.co/900x600/f4f4f5/71717a?text=Project+Two&font=raleway',
-    tags: ['Next.js', 'PostgreSQL', 'Prisma'],
+      "A learning management system that allows the teacher to create and sell courses while students can enroll and attend the lessons with a dashboard and progress tracking.",
+    image: {
+      src: "/images/project-placeholder.webp",
+      alt: "Online Learning Platform",
+    },
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma"],
     links: {
-      demo: '#',
-      github: '#',
+      demo: "https://lw-online-learning-platform.vercel.app/",
+      source: "https://github.com/LucasWinkler/online-learning-platform",
     },
   },
   {
-    title: 'Audiophile Ecommerce',
-    slug: 'audiophile-ecommerce',
+    title: "Audiophile Ecommerce",
+    slug: "audiophile-ecommerce",
     description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
-    image:
-      'https://placehold.co/900x600/f4f4f5/71717a?text=Project+Three&font=raleway',
-    tags: ['React Native', 'Redux', 'Node.js'],
+      "An e-commerce solution for a fictional audio equipment store. It features a fully responsive design and a mock checkout process. The goal was to follow the original design with precision.",
+    image: {
+      src: "/images/audiophile.webp",
+      alt: "Audiophile Ecommerce",
+    },
+    tags: ["Next.js", "TypeScript", "Tailwind CSS"],
     links: {
-      demo: '#',
-      github: '#',
+      demo: "https://fem-audiophile-ecommerce.vercel.app/",
+      source: "https://github.com/LucasWinkler/audiophile-ecommerce",
     },
   },
 ] as const;

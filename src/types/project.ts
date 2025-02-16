@@ -2,10 +2,13 @@ export interface Project {
   title: string;
   slug: string;
   description: string;
-  image: string;
-  tags: string[];
+  image: {
+    src: string;
+    alt: string;
+  };
+  tags?: string[];
   links: {
     demo: string;
-    github: string;
+    source: string;
   };
 }
