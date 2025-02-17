@@ -140,9 +140,6 @@
   * {
     @apply border-border outline-ring/50;
   }
-  html {
-    scroll-behavior: smooth;
-  }
   body {
     color: var(--foreground-dark);
     background: var(--background-dark);

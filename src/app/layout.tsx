@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable}`}>
+    <html lang="en" className={`${inter.variable} md:scroll-smooth`}>
       <body className="dark overflow-x-hidden antialiased">
         <Header />
         <main id="main" className="relative">
