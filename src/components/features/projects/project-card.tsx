@@ -31,7 +31,7 @@ export const ProjectCard = ({
       )}
     >
       <Link
-        aria-label={`View ${project.title} details`}
+        aria-label={`View ${project.title} demo`}
         href={!isProduction ? `/projects/${project.slug}` : project.links.demo}
         className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900/90 to-slate-800/90 lg:w-7/12"
         onMouseEnter={onMouseEnter}
@@ -47,7 +47,7 @@ export const ProjectCard = ({
       >
         <div className="mb-4 flex items-center justify-between">
           <Link
-            aria-label={`View ${project.title} details`}
+            aria-label={`View ${project.title} demo`}
             href={
               !isProduction ? `/projects/${project.slug}` : project.links.demo
             }
