@@ -1,4 +1,6 @@
 import { Project } from "@/types/project";
+import poitogo from "@/../public/images/poitogo.webp";
+import audiophile from "@/../public/images/audiophile.webp";
 
 export const PROJECTS: Project[] = [
   {
@@ -7,7 +9,7 @@ export const PROJECTS: Project[] = [
     description:
       "A web app that lets users discover and save points of interest. Features include custom list creation, nearby search, user profiles, and social sharing capabilities.",
     image: {
-      src: "/images/poitogo.webp",
+      src: poitogo,
       alt: "PoiToGo",
     },
     tags: [
@@ -28,7 +30,7 @@ export const PROJECTS: Project[] = [
     description:
       "A learning management system that allows the teacher to create and sell courses while students can enroll and attend the lessons with a dashboard and progress tracking.",
     image: {
-      src: "/images/project-placeholder.webp",
+      src: undefined,
       alt: "Online Learning Platform",
     },
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma"],
@@ -43,7 +45,7 @@ export const PROJECTS: Project[] = [
     description:
       "An e-commerce solution for a fictional audio equipment store. It features a fully responsive design and a mock checkout process. The goal was to follow the original design with precision.",
     image: {
-      src: "/images/audiophile.webp",
+      src: audiophile,
       alt: "Audiophile Ecommerce",
     },
     tags: ["Next.js", "TypeScript", "Tailwind CSS"],

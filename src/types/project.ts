@@ -1,9 +1,11 @@
+import { StaticImageData } from "next/image";
+
 export interface Project {
   title: string;
   slug: string;
   description: string;
   image: {
-    src: string;
+    src?: string | StaticImageData;
     alt: string;
   };
   tags?: string[];

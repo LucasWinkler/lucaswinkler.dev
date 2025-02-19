@@ -1,6 +1,8 @@
 import Image from "next/image";
 import type { Project } from "@/types/project";
 
+import placeholder from "@/../public/images/project-placeholder.webp";
+
 interface ProjectImageProps {
   image: Project["image"];
   priority?: boolean;
@@ -23,13 +25,16 @@ export const ProjectImage = ({
         />
       </div>
       <Image
-        src={image.src || "/images/project-placeholder.webp"}
+        src={image.src || placeholder}
         alt={image.alt}
         fill
         className="z-10 object-cover transition-transform duration-300 group-hover:scale-105"
-        sizes="(min-width: 1024px) 90vw, (min-width: 768px) 50vw, 100vw"
+        sizes={`
+          (min-width: 64rem) calc(50vw - 40px - 16px), 
+          (min-width: 40rem) calc(100vw - 64px),
+          calc(100vw - 48px)
+        `}
         priority={priority}
-        unoptimized
       />
     </div>
   );

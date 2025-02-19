@@ -1,6 +1,8 @@
 import { Container } from "@/components/layout/container";
 import Image from "next/image";
 
+import portrait from "@/../public/images/portrait.webp";
+
 export interface AboutProps {
   eyebrow: string;
   heading: string;
@@ -17,12 +19,11 @@ export const About = ({ eyebrow, heading, description }: AboutProps) => {
         <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
           <div className="relative aspect-square w-48 shrink-0 overflow-hidden rounded-full sm:w-56 lg:w-72">
             <Image
-              src="/images/portrait.webp"
+              src={portrait}
               alt="Lucas Winkler"
               fill
               className="object-cover"
-              unoptimized
-              sizes="(min-width: 1024px) 288px, (min-width: 640px) 224px, 192px"
+              sizes="(min-width: 64rem) 288px, (min-width: 40rem) 224px, 192px"
             />
           </div>
           <div className="text-center lg:text-start">
