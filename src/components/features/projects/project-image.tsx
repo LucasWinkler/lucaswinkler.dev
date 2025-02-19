@@ -35,6 +35,7 @@ export const ProjectImage = ({
           calc(100vw - 48px)
         `}
         priority={priority}
+        unoptimized
       />
     </div>
   );

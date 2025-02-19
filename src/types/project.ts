@@ -5,7 +5,7 @@ export interface Project {
   slug: string;
   description: string;
   image: {
-    src?: string | StaticImageData;
+    src?: StaticImageData;
     alt: string;
   };
   tags?: string[];
