@@ -36,7 +36,6 @@ export const ProjectImage = ({
         `}
         priority={priority}
         draggable={false}
-        unoptimized
       />
     </div>
   );

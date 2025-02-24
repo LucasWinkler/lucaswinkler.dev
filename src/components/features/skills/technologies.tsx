@@ -52,7 +52,6 @@ export const Technologies = ({ technologies }: TechnologyProps) => {
                       alt={`${tech.name} logo`}
                       width={48}
                       height={48}
-                      unoptimized
                       draggable={false}
                     />
                   </div>

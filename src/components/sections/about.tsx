@@ -24,7 +24,6 @@ export const About = ({ eyebrow, heading, description }: AboutProps) => {
               fill
               className="object-cover"
               sizes="(min-width: 64rem) 288px, (min-width: 40rem) 224px, 192px"
-              unoptimized
               draggable={false}
             />
           </div>
