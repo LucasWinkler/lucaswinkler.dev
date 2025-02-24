@@ -206,11 +206,7 @@ export const MobileNav = () => {
                       onFocus={() => iconRef?.current?.startAnimation()}
                       onBlur={() => iconRef?.current?.stopAnimation()}
                     >
-                      <Icon
-                        ref={iconRef}
-                        className="flex size-4.5 items-center justify-center"
-                        aria-hidden
-                      />
+                      <Icon ref={iconRef} className="size-4.5" aria-hidden />
                       <span className="sr-only">{label}</span>
                     </Link>
                   </li>

@@ -18,7 +18,7 @@ const defaultTransition: Transition = {
 };
 
 const CopyIcon = forwardRef<CopyIconHandle, HTMLAttributes<HTMLDivElement>>(
-  ({ onMouseEnter, onMouseLeave, ...props }, ref) => {
+  ({ onMouseEnter, onMouseLeave, className, ...props }, ref) => {
     const controls = useAnimation();
     const isControlledRef = useRef(false);
 
@@ -69,6 +69,7 @@ const CopyIcon = forwardRef<CopyIconHandle, HTMLAttributes<HTMLDivElement>>(
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
+          className={className}
         >
           <motion.rect
             width="14"
