@@ -108,8 +108,9 @@ export const DesktopNav = () => {
               <Link
                 className="hover:text-accent-foreground focus:text-accent-foreground ring-ring/10 dark:ring-ring/20 dark:outline-ring/40 outline-ring/50 inline-flex items-center justify-center transition-[color,box-shadow] focus-visible:ring-4 focus-visible:outline-1"
                 href={href}
+                aria-label={`Visit my ${label} profile`}
               >
-                <Icon className="m-2 size-5" />
+                <Icon className="m-2 size-5" aria-hidden />
               </Link>
             </li>
           ))}
