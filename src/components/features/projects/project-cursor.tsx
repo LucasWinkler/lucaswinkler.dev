@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
 import { PlusIcon } from "@radix-ui/react-icons";
+import { motion } from "motion/react";
 
 export const ProjectCursor = () => {
   return (

@@ -1,5 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { CaretRightIcon } from "@radix-ui/react-icons";
+import { Menu } from "lucide-react";
+import { motion } from "motion/react";
+import Link from "next/link";
+
+import { CopyToClipboardButton } from "@/components/common/copy-to-clipboard-button";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -11,14 +18,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { NAV_LINKS, createSocialLinks } from "@/constants/links";
-import { Menu } from "lucide-react";
-import { CaretRightIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
-import { useEffect, useState } from "react";
 import { config } from "@/config";
-import { motion } from "motion/react";
-import { CopyToClipboardButton } from "@/components/common/copy-to-clipboard-button";
+import { createSocialLinks, NAV_LINKS } from "@/constants/links";
 
 const MotionLink = motion.create(Link);
 

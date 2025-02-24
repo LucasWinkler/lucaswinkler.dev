@@ -1,10 +1,11 @@
-import { PROJECTS } from "./projects";
-import { technologies } from "./technologies";
+import type { AboutProps } from "@/components/sections/about";
+import type { CTAProps } from "@/components/sections/cta";
 import type { HeroProps } from "@/components/sections/hero";
 import type { ProjectsProps } from "@/components/sections/projects";
-import type { AboutProps } from "@/components/sections/about";
 import type { SkillsProps } from "@/components/sections/skills";
-import type { CTAProps } from "@/components/sections/cta";
+
+import { PROJECTS } from "./projects";
+import { technologies } from "./technologies";
 
 export const HERO_CONTENT: HeroProps = {
   title: (

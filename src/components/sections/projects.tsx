@@ -1,19 +1,53 @@
 "use client";
 
+import { useState } from "react";
+import { ArrowRight } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import Link from "next/link";
+
+import { ProjectCard } from "@/components/features/projects/project-card";
+import { ProjectCursor } from "@/components/features/projects/project-cursor";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
-import { ProjectCard } from "@/components/features/projects/project-card";
-import { useTouchDevice } from "@/hooks/use-touch-device";
 import { Cursor } from "@/components/ui/cursor";
-import { ProjectCursor } from "@/components/features/projects/project-cursor";
-import { useState } from "react";
-import { AnimatePresence } from "motion/react";
+import { useTouchDevice } from "@/hooks/use-touch-device";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types/project";
 
 const isProduction = process.env.NODE_ENV === "production";
+
+const MotionProjectCard = motion.create(ProjectCard);
+
+const headerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 10,
+      mass: 0.5,
+      delay: 0.3,
+    },
+  },
+};
+
+const projectVariants = {
+  hidden: (custom: { isReversed: boolean }) => ({
+    opacity: 0,
+    x: custom.isReversed ? 20 : -20,
+  }),
+  visible: (custom: { index: number }) => ({
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.21, 0.47, 0.32, 0.98],
+      delay: 0.4 + custom.index * 0.15,
+    },
+  }),
+};
 
 export interface ProjectsProps {
   eyebrow: string;
@@ -52,7 +86,13 @@ export const Projects = ({
         </Cursor>
       )}
       <Container>
-        <div className="mx-auto max-w-2xl text-center">
+        <motion.div
+          className="mx-auto max-w-2xl text-center"
+          variants={headerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
           <span className="mb-3 inline-block text-xs leading-tight tracking-[0.2em] text-purple-400/80 uppercase sm:mb-4 sm:text-sm">
             {eyebrow}
           </span>
@@ -62,28 +102,45 @@ export const Projects = ({
           <p className="text-foreground-dark-secondary mx-auto mb-12 max-w-[50ch] text-base sm:mb-16 sm:text-lg md:text-xl">
             {description}
           </p>
-        </div>
+        </motion.div>
         <ul className="space-y-16 sm:space-y-20 md:space-y-24">
           {projects.map((project, index) => (
-            <ProjectCard
+            <MotionProjectCard
               key={project.slug}
               project={project}
               isReversed={index % 2 !== 0}
               priority={index === 0}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
+              variants={projectVariants}
+              custom={{ isReversed: index % 2 !== 0, index }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "2.5%" }}
             />
           ))}
         </ul>
         {!isProduction && (
-          <div className="mt-12 text-center sm:mt-16">
+          <motion.div
+            className="mt-12 text-center sm:mt-16"
+            variants={headerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{
+              once: true,
+              margin: "0px",
+            }}
+            transition={{
+              delay: projects.length * 0.15,
+            }}
+          >
             <Button asChild variant="ghost" size="lg" className="group">
               <Link href="/projects" className="inline-flex items-center gap-2">
                 View all projects
                 <ArrowRight className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
               </Link>
             </Button>
-          </div>
+          </motion.div>
         )}
       </Container>
     </section>

@@ -1,7 +1,37 @@
-import { Container } from "@/components/layout/container";
+"use client";
+
+import { motion } from "motion/react";
+
+import { AvailabilityBadge } from "@/components/features/hero/availability-badge";
 import { BackgroundEffect } from "@/components/features/hero/background-effect";
 import { CTAs } from "@/components/features/hero/ctas";
-import { AvailabilityBadge } from "@/components/features/hero/availability-badge";
+import { Container } from "@/components/layout/container";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 10,
+      mass: 0.5,
+    },
+  },
+};
+
+const MotionContainer = motion.create(Container);
 
 export interface HeroProps {
   title: React.ReactNode;
@@ -16,16 +46,33 @@ export const Hero = ({ title, description, isAvailable }: HeroProps) => {
       className="relative -mt-[var(--header-height)] pt-[var(--header-height)]"
     >
       <BackgroundEffect />
-      <Container className="grid items-center py-12 sm:py-16 md:py-20">
-        {isAvailable && <AvailabilityBadge className="mb-4 sm:mb-6" />}
-        <h1 className="font-heading 2xs:text-[3rem] mb-6 bg-gradient-to-br from-white via-slate-200 to-indigo-200 bg-clip-text text-[2.5rem] leading-[1.05] font-bold text-transparent sm:mb-8 sm:text-[4rem] md:text-7xl lg:text-8xl">
+      <MotionContainer
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="grid items-center py-12 sm:py-16 md:py-20"
+      >
+        {isAvailable && (
+          <motion.div variants={itemVariants}>
+            <AvailabilityBadge className="mb-4 sm:mb-6" />
+          </motion.div>
+        )}
+        <motion.h1
+          variants={itemVariants}
+          className="font-heading 2xs:text-[3rem] mb-6 bg-gradient-to-br from-white via-slate-200 to-indigo-200 bg-clip-text text-[2.5rem] leading-[1.05] font-bold text-transparent sm:mb-8 sm:text-[4rem] md:text-7xl lg:text-8xl"
+        >
           {title}
-        </h1>
-        <p className="2xs:text-lg text-foreground-dark-tertiary mb-8 max-w-[48ch] text-base sm:mb-10 md:text-xl xl:text-xl">
+        </motion.h1>
+        <motion.p
+          variants={itemVariants}
+          className="2xs:text-lg text-foreground-dark-tertiary mb-8 max-w-[48ch] text-base sm:mb-10 md:text-xl xl:text-xl"
+        >
           {description}
-        </p>
-        <CTAs />
-      </Container>
+        </motion.p>
+        <motion.div variants={itemVariants}>
+          <CTAs />
+        </motion.div>
+      </MotionContainer>
     </section>
   );
 };

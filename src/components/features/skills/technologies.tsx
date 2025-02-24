@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import { ChevronDown } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import Image from "next/image";
+
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import type { Technology } from "@/types/technology";
 import { hexToRgba } from "@/utils/colour";
-import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
 
 interface TechnologyProps {
   technologies: Technology[];

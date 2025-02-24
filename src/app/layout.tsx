@@ -1,11 +1,16 @@
-import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import { Inter } from "next/font/google";
+
+import { Footer } from "@/components/layout/footer/footer";
+import { Header } from "@/components/layout/header/header";
+import { TooltipProvider } from "@/components/providers/tooltip-provider";
 import { config } from "@/config";
 import { createMetadata } from "@/lib/seo";
-import { Header } from "@/components/layout/header/header";
-import { Footer } from "@/components/layout/footer/footer";
-import { TooltipProvider } from "@/components/providers/tooltip-provider";
+
 import "@/styles/globals.css";
+
+import { MotionConfig } from "motion/react";
+
 import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
 
 const inter = Inter({
@@ -44,13 +49,22 @@ export default function RootLayout({
         />
       </head>
       <body className="dark overflow-x-hidden antialiased">
-        <TooltipProvider>
-          <Header />
-          <main id="main" className="relative">
-            {children}
-          </main>
-          <Footer />
-        </TooltipProvider>
+        <MotionConfig
+          reducedMotion="user"
+          transition={{
+            type: "spring",
+            stiffness: 100,
+            damping: 10,
+          }}
+        >
+          <TooltipProvider>
+            <Header />
+            <main id="main" className="relative">
+              {children}
+            </main>
+            <Footer />
+          </TooltipProvider>
+        </MotionConfig>
         <Analytics />
       </body>
     </html>

@@ -2,14 +2,15 @@
 
 import React, { useEffect, useState } from "react";
 import {
+  AnimatePresence,
   motion,
   SpringOptions,
+  Transition,
   useMotionValue,
   useSpring,
-  AnimatePresence,
-  Transition,
   Variant,
 } from "motion/react";
+
 import { cn } from "@/lib/utils";
 
 export type CursorProps = {

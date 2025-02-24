@@ -1,5 +1,6 @@
-import { config } from "@/config";
 import type { Metadata } from "next";
+
+import { config } from "@/config";
 
 type MetadataConfig = Metadata & {
   canonicalUrlRelative?: string;
