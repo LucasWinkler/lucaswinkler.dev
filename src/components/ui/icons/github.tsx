@@ -60,46 +60,67 @@ const GithubIcon = forwardRef<GithubIconHandle, HTMLAttributes<HTMLDivElement>>(
     const bodyControls = useAnimation();
     const tailControls = useAnimation();
     const isControlledRef = useRef(false);
+    const animationInProgressRef = useRef(false);
+
+    const stopAllAnimations = useCallback(() => {
+      animationInProgressRef.current = false;
+      bodyControls.start("normal");
+      tailControls.start("normal");
+    }, [bodyControls, tailControls]);
 
     useImperativeHandle(ref, () => {
       isControlledRef.current = true;
 
       return {
         startAnimation: async () => {
+          animationInProgressRef.current = true;
           bodyControls.start("animate");
-          await tailControls.start("draw");
-          tailControls.start("wag");
+          try {
+            if (animationInProgressRef.current) {
+              await tailControls.start("draw");
+              if (animationInProgressRef.current) {
+                tailControls.start("wag");
+              }
+            }
+          } catch {
+            stopAllAnimations();
+          }
         },
-        stopAnimation: () => {
-          bodyControls.start("normal");
-          tailControls.start("normal");
-        },
+        stopAnimation: stopAllAnimations,
       };
     });
 
     const handleMouseEnter = useCallback(
       async (e: React.MouseEvent<HTMLDivElement>) => {
         if (!isControlledRef.current) {
+          animationInProgressRef.current = true;
           bodyControls.start("animate");
-          await tailControls.start("draw");
-          tailControls.start("wag");
+          try {
+            if (animationInProgressRef.current) {
+              await tailControls.start("draw");
+              if (animationInProgressRef.current) {
+                tailControls.start("wag");
+              }
+            }
+          } catch {
+            stopAllAnimations();
+          }
         } else {
           onMouseEnter?.(e);
         }
       },
-      [bodyControls, onMouseEnter, tailControls],
+      [bodyControls, onMouseEnter, tailControls, stopAllAnimations],
     );
 
     const handleMouseLeave = useCallback(
       (e: React.MouseEvent<HTMLDivElement>) => {
         if (!isControlledRef.current) {
-          bodyControls.start("normal");
-          tailControls.start("normal");
+          stopAllAnimations();
         } else {
           onMouseLeave?.(e);
         }
       },
-      [bodyControls, tailControls, onMouseLeave],
+      [stopAllAnimations, onMouseLeave],
     );
 
     return (
