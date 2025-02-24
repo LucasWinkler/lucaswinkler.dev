@@ -48,5 +48,8 @@ export const createMetadata = ({
       },
     }),
     ...extraTags,
+    authors: [{ name: config.name, url: config.baseUrl }],
+    creator: config.name,
+    publisher: config.name,
   };
 };
