@@ -192,15 +192,24 @@ export const MobileNav = () => {
 
             <SheetFooter className="border-border/60 mt-6 border-t pt-6">
               <ul className="flex items-center gap-3">
-                {SOCIAL_LINKS.map(({ href, icon: Icon }) => (
+                {SOCIAL_LINKS.map(({ href, icon: Icon, iconRef, label }) => (
                   <li key={href}>
                     <Link
-                      className="border-border hover:bg-accent/50 flex size-9 items-center justify-center rounded-full border transition-all duration-200 ease-out"
+                      className="border-border hover:bg-accent/50 inline-flex size-10 items-center justify-center rounded-full border transition-all duration-200 ease-out"
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onMouseEnter={() => iconRef?.current?.startAnimation()}
+                      onMouseLeave={() => iconRef?.current?.stopAnimation()}
+                      onFocus={() => iconRef?.current?.startAnimation()}
+                      onBlur={() => iconRef?.current?.stopAnimation()}
                     >
-                      <Icon className="size-4" />
+                      <Icon
+                        ref={iconRef}
+                        className="flex size-4.5 items-center justify-center"
+                        aria-hidden
+                      />
+                      <span className="sr-only">{label}</span>
                     </Link>
                   </li>
                 ))}

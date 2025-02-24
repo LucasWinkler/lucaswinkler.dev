@@ -1,7 +1,8 @@
 "use client";
 
+import { useState, useRef, forwardRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Copy, Check, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { motion } from "motion/react";
 import { AnimatePresence } from "motion/react";
 import { useClipboardCopy } from "@/hooks/use-clipboard-copy";
@@ -12,7 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useState } from "react";
+import { CopyIcon, CopyIconHandle } from "@/components/ui/icons/copy";
 
 export interface CopyToClipboardButtonProps {
   textToCopy: string;
@@ -31,13 +32,13 @@ export interface CopyToClipboardButtonProps {
 
 const MotionButton = motion.create(Button);
 
-const AnimatedIcon = ({
-  hasError,
-  copied,
-}: {
-  hasError: boolean;
-  copied: boolean;
-}) => (
+const AnimatedIcon = forwardRef<
+  CopyIconHandle,
+  {
+    hasError: boolean;
+    copied: boolean;
+  }
+>(({ hasError, copied }, ref) => (
   <AnimatePresence mode="wait" initial={false}>
     <motion.div
       key={hasError ? "error" : copied ? "check" : "copy"}
@@ -54,11 +55,12 @@ const AnimatedIcon = ({
       ) : copied ? (
         <Check className="size-4" />
       ) : (
-        <Copy className="size-4" />
+        <CopyIcon ref={ref} className="size-4" />
       )}
     </motion.div>
   </AnimatePresence>
-);
+));
+AnimatedIcon.displayName = "AnimatedIcon";
 
 export const CopyToClipboardButton = ({
   textToCopy,
@@ -77,7 +79,8 @@ export const CopyToClipboardButton = ({
     copiedDuration,
   });
 
-  const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(true);
+  const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(false);
+  const copyIconRef = useRef<CopyIconHandle>(null);
 
   const displayText = error ? errorText : copied ? copiedText : text;
   const tooltipText = tooltip || `Copy "${textToCopy}"`;
@@ -95,13 +98,25 @@ export const CopyToClipboardButton = ({
             className={cn("group flex items-center gap-2", className)}
             onClick={() => copyToClipboard(textToCopy)}
             whileTap={{ scale: 0.97 }}
+            onMouseEnter={() => copyIconRef.current?.startAnimation()}
+            onMouseLeave={() => copyIconRef.current?.stopAnimation()}
+            onFocus={() => copyIconRef.current?.startAnimation()}
+            onBlur={() => copyIconRef.current?.stopAnimation()}
           >
             {iconPosition === "left" && (
-              <AnimatedIcon hasError={error !== null} copied={copied} />
+              <AnimatedIcon
+                ref={copyIconRef}
+                hasError={error !== null}
+                copied={copied}
+              />
             )}
             {displayText}
             {iconPosition === "right" && (
-              <AnimatedIcon hasError={error !== null} copied={copied} />
+              <AnimatedIcon
+                ref={copyIconRef}
+                hasError={error !== null}
+                copied={copied}
+              />
             )}
           </MotionButton>
         </TooltipTrigger>

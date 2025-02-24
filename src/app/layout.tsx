@@ -3,7 +3,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { config } from "@/config";
 import { createMetadata } from "@/lib/seo";
 import { Header } from "@/components/layout/header/header";
-import { Footer } from "@/components/layout/footer";
+import { Footer } from "@/components/layout/footer/footer";
 import "@/styles/globals.css";
 
 const inter = Inter({
