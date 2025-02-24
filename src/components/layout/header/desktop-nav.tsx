@@ -101,7 +101,7 @@ export const DesktopNav = () => {
         </NavigationMenuList>
       </NavigationMenu>
       {socialLinks.length > 0 && (
-        <ul className="flex items-center gap-1 border-l border-gray-800 pl-4">
+        <ul className="border-border/90 flex items-center gap-1 border-l pl-4">
           {socialLinks.map(({ label, href, icon: Icon }) => (
             <li key={label}>
               <Link

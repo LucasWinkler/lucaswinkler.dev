@@ -28,8 +28,8 @@ export const Header = () => {
       className={cn(
         "ease-fluid sticky top-0 z-50 h-[var(--header-height)] w-full border-b transition-all duration-300",
         hasScrolled
-          ? "border-border bg-background-dark/60 shadow-lg backdrop-blur-md backdrop-saturate-150"
-          : "border-transparent bg-transparent shadow-transparent backdrop-blur-none",
+          ? "border-border/90 bg-background-dark shadow-lg"
+          : "border-transparent bg-transparent shadow-transparent",
       )}
     >
       <a
