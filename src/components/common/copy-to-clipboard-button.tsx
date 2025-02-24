@@ -6,11 +6,11 @@ import { Check, X } from "lucide-react";
 import { motion } from "motion/react";
 import { AnimatePresence } from "motion/react";
 import { useClipboardCopy } from "@/hooks/use-clipboard-copy";
+import { useTouchDevice } from "@/hooks/use-touch-device";
 import { cn } from "@/lib/utils";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { CopyIcon, CopyIconHandle } from "@/components/ui/icons/copy";
@@ -81,47 +81,74 @@ export const CopyToClipboardButton = ({
 
   const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(false);
   const copyIconRef = useRef<CopyIconHandle>(null);
+  const isTouchDevice = useTouchDevice();
 
   const displayText = error ? errorText : copied ? copiedText : text;
   const tooltipText = tooltip || `Copy "${textToCopy}"`;
 
-  return (
-    <TooltipProvider>
-      <Tooltip
-        delayDuration={tooltipDelay}
-        open={disableTooltip ? false : isTooltipOpen}
-        onOpenChange={setIsTooltipOpen}
+  if (isTouchDevice) {
+    return (
+      <MotionButton
+        size="lg"
+        className={cn("group flex items-center gap-2", className)}
+        onClick={() => copyToClipboard(textToCopy)}
+        whileTap={{ scale: 0.97 }}
       >
-        <TooltipTrigger asChild>
-          <MotionButton
-            size="lg"
-            className={cn("group flex items-center gap-2", className)}
-            onClick={() => copyToClipboard(textToCopy)}
-            whileTap={{ scale: 0.97 }}
-            onMouseEnter={() => copyIconRef.current?.startAnimation()}
-            onMouseLeave={() => copyIconRef.current?.stopAnimation()}
-            onFocus={() => copyIconRef.current?.startAnimation()}
-            onBlur={() => copyIconRef.current?.stopAnimation()}
-          >
-            {iconPosition === "left" && (
-              <AnimatedIcon
-                ref={copyIconRef}
-                hasError={error !== null}
-                copied={copied}
-              />
-            )}
-            {displayText}
-            {iconPosition === "right" && (
-              <AnimatedIcon
-                ref={copyIconRef}
-                hasError={error !== null}
-                copied={copied}
-              />
-            )}
-          </MotionButton>
-        </TooltipTrigger>
-        <TooltipContent side={tooltipSide}>{tooltipText}</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+        {iconPosition === "left" && (
+          <AnimatedIcon
+            ref={copyIconRef}
+            hasError={error !== null}
+            copied={copied}
+          />
+        )}
+        {displayText}
+        {iconPosition === "right" && (
+          <AnimatedIcon
+            ref={copyIconRef}
+            hasError={error !== null}
+            copied={copied}
+          />
+        )}
+      </MotionButton>
+    );
+  }
+
+  return (
+    <Tooltip
+      disableHoverableContent
+      delayDuration={tooltipDelay}
+      open={disableTooltip ? false : isTooltipOpen}
+      onOpenChange={setIsTooltipOpen}
+    >
+      <TooltipTrigger asChild>
+        <MotionButton
+          size="lg"
+          className={cn("group flex items-center gap-2", className)}
+          onClick={() => copyToClipboard(textToCopy)}
+          whileTap={{ scale: 0.97 }}
+          onMouseEnter={() => copyIconRef.current?.startAnimation()}
+          onMouseLeave={() => copyIconRef.current?.stopAnimation()}
+          onFocus={() => copyIconRef.current?.startAnimation()}
+          onBlur={() => copyIconRef.current?.stopAnimation()}
+        >
+          {iconPosition === "left" && (
+            <AnimatedIcon
+              ref={copyIconRef}
+              hasError={error !== null}
+              copied={copied}
+            />
+          )}
+          {displayText}
+          {iconPosition === "right" && (
+            <AnimatedIcon
+              ref={copyIconRef}
+              hasError={error !== null}
+              copied={copied}
+            />
+          )}
+        </MotionButton>
+      </TooltipTrigger>
+      <TooltipContent side={tooltipSide}>{tooltipText}</TooltipContent>
+    </Tooltip>
   );
 };
