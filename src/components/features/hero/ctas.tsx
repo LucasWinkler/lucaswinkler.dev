@@ -17,7 +17,7 @@ export const CTAs = () => {
         type="button"
         asChild
       >
-        <a href="#projects">See my work</a>
+        <a href="#projects">View projects</a>
       </MotionButton>
       <MotionButton
         whileTap={{ scale: 0.95 }}
@@ -33,7 +33,7 @@ export const CTAs = () => {
           rel="noopener noreferrer"
           aria-label="Open resume in new tab"
         >
-          View my resume
+          View resume
           <ArrowRightIcon
             className="ease-snappy transition-transform duration-300 group-hover/cta:translate-x-1"
             aria-hidden="true"
