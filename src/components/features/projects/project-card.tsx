@@ -87,7 +87,7 @@ export const ProjectCard = ({
               href={project.links.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2"
+              className="group 2xs:w-auto inline-flex w-full items-center gap-2"
             >
               Live Demo
               <ArrowUpRight
@@ -101,7 +101,7 @@ export const ProjectCard = ({
               href={project.links.source}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2"
+              className="2xs:w-auto inline-flex w-full items-center gap-2"
               onMouseEnter={() => githubIconRef.current?.startAnimation()}
               onMouseLeave={() => githubIconRef.current?.stopAnimation()}
             >
