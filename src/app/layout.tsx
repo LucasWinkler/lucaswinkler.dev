@@ -4,6 +4,7 @@ import { config } from "@/config";
 import { createMetadata } from "@/lib/seo";
 import { Header } from "@/components/layout/header/header";
 import { Footer } from "@/components/layout/footer/footer";
+import { TooltipProvider } from "@/components/providers/tooltip-provider";
 import "@/styles/globals.css";
 
 const inter = Inter({
@@ -32,11 +33,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} md:scroll-smooth`}>
       <body className="dark overflow-x-hidden antialiased">
-        <Header />
-        <main id="main" className="relative">
-          {children}
-        </main>
-        <Footer />
+        <TooltipProvider>
+          <Header />
+          <main id="main" className="relative">
+            {children}
+          </main>
+          <Footer />
+        </TooltipProvider>
         <Analytics />
       </body>
     </html>

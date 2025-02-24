@@ -54,7 +54,7 @@ const CopyIcon = forwardRef<CopyIconHandle, HTMLAttributes<HTMLDivElement>>(
     );
     return (
       <div
-        className="hover:bg-accent flex cursor-pointer items-center justify-center rounded-md p-2 transition-colors duration-200 select-none"
+        className="flex cursor-pointer items-center justify-center rounded-md transition-colors duration-200 select-none"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         {...props}
