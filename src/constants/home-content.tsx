@@ -14,7 +14,7 @@ export const HERO_CONTENT: HeroProps = {
     </>
   ),
   description:
-    "I build web apps that are user-focused, fast and intuitive. Currently based in Ontario, Canada.",
+    "I build user-focused, fast and intuitive web applications. Currently based in Ontario, Canada.",
   isAvailable: true,
 };
 

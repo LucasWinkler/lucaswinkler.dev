@@ -89,7 +89,7 @@ export const ProjectCard = ({
               rel="noopener noreferrer"
               className="group 2xs:w-auto inline-flex w-full items-center gap-2"
             >
-              Live Demo
+              Live demo
               <ArrowUpRight
                 className="ease-snappy size-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                 aria-hidden
@@ -105,7 +105,7 @@ export const ProjectCard = ({
               onMouseEnter={() => githubIconRef.current?.startAnimation()}
               onMouseLeave={() => githubIconRef.current?.stopAnimation()}
             >
-              Source Code
+              Source code
               <GithubIcon ref={githubIconRef} className="size-4" aria-hidden />
             </Link>
           </Button>
