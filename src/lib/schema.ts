@@ -1,5 +1,4 @@
 import { config } from "@/config";
-import { Project } from "@/types/project";
 
 export const generatePersonSchema = () => {
   return {
@@ -8,29 +7,42 @@ export const generatePersonSchema = () => {
     name: config.name,
     email: config.contactEmail,
     url: config.baseUrl,
+    jobTitle: "Full-Stack Developer",
+    description: config.appDescription,
     sameAs: [
       "https://github.com/lucaswinkler",
       "https://www.linkedin.com/in/lucas-winkler/",
       "https://x.com/lucasjwinkler",
     ],
-    jobTitle: "Full-Stack Developer",
-    image: `${config.baseUrl}/images/portrait.webp`,
-    description: config.appDescription,
-  };
-};
-
-export const generateProjectSchema = (project: Project) => {
-  return {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    name: project.title,
-    description: project.description,
-    author: {
-      "@type": "Person",
-      name: config.name,
+    image: {
+      "@type": "ImageObject",
+      contentUrl: `${config.baseUrl}/images/portrait.webp`,
+      creator: {
+        "@type": "Person",
+        name: config.name,
+      },
+      creditText: config.name,
     },
-    programmingLanguage: project.tags,
-    codeRepository: project.links.source,
-    url: project.links.demo,
+    knowsAbout: [
+      "Web Development",
+      "Full-Stack Development",
+      "Front-End Development",
+      "Back-End Development",
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "C#",
+    ],
+    address: {
+      "@type": "PostalAddress",
+      addressRegion: "Ontario",
+      addressCountry: "CA",
+    },
   };
 };
