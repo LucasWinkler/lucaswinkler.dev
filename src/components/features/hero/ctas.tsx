@@ -14,7 +14,6 @@ export const CTAs = () => {
         className="group/cta w-full sm:w-auto"
         variant="default"
         size="lg"
-        type="button"
         asChild
       >
         <a href="#projects">View projects</a>
@@ -24,7 +23,6 @@ export const CTAs = () => {
         className="group/cta w-full sm:w-auto"
         variant="ghost"
         size="sm"
-        type="button"
         asChild
       >
         <a

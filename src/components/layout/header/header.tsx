@@ -1,11 +1,32 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react";
+import dynamic from "next/dynamic";
 import { Container } from "@/components/layout/container";
 import { Logo } from "@/components/common/logo";
 import { DesktopNav } from "./desktop-nav";
-import { MobileNav } from "./mobile-nav";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+
+const NavTriggerFallback = () => (
+  <Button
+    aria-label="Menu"
+    className="-mr-[0.625rem] h-[var(--header-height)] bg-transparent hover:bg-transparent md:hidden"
+    variant="ghost"
+    size="icon"
+  >
+    <Menu />
+  </Button>
+);
+
+const MobileNav = dynamic(
+  () => import("./mobile-nav").then((mod) => mod.MobileNav),
+  {
+    loading: () => <NavTriggerFallback />,
+    ssr: false,
+  },
+);
 
 export const Header = () => {
   const [hasScrolled, setHasScrolled] = useState(false);

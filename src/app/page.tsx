@@ -1,7 +1,7 @@
 import { Hero } from "@/components/sections/hero";
 import { Projects } from "@/components/sections/projects";
-import { About } from "@/components/sections/about";
 import { Skills } from "@/components/sections/skills";
+import { About } from "@/components/sections/about";
 import { CTA } from "@/components/sections/cta";
 import {
   HERO_CONTENT,
