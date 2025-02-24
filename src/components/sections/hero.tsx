@@ -13,7 +13,7 @@ export const Hero = ({ title, description, isAvailable }: HeroProps) => {
   return (
     <section
       id="hero"
-      className="relative -mt-[var(--header-height)] overflow-hidden pt-[var(--header-height)]"
+      className="relative -mt-[var(--header-height)] pt-[var(--header-height)]"
     >
       <BackgroundEffect />
       <Container className="grid items-center py-12 sm:py-16 md:py-20">
