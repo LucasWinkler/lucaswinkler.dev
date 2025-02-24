@@ -6,7 +6,7 @@ import { Header } from "@/components/layout/header/header";
 import { Footer } from "@/components/layout/footer/footer";
 import { TooltipProvider } from "@/components/providers/tooltip-provider";
 import "@/styles/globals.css";
-import { generatePersonSchema } from "@/lib/schema";
+import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,13 +31,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const schemas = [generatePersonSchema(), generateWebSiteSchema()];
+
   return (
     <html lang="en" className={`${inter.variable} md:scroll-smooth`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generatePersonSchema()),
+            __html: JSON.stringify(schemas),
           }}
         />
       </head>
