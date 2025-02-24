@@ -11,7 +11,7 @@ export const CTAs = () => {
     <div className="flex flex-wrap items-center gap-4">
       <MotionButton
         whileTap={{ scale: 0.95 }}
-        className="group/cta xs:w-auto w-full"
+        className="group/cta w-full sm:w-auto"
         variant="default"
         size="lg"
         type="button"
@@ -21,7 +21,7 @@ export const CTAs = () => {
       </MotionButton>
       <MotionButton
         whileTap={{ scale: 0.95 }}
-        className="group/cta xs:w-auto w-full"
+        className="group/cta w-full sm:w-auto"
         variant="ghost"
         size="sm"
         type="button"

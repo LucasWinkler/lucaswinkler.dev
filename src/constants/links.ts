@@ -1,5 +1,9 @@
-import type { NavLink, SocialLink } from "@/types/link";
-import { Github, Linkedin } from "lucide-react";
+import { createRef } from "react";
+import { GithubIcon } from "@/components/ui/icons/github";
+import { LinkedinIcon } from "@/components/ui/icons/linkedin";
+import { GithubIconHandle } from "@/components/ui/icons/github";
+import { LinkedinIconHandle } from "@/components/ui/icons/linkedin";
+import type { NavLink } from "@/types/link";
 
 export const MAX_PROJECTS = 3;
 export const MAX_SUBLINKS = 5;
@@ -24,15 +28,17 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Get in touch", href: "/#cta" },
 ] as const;
 
-export const SOCIAL_LINKS: SocialLink[] = [
+export const SOCIAL_LINKS = [
   {
     label: "GitHub",
     href: "https://github.com/lucaswinkler",
-    icon: Github,
+    icon: GithubIcon,
+    iconRef: createRef<GithubIconHandle>(),
   },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/lucas-winkler/",
-    icon: Linkedin,
+    icon: LinkedinIcon,
+    iconRef: createRef<LinkedinIconHandle>(),
   },
 ] as const;

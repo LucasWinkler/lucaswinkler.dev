@@ -1,10 +1,15 @@
+"use client";
+
 import Link from "next/link";
-import { Github, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types/project";
 import { ProjectImage } from "./project-image";
 import { Badge } from "@/components/ui/badge";
+import { GithubIcon } from "@/components/ui/icons/github";
+import { useRef } from "react";
+import type { GithubIconHandle } from "@/components/ui/icons/github";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -23,6 +28,8 @@ export const ProjectCard = ({
   onMouseEnter,
   onMouseLeave,
 }: ProjectCardProps) => {
+  const githubIconRef = useRef<GithubIconHandle>(null);
+
   return (
     <li
       className={cn(
@@ -57,8 +64,8 @@ export const ProjectCard = ({
               {project.title}
             </h3>
             <ArrowUpRight
+              className="ease-snappy size-5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               aria-hidden="true"
-              className="size-5 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
             />
           </Link>
         </div>
@@ -75,7 +82,7 @@ export const ProjectCard = ({
           </div>
         )}
         <div className="flex flex-wrap items-center gap-3">
-          <Button asChild size="lg" variant="default">
+          <Button variant="default" size="lg" asChild>
             <Link
               href={project.links.demo}
               target="_blank"
@@ -84,20 +91,22 @@ export const ProjectCard = ({
             >
               Live Demo
               <ArrowUpRight
-                aria-hidden="true"
-                className="size-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                className="ease-snappy size-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                aria-hidden
               />
             </Link>
           </Button>
-          <Button asChild size="lg" variant="outline">
+          <Button variant="outline" size="lg" asChild>
             <Link
               href={project.links.source}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2"
+              onMouseEnter={() => githubIconRef.current?.startAnimation()}
+              onMouseLeave={() => githubIconRef.current?.stopAnimation()}
             >
               Source Code
-              <Github aria-hidden="true" className="size-4" />
+              <GithubIcon ref={githubIconRef} className="size-4" aria-hidden />
             </Link>
           </Button>
         </div>
