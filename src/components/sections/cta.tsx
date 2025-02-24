@@ -8,14 +8,16 @@ import { motion } from "motion/react";
 const containerVariants = {
   hidden: {
     opacity: 0,
-    scale: 0.98,
+    scale: 0.95,
+    y: 20,
   },
   visible: {
     opacity: 1,
     scale: 1,
+    y: 0,
     transition: {
       type: "spring",
-      stiffness: 70,
+      stiffness: 150,
       damping: 20,
       mass: 1,
       delayChildren: 0.2,
@@ -76,7 +78,7 @@ export const CTA = ({ eyebrow, heading, description }: CTAProps) => {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-10%" }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-blue-500/10" />
           <div
