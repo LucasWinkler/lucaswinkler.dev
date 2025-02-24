@@ -17,7 +17,7 @@ export const BackgroundEffect = () => {
           }}
         />
       </Container>
-      <div className="from-background absolute right-0 bottom-0 left-0 h-32 bg-gradient-to-t to-transparent" />
+      <div className="from-background-dark absolute right-0 bottom-0 left-0 h-32 bg-gradient-to-t from-0% via-[color-mix(in_srgb,var(--background-dark)_80%,transparent)_30%,color-mix(in_srgb,var(--background-dark)_40%,transparent)_60%] to-transparent to-100%" />
     </div>
   );
 };
