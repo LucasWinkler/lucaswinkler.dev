@@ -101,11 +101,14 @@ export const DesktopNav = () => {
         </NavigationMenuList>
       </NavigationMenu>
       {socialLinks.length > 0 && (
-        <ul className="flex items-center gap-4 border-l border-gray-800 pl-8">
+        <ul className="flex items-center gap-1 border-l border-gray-800 pl-4">
           {socialLinks.map(({ label, href, icon: Icon }) => (
             <li key={label}>
-              <Link href={href}>
-                <Icon />
+              <Link
+                className="hover:text-accent-foreground focus:text-accent-foreground ring-ring/10 dark:ring-ring/20 dark:outline-ring/40 outline-ring/50 inline-flex items-center justify-center p-2 transition-[color,box-shadow] focus-visible:ring-4 focus-visible:outline-1"
+                href={href}
+              >
+                <Icon className="size-5" />
               </Link>
             </li>
           ))}

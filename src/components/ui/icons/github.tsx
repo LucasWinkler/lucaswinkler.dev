@@ -56,7 +56,7 @@ const tailVariants: Variants = {
 };
 
 const GithubIcon = forwardRef<GithubIconHandle, HTMLAttributes<HTMLDivElement>>(
-  ({ onMouseEnter, onMouseLeave, ...props }, ref) => {
+  ({ onMouseEnter, onMouseLeave, className, ...props }, ref) => {
     const bodyControls = useAnimation();
     const tailControls = useAnimation();
     const isControlledRef = useRef(false);
@@ -119,6 +119,7 @@ const GithubIcon = forwardRef<GithubIconHandle, HTMLAttributes<HTMLDivElement>>(
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
+          className={className}
         >
           <motion.path
             variants={bodyVariants}

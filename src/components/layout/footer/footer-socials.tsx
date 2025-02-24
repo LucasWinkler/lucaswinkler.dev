@@ -19,7 +19,7 @@ export const FooterSocials = () => {
           onFocus={() => iconRef?.current?.startAnimation()}
           onBlur={() => iconRef?.current?.stopAnimation()}
         >
-          <SocialIcon ref={iconRef} />
+          <SocialIcon className="size-5" ref={iconRef} />
           <span className="text-sm">{label}</span>
         </a>
       ))}
