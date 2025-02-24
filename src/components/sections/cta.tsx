@@ -86,7 +86,7 @@ export const CTA = ({ eyebrow, heading, description }: CTAProps) => {
               backgroundSize: "32px 32px",
             }}
           />
-          <div className="relative px-6 py-10 sm:px-12 sm:py-14 md:py-16">
+          <div className="relative px-6 py-12 sm:px-12 sm:py-16 md:px-16 md:py-20">
             <motion.div
               className="mx-auto max-w-2xl text-center"
               variants={contentVariants}

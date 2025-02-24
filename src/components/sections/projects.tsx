@@ -9,7 +9,7 @@ import { useTouchDevice } from "@/hooks/use-touch-device";
 import { Cursor } from "@/components/ui/cursor";
 import { ProjectCursor } from "@/components/features/projects/project-cursor";
 import { useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types/project";
 
@@ -63,7 +63,6 @@ export const Projects = ({
 }: ProjectsProps) => {
   const [isHovering, setIsHovering] = useState(false);
   const isTouchDevice = useTouchDevice();
-  const shouldReduceMotion = useReducedMotion();
 
   const handleMouseEnter = () => setIsHovering(true);
   const handleMouseLeave = () => setIsHovering(false);
@@ -112,7 +111,7 @@ export const Projects = ({
               priority={index === 0}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
-              variants={shouldReduceMotion ? {} : projectVariants}
+              variants={projectVariants}
               custom={{ isReversed: index % 2 !== 0, index }}
               initial="hidden"
               whileInView="visible"

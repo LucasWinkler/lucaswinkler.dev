@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/footer/footer";
 import { TooltipProvider } from "@/components/providers/tooltip-provider";
 import "@/styles/globals.css";
 import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
+import { MotionConfig } from "motion/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,13 +45,22 @@ export default function RootLayout({
         />
       </head>
       <body className="dark overflow-x-hidden antialiased">
-        <TooltipProvider>
-          <Header />
-          <main id="main" className="relative">
-            {children}
-          </main>
-          <Footer />
-        </TooltipProvider>
+        <MotionConfig
+          reducedMotion="user"
+          transition={{
+            type: "spring",
+            stiffness: 100,
+            damping: 10,
+          }}
+        >
+          <TooltipProvider>
+            <Header />
+            <main id="main" className="relative">
+              {children}
+            </main>
+            <Footer />
+          </TooltipProvider>
+        </MotionConfig>
         <Analytics />
       </body>
     </html>

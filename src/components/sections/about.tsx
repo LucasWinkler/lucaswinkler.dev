@@ -2,7 +2,7 @@
 
 import { Container } from "@/components/layout/container";
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 import portrait from "@/../public/images/portrait.webp";
 
@@ -66,7 +66,6 @@ export interface AboutProps {
 
 export const About = ({ eyebrow, heading, description }: AboutProps) => {
   const [isMobile, setIsMobile] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -87,7 +86,7 @@ export const About = ({ eyebrow, heading, description }: AboutProps) => {
         <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
           <motion.div
             className="relative aspect-square w-48 shrink-0 overflow-hidden rounded-full sm:w-56 lg:w-72"
-            variants={shouldReduceMotion ? {} : imageVariants}
+            variants={imageVariants}
             custom={isMobile}
             initial="hidden"
             whileInView="visible"
