@@ -2,12 +2,15 @@ import { Container } from "@/components/layout/container";
 
 export const BackgroundEffect = () => {
   return (
-    <div className="absolute inset-0 -z-10">
+    <div className="absolute inset-0 -z-10 overflow-x-clip">
       <Container className="relative h-full">
         <div className="absolute inset-0">
-          <div className="xs:h-[450px] xs:w-[450px] absolute top-[80px] -left-[100px] h-[300px] w-[300px] transform-gpu rounded-full bg-gradient-to-tr from-purple-500/[0.15] via-purple-500/[0.08] to-transparent blur-[130px] sm:top-[50px] sm:-left-[150px] sm:h-[600px] sm:w-[600px]" />
-          <div className="xs:h-[350px] xs:w-[350px] absolute -top-[25px] right-[50px] h-[250px] w-[250px] transform-gpu rounded-full bg-gradient-to-bl from-indigo-500/[0.18] via-indigo-500/[0.12] to-transparent blur-[140px] sm:-top-[50px] sm:right-[100px] sm:h-[600px] sm:w-[600px]" />
-          <div className="xs:h-[300px] xs:w-[300px] absolute top-[150px] right-[25px] h-[200px] w-[200px] transform-gpu rounded-full bg-gradient-to-tr from-blue-500/[0.16] via-blue-500/[0.12] to-transparent blur-[120px] sm:top-[200px] sm:right-[50px] sm:h-[500px] sm:w-[500px]" />
+          {/* Purple gradient - left side */}
+          <div className="absolute top-[40%] -left-[300px] h-[700px] w-[700px] -translate-y-1/2 bg-radial/oklch from-purple-500/[0.12] from-0% via-purple-500/[0.03] via-45% to-transparent to-75% sm:-left-[400px] sm:h-[900px] sm:w-[900px] sm:from-purple-500/[0.13] md:top-[45%] md:-left-[500px] md:h-[1200px] md:w-[1200px] md:from-purple-500/[0.14]" />
+          {/* Indigo gradient - right side */}
+          <div className="absolute top-[0px] right-[-250px] h-[600px] w-[600px] bg-radial/oklch from-indigo-500/[0.12] from-0% via-indigo-500/[0.02] via-45% to-transparent to-75% sm:top-[-50px] sm:right-[-350px] sm:h-[800px] sm:w-[800px] sm:from-indigo-500/[0.13] md:-top-[200px] md:right-[-500px] md:h-[1200px] md:w-[1200px] md:from-indigo-500/[0.14]" />
+          {/* Blue gradient - right side */}
+          <div className="absolute top-[100px] right-[-50px] h-[450px] w-[450px] bg-radial/oklch from-blue-500/[0.10] from-0% via-blue-500/[0.02] via-45% to-transparent to-75% sm:top-[75px] sm:right-[-150px] sm:h-[600px] sm:w-[600px] sm:from-blue-500/[0.11] md:-top-[25px] md:right-[-200px] md:h-[900px] md:w-[900px] md:from-blue-500/[0.12]" />
         </div>
         <div
           className="absolute inset-0 opacity-[0.15]"
@@ -17,7 +20,6 @@ export const BackgroundEffect = () => {
           }}
         />
       </Container>
-      <div className="from-background-dark absolute right-0 bottom-0 left-0 h-32 bg-gradient-to-t from-0% via-[color-mix(in_srgb,var(--background-dark)_80%,transparent)_30%,color-mix(in_srgb,var(--background-dark)_40%,transparent)_60%] to-transparent to-100%" />
     </div>
   );
 };
