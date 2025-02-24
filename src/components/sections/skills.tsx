@@ -1,9 +1,10 @@
 "use client";
 
-import { Container } from "@/components/layout/container";
-import { Technologies } from "@/components/features/skills/technologies";
-import type { Technology } from "@/types/technology";
 import { motion } from "motion/react";
+
+import { Technologies } from "@/components/features/skills/technologies";
+import { Container } from "@/components/layout/container";
+import type { Technology } from "@/types/technology";
 
 const headerVariants = {
   hidden: { opacity: 0, y: 20 },

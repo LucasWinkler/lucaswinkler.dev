@@ -1,13 +1,15 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
 import dynamic from "next/dynamic";
-import { Container } from "@/components/layout/container";
+
 import { Logo } from "@/components/common/logo";
-import { DesktopNav } from "./desktop-nav";
-import { useEffect, useState } from "react";
+import { Container } from "@/components/layout/container";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+
+import { DesktopNav } from "./desktop-nav";
 
 const NavTriggerFallback = () => (
   <Button

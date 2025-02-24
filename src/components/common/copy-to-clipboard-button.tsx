@@ -1,19 +1,19 @@
 "use client";
 
-import { useState, useRef, forwardRef } from "react";
-import { Button } from "@/components/ui/button";
+import { forwardRef, useRef, useState } from "react";
 import { Check, X } from "lucide-react";
-import { motion } from "motion/react";
-import { AnimatePresence } from "motion/react";
-import { useClipboardCopy } from "@/hooks/use-clipboard-copy";
-import { useTouchDevice } from "@/hooks/use-touch-device";
-import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "motion/react";
+
+import { Button } from "@/components/ui/button";
+import { CopyIcon, CopyIconHandle } from "@/components/ui/icons/copy";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { CopyIcon, CopyIconHandle } from "@/components/ui/icons/copy";
+import { useClipboardCopy } from "@/hooks/use-clipboard-copy";
+import { useTouchDevice } from "@/hooks/use-touch-device";
+import { cn } from "@/lib/utils";
 
 export interface CopyToClipboardButtonProps {
   textToCopy: string;

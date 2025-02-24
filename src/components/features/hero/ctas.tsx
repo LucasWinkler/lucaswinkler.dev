@@ -1,8 +1,9 @@
 "use client";
 
 import { ArrowRightIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
+
+import { Button } from "@/components/ui/button";
 
 const MotionButton = motion.create(Button);
 

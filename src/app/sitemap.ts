@@ -1,6 +1,7 @@
+import type { MetadataRoute } from "next";
+
 import { config } from "@/config";
 import { PROJECTS } from "@/constants/projects";
-import type { MetadataRoute } from "next";
 
 const isProduction = process.env.NODE_ENV === "production";
 

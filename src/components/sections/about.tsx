@@ -1,10 +1,11 @@
 "use client";
 
-import { Container } from "@/components/layout/container";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { useState, useEffect } from "react";
+import Image from "next/image";
+
 import portrait from "@/../public/images/portrait.webp";
+import { Container } from "@/components/layout/container";
 
 const imageVariants = {
   hidden: (isMobile: boolean) => ({

@@ -1,16 +1,19 @@
 "use client";
 
-import Link from "next/link";
+import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
+import type { HTMLMotionProps } from "motion/react";
+import { motion } from "motion/react";
+import Link from "next/link";
+
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import type { GithubIconHandle } from "@/components/ui/icons/github";
+import { GithubIcon } from "@/components/ui/icons/github";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types/project";
+
 import { ProjectImage } from "./project-image";
-import { Badge } from "@/components/ui/badge";
-import { GithubIcon } from "@/components/ui/icons/github";
-import { useRef } from "react";
-import type { GithubIconHandle } from "@/components/ui/icons/github";
-import { motion, type HTMLMotionProps } from "motion/react";
 
 const isProduction = process.env.NODE_ENV === "production";
 

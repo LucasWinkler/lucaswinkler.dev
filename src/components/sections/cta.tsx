@@ -1,9 +1,10 @@
 "use client";
 
-import { config } from "@/config";
-import { Container } from "@/components/layout/container";
-import { CopyToClipboardButton } from "@/components/common/copy-to-clipboard-button";
 import { motion } from "motion/react";
+
+import { CopyToClipboardButton } from "@/components/common/copy-to-clipboard-button";
+import { Container } from "@/components/layout/container";
+import { config } from "@/config";
 
 const containerVariants = {
   hidden: {

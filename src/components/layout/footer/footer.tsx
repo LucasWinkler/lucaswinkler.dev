@@ -1,5 +1,6 @@
-import { Container } from "../container";
 import { config } from "@/config";
+
+import { Container } from "../container";
 import { FooterSocials } from "./footer-socials";
 
 export const Footer = () => {

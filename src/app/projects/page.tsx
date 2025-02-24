@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { createMetadata } from "@/lib/seo";
-import { PROJECTS } from "@/constants/projects";
-import { config } from "@/config";
+
 import { Container } from "@/components/layout/container";
+import { config } from "@/config";
+import { PROJECTS } from "@/constants/projects";
+import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Projects",

@@ -1,7 +1,7 @@
 import Image from "next/image";
-import type { Project } from "@/types/project";
 
 import placeholder from "@/../public/images/project-placeholder.webp";
+import type { Project } from "@/types/project";
 
 interface ProjectImageProps {
   image: Project["image"];

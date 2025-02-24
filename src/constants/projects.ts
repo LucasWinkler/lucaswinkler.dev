@@ -1,6 +1,6 @@
-import { Project } from "@/types/project";
-import poitogo from "@/../public/images/poitogo.webp";
 import audiophile from "@/../public/images/audiophile.webp";
+import poitogo from "@/../public/images/poitogo.webp";
+import { Project } from "@/types/project";
 
 export const PROJECTS: Project[] = [
   {

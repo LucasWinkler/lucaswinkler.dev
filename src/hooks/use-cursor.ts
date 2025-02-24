@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+
 import { useTouchDevice } from "./use-touch-device";
 
 interface CursorState {

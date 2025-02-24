@@ -1,10 +1,12 @@
 import { createRef } from "react";
-import { GithubIcon } from "@/components/ui/icons/github";
-import { LinkedinIcon } from "@/components/ui/icons/linkedin";
-import { GithubIconHandle } from "@/components/ui/icons/github";
-import { LinkedinIconHandle } from "@/components/ui/icons/linkedin";
-import type { NavLink } from "@/types/link";
+
+import { GithubIcon, GithubIconHandle } from "@/components/ui/icons/github";
+import {
+  LinkedinIcon,
+  LinkedinIconHandle,
+} from "@/components/ui/icons/linkedin";
 import { TwitterIcon, TwitterIconHandle } from "@/components/ui/icons/twitter";
+import type { NavLink } from "@/types/link";
 
 export const MAX_PROJECTS = 3;
 export const MAX_SUBLINKS = 5;

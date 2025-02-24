@@ -1,10 +1,11 @@
 "use client";
 
-import { Container } from "@/components/layout/container";
+import { motion } from "motion/react";
+
+import { AvailabilityBadge } from "@/components/features/hero/availability-badge";
 import { BackgroundEffect } from "@/components/features/hero/background-effect";
 import { CTAs } from "@/components/features/hero/ctas";
-import { AvailabilityBadge } from "@/components/features/hero/availability-badge";
-import { motion } from "motion/react";
+import { Container } from "@/components/layout/container";
 
 const containerVariants = {
   hidden: { opacity: 0 },

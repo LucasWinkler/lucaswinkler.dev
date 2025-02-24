@@ -1,15 +1,16 @@
 "use client";
 
+import { useState } from "react";
+import { ArrowRight } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import Link from "next/link";
+
+import { ProjectCard } from "@/components/features/projects/project-card";
+import { ProjectCursor } from "@/components/features/projects/project-cursor";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
-import { ProjectCard } from "@/components/features/projects/project-card";
-import { useTouchDevice } from "@/hooks/use-touch-device";
 import { Cursor } from "@/components/ui/cursor";
-import { ProjectCursor } from "@/components/features/projects/project-cursor";
-import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useTouchDevice } from "@/hooks/use-touch-device";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types/project";
 

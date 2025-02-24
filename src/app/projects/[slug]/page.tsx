@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+import { Container } from "@/components/layout/container";
 import { config } from "@/config";
 import { PROJECTS } from "@/constants/projects";
 import { createMetadata } from "@/lib/seo";
-import { Container } from "@/components/layout/container";
 
 interface Props {
   params: Promise<{ slug: string }>;
