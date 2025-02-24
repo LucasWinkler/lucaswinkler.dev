@@ -1,13 +1,6 @@
-"use client";
-
-import { Container } from "@/components/layout/container";
-import { Button } from "@/components/ui/button";
-import { Check, Copy } from "lucide-react";
 import { config } from "@/config";
-import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-
-const MotionButton = motion.create(Button);
+import { Container } from "@/components/layout/container";
+import { CopyToClipboardButton } from "@/components/common/copy-to-clipboard-button";
 
 export interface CTAProps {
   eyebrow: string;
@@ -16,24 +9,12 @@ export interface CTAProps {
 }
 
 export const CTA = ({ eyebrow, heading, description }: CTAProps) => {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(config.contactEmail);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy email:", err);
-    }
-  };
-
   return (
-    <section
-      id="cta"
-      className="scroll-mt-[var(--header-height)] py-12 sm:py-16 md:py-20"
-    >
-      <Container>
+    <Container asChild>
+      <section
+        id="cta"
+        className="scroll-mt-[var(--header-height)] py-12 sm:py-16 md:py-20"
+      >
         <div className="relative overflow-hidden rounded-3xl">
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-blue-500/10" />
           <div
@@ -54,39 +35,18 @@ export const CTA = ({ eyebrow, heading, description }: CTAProps) => {
               <p className="text-foreground-dark-secondary mx-auto mb-8 max-w-[50ch] text-base sm:text-lg md:text-xl">
                 {description}
               </p>
-              <div className="flex justify-center">
-                <MotionButton
-                  size="lg"
-                  className="group w-full sm:w-auto"
-                  onClick={handleCopyEmail}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.div
-                      key={copied ? "check" : "copy"}
-                      initial={{ opacity: 0, scale: 0.5, rotate: -90 }}
-                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                      exit={{ opacity: 0, scale: 0.5, rotate: 90 }}
-                      transition={{
-                        duration: 0.2,
-                        ease: [0.23, 1, 0.32, 1],
-                      }}
-                      className="mr-2"
-                    >
-                      {copied ? (
-                        <Check className="size-4" />
-                      ) : (
-                        <Copy className="size-4" />
-                      )}
-                    </motion.div>
-                  </AnimatePresence>
-                  <span>{copied ? "Email copied!" : "Copy Email"}</span>
-                </MotionButton>
-              </div>
+              <CopyToClipboardButton
+                textToCopy={config.contactEmail}
+                iconPosition="left"
+                text="Copy Email"
+                copiedText="Email Copied"
+                errorText="Failed to Copy Email"
+                className="mx-auto w-full sm:w-auto"
+              />
             </div>
           </div>
         </div>
-      </Container>
-    </section>
+      </section>
+    </Container>
   );
 };

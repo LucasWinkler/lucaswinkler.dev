@@ -12,16 +12,18 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { NAV_LINKS, SOCIAL_LINKS } from "@/constants/links";
-import { Check, Copy, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { CaretRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { config } from "@/config";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
+import { CopyToClipboardButton } from "@/components/common/copy-to-clipboard-button";
+
+const MotionLink = motion.create(Link);
 
 export const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
   const translateAmount = 12;
 
   useEffect(() => {
@@ -33,16 +35,6 @@ export const MobileNav = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  const handleCopyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(config.contactEmail);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy email:", err);
-    }
-  };
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -74,46 +66,49 @@ export const MobileNav = () => {
                   {NAV_LINKS.map(({ href, label, sublinks }) => (
                     <li
                       key={href}
-                      className="border-border/50 flex flex-col border-t first:border-none"
+                      className="border-border/50 relative flex flex-col border-t first:border-none"
                     >
-                      <motion.div
-                        className="relative py-4"
-                        whileHover="hover"
-                        initial="initial"
-                      >
-                        <SheetClose asChild>
-                          <Link href={href} className="relative block">
-                            <div className="relative flex items-center justify-between">
-                              <motion.div
-                                className="text-lg font-medium tracking-wide"
-                                variants={{
-                                  initial: { x: 0 },
-                                  hover: { x: translateAmount },
-                                }}
-                                transition={{
-                                  duration: 0.2,
-                                  ease: [0.32, 0.72, 0, 1],
-                                }}
-                              >
-                                {label}
-                              </motion.div>
-                              <motion.div
-                                className="text-muted-foreground absolute right-0"
-                                variants={{
-                                  initial: { opacity: 0, x: translateAmount },
-                                  hover: { opacity: 1, x: 0 },
-                                }}
-                                transition={{
-                                  duration: 0.2,
-                                  ease: [0.32, 0.72, 0, 1],
-                                }}
-                              >
-                                <CaretRightIcon className="size-4" />
-                              </motion.div>
-                            </div>
-                          </Link>
-                        </SheetClose>
-                      </motion.div>
+                      <SheetClose asChild>
+                        <MotionLink
+                          href={href}
+                          className="relative block py-4"
+                          whileHover="hover"
+                          whileFocus="hover"
+                          initial="initial"
+                        >
+                          <div className="relative flex items-center justify-between">
+                            <motion.div
+                              className="text-lg font-medium tracking-wide"
+                              variants={{
+                                initial: { x: 0 },
+                                hover: { x: translateAmount },
+                              }}
+                              transition={{
+                                duration: 0.2,
+                                ease: [0.32, 0.72, 0, 1],
+                              }}
+                            >
+                              {label}
+                            </motion.div>
+                            <motion.div
+                              className="text-muted-foreground absolute right-0"
+                              variants={{
+                                initial: {
+                                  opacity: 0,
+                                  x: 0,
+                                },
+                                hover: { opacity: 1, x: -translateAmount },
+                              }}
+                              transition={{
+                                duration: 0.2,
+                                ease: [0.32, 0.72, 0, 1],
+                              }}
+                            >
+                              <CaretRightIcon className="size-4" />
+                            </motion.div>
+                          </div>
+                        </MotionLink>
+                      </SheetClose>
 
                       {sublinks && sublinks.links.length > 0 && (
                         <ul className="space-y-1 pb-4">
@@ -186,34 +181,14 @@ export const MobileNav = () => {
           </div>
 
           <div className="border-border/60 bg-background border-t p-6">
-            <Button
-              className="group/cta w-full"
-              variant="default"
-              type="button"
-              onClick={handleCopyEmail}
-            >
-              <span className="mr-2">
-                {copied ? "Email copied!" : "Copy email"}
-              </span>
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={copied ? "check" : "copy"}
-                  initial={{ opacity: 0, scale: 0.5, rotate: -90 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ opacity: 0, scale: 0.5, rotate: 90 }}
-                  transition={{
-                    duration: 0.2,
-                    ease: [0.23, 1, 0.32, 1],
-                  }}
-                >
-                  {copied ? (
-                    <Check className="h-4 w-4" />
-                  ) : (
-                    <Copy className="h-4 w-4" />
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </Button>
+            <CopyToClipboardButton
+              textToCopy={config.contactEmail}
+              iconPosition="left"
+              text="Copy Email"
+              copiedText="Email Copied"
+              errorText="Failed to Copy Email"
+              className="w-full"
+            />
 
             <SheetFooter className="border-border/60 mt-6 border-t pt-6">
               <ul className="flex items-center gap-3">
