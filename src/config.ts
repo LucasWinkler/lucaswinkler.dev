@@ -20,4 +20,5 @@ export const config = {
   name: "Lucas Winkler",
   contactEmail: "hello@lucaswinkler.dev",
   twitterHandle: "@LucasJWinkler",
+  copyrightYear: 2019,
 } as const;
