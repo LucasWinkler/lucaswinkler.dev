@@ -26,7 +26,7 @@ const contentVariants = {
     scale: 1,
     transition: {
       type: "spring",
-      stiffness: 70,
+      stiffness: 125,
       damping: 20,
       mass: 1,
       delayChildren: 0.2,
