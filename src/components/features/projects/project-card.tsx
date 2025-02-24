@@ -10,10 +10,11 @@ import { Badge } from "@/components/ui/badge";
 import { GithubIcon } from "@/components/ui/icons/github";
 import { useRef } from "react";
 import type { GithubIconHandle } from "@/components/ui/icons/github";
+import { motion, type HTMLMotionProps } from "motion/react";
 
 const isProduction = process.env.NODE_ENV === "production";
 
-interface ProjectCardProps {
+interface ProjectCardProps extends HTMLMotionProps<"li"> {
   project: Project;
   isReversed?: boolean;
   priority?: boolean;
@@ -27,15 +28,17 @@ export const ProjectCard = ({
   priority = false,
   onMouseEnter,
   onMouseLeave,
+  ...motionProps
 }: ProjectCardProps) => {
   const githubIconRef = useRef<GithubIconHandle>(null);
 
   return (
-    <li
+    <motion.li
       className={cn(
         isReversed ? "lg:flex-row-reverse" : "lg:flex-row",
         "relative flex flex-col gap-8 lg:flex lg:items-center lg:gap-12",
       )}
+      {...motionProps}
     >
       <Link
         aria-label={`View ${project.title} demo`}
@@ -111,6 +114,6 @@ export const ProjectCard = ({
           </Button>
         </div>
       </div>
-    </li>
+    </motion.li>
   );
 };
