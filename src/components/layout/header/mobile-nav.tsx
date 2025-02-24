@@ -11,7 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { NAV_LINKS, SOCIAL_LINKS } from "@/constants/links";
+import { NAV_LINKS, createSocialLinks } from "@/constants/links";
 import { Menu } from "lucide-react";
 import { CaretRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
@@ -24,6 +24,8 @@ const MotionLink = motion.create(Link);
 
 export const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const socialLinks = createSocialLinks();
   const translateAmount = 12;
 
   useEffect(() => {
@@ -192,7 +194,7 @@ export const MobileNav = () => {
 
             <SheetFooter className="border-border/60 mt-6 border-t pt-6">
               <ul className="flex items-center gap-3">
-                {SOCIAL_LINKS.map(({ href, icon: Icon, iconRef, label }) => (
+                {socialLinks.map(({ href, icon: Icon, iconRef, label }) => (
                   <li key={href}>
                     <Link
                       className="border-border hover:bg-accent/50 inline-flex size-10 items-center justify-center rounded-full border transition-all duration-200 ease-out"

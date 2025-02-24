@@ -29,23 +29,25 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Get in touch", href: "/#cta" },
 ] as const;
 
-export const SOCIAL_LINKS = [
-  {
-    label: "GitHub",
-    href: "https://github.com/lucaswinkler",
-    icon: GithubIcon,
-    iconRef: createRef<GithubIconHandle>(),
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/lucas-winkler/",
-    icon: LinkedinIcon,
-    iconRef: createRef<LinkedinIconHandle>(),
-  },
-  {
-    label: "Twitter",
-    href: "https://x.com/lucasjwinkler",
-    icon: TwitterIcon,
-    iconRef: createRef<TwitterIconHandle>(),
-  },
-] as const;
+// Create a function to generate social links with new refs
+export const createSocialLinks = () =>
+  [
+    {
+      label: "GitHub",
+      href: "https://github.com/lucaswinkler",
+      icon: GithubIcon,
+      iconRef: createRef<GithubIconHandle>(),
+    },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/lucas-winkler/",
+      icon: LinkedinIcon,
+      iconRef: createRef<LinkedinIconHandle>(),
+    },
+    {
+      label: "Twitter",
+      href: "https://x.com/lucasjwinkler",
+      icon: TwitterIcon,
+      iconRef: createRef<TwitterIconHandle>(),
+    },
+  ] as const;

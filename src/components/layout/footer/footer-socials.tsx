@@ -1,11 +1,13 @@
 "use client";
 
-import { SOCIAL_LINKS } from "@/constants/links";
+import { createSocialLinks } from "@/constants/links";
 
 export const FooterSocials = () => {
+  const socialLinks = createSocialLinks();
+
   return (
     <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-      {SOCIAL_LINKS.map(({ href, icon: SocialIcon, label, iconRef }) => (
+      {socialLinks.map(({ href, icon: SocialIcon, label, iconRef }) => (
         <a
           key={href}
           href={href}
