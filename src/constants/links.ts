@@ -4,6 +4,7 @@ import { LinkedinIcon } from "@/components/ui/icons/linkedin";
 import { GithubIconHandle } from "@/components/ui/icons/github";
 import { LinkedinIconHandle } from "@/components/ui/icons/linkedin";
 import type { NavLink } from "@/types/link";
+import { TwitterIcon, TwitterIconHandle } from "@/components/ui/icons/twitter";
 
 export const MAX_PROJECTS = 3;
 export const MAX_SUBLINKS = 5;
@@ -28,17 +29,25 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Get in touch", href: "/#cta" },
 ] as const;
 
-export const SOCIAL_LINKS = [
-  {
-    label: "GitHub",
-    href: "https://github.com/lucaswinkler",
-    icon: GithubIcon,
-    iconRef: createRef<GithubIconHandle>(),
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/lucas-winkler/",
-    icon: LinkedinIcon,
-    iconRef: createRef<LinkedinIconHandle>(),
-  },
-] as const;
+// Create a function to generate social links with new refs
+export const createSocialLinks = () =>
+  [
+    {
+      label: "GitHub",
+      href: "https://github.com/lucaswinkler",
+      icon: GithubIcon,
+      iconRef: createRef<GithubIconHandle>(),
+    },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/lucas-winkler/",
+      icon: LinkedinIcon,
+      iconRef: createRef<LinkedinIconHandle>(),
+    },
+    {
+      label: "Twitter",
+      href: "https://x.com/lucasjwinkler",
+      icon: TwitterIcon,
+      iconRef: createRef<TwitterIconHandle>(),
+    },
+  ] as const;
