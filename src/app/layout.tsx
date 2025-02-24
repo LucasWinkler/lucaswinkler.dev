@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/header/header";
 import { Footer } from "@/components/layout/footer/footer";
 import { TooltipProvider } from "@/components/providers/tooltip-provider";
 import "@/styles/globals.css";
+import { generatePersonSchema } from "@/lib/schema";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,6 +33,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} md:scroll-smooth`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generatePersonSchema()),
+          }}
+        />
+      </head>
       <body className="dark overflow-x-hidden antialiased">
         <TooltipProvider>
           <Header />
