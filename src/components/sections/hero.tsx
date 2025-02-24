@@ -11,7 +11,10 @@ export interface HeroProps {
 
 export const Hero = ({ title, description, isAvailable }: HeroProps) => {
   return (
-    <section className="relative -mt-[var(--header-height)] overflow-hidden pt-[var(--header-height)]">
+    <section
+      id="hero"
+      className="relative -mt-[var(--header-height)] overflow-hidden pt-[var(--header-height)]"
+    >
       <BackgroundEffect />
       <Container className="grid items-center py-12 sm:py-16 md:py-20">
         {isAvailable && <AvailabilityBadge className="mb-4 sm:mb-6" />}
