@@ -85,7 +85,7 @@ export const CopyToClipboardButton = ({
   return (
     <TooltipProvider>
       <Tooltip
-        delayDuration={300}
+        delayDuration={tooltipDelay}
         open={disableTooltip ? false : isTooltipOpen}
         onOpenChange={setIsTooltipOpen}
       >
