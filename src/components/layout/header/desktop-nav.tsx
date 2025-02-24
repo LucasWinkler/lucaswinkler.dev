@@ -87,7 +87,10 @@ export const DesktopNav = () => {
               ) : (
                 <NavigationMenuLink
                   asChild
-                  className={cn("px-10", navigationMenuTriggerStyle())}
+                  className={navigationMenuTriggerStyle({
+                    className:
+                      href === NAV_LINKS[NAV_LINKS.length - 1].href && "pr-0",
+                  })}
                 >
                   <Link href={href}>{label}</Link>
                 </NavigationMenuLink>
