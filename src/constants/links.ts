@@ -4,6 +4,7 @@ import { LinkedinIcon } from "@/components/ui/icons/linkedin";
 import { GithubIconHandle } from "@/components/ui/icons/github";
 import { LinkedinIconHandle } from "@/components/ui/icons/linkedin";
 import type { NavLink } from "@/types/link";
+import { TwitterIcon, TwitterIconHandle } from "@/components/ui/icons/twitter";
 
 export const MAX_PROJECTS = 3;
 export const MAX_SUBLINKS = 5;
@@ -40,5 +41,11 @@ export const SOCIAL_LINKS = [
     href: "https://www.linkedin.com/in/lucas-winkler/",
     icon: LinkedinIcon,
     iconRef: createRef<LinkedinIconHandle>(),
+  },
+  {
+    label: "Twitter",
+    href: "https://x.com/lucasjwinkler",
+    icon: TwitterIcon,
+    iconRef: createRef<TwitterIconHandle>(),
   },
 ] as const;
