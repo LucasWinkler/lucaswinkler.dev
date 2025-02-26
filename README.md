@@ -103,7 +103,6 @@ To get a local copy up and running follow these simple example steps.
 
 ## Roadmap
 
-- [ ] In-view animations
 - [ ] More background features for depth
 - [ ] Light mode with a Light/Dark/System toggle
 - [ ] Projects page
