@@ -45,10 +45,12 @@ export const ProjectCard = ({
     >
       <Link
         aria-label={`View ${project.title} demo`}
-        href={!isProduction ? `/projects/${project.slug}` : project.links.demo}
+        href={isProduction ? project.links.demo : `/projects/${project.slug}`}
         className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900/90 to-slate-800/90 lg:w-7/12"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        target={isProduction ? "_blank" : undefined}
+        rel={isProduction ? "noopener noreferrer" : undefined}
       >
         <ProjectImage image={project.image} priority={priority} />
       </Link>
@@ -62,9 +64,11 @@ export const ProjectCard = ({
           <Link
             aria-label={`View ${project.title} demo`}
             href={
-              !isProduction ? `/projects/${project.slug}` : project.links.demo
+              isProduction ? project.links.demo : `/projects/${project.slug}`
             }
             className="group hover:text-foreground/80 inline-flex items-center gap-2 transition-colors"
+            target={isProduction ? "_blank" : undefined}
+            rel={isProduction ? "noopener noreferrer" : undefined}
           >
             <h3 className="font-heading text-2xl font-bold sm:text-3xl">
               {project.title}
