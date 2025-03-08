@@ -44,7 +44,7 @@ const projectVariants = {
     transition: {
       duration: 0.5,
       ease: [0.21, 0.47, 0.32, 0.98],
-      delay: 0.4 + custom.index * 0.15,
+      delay: 0.4 + custom.index * 0.05,
     },
   }),
 };
