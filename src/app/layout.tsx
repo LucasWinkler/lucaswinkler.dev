@@ -40,7 +40,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} md:scroll-smooth overflow-x-hidden antialiased`}
+      className={`${inter.variable} md:scroll-smooth antialiased`}
       // Applies only 1 level deep to prevent hydration errors with next-themes
       suppressHydrationWarning
     >
@@ -52,7 +52,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>
+      <body className="overflow-x-hidden">
         <MotionConfig
           reducedMotion="user"
           transition={{
