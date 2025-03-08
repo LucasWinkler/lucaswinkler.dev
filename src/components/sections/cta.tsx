@@ -102,13 +102,13 @@ export const CTA = ({ eyebrow, heading, description }: CTAProps) => {
               </motion.span>
               <motion.h2
                 variants={contentVariants}
-                className="font-heading text-foreground-dark 2xs:text-[2.25rem] mb-4 text-[1.75rem] leading-[1.1] font-bold tracking-tight sm:mb-6 sm:text-4xl sm:tracking-normal md:mb-8 md:text-5xl lg:text-6xl lg:tracking-[-0.02em]"
+                className="font-heading text-heading 2xs:text-[2.25rem] mb-4 text-[1.75rem] leading-[1.1] font-bold tracking-tight sm:mb-6 sm:text-4xl sm:tracking-normal md:mb-8 md:text-5xl lg:text-6xl lg:tracking-[-0.02em]"
               >
                 {heading}
               </motion.h2>
               <motion.p
                 variants={contentVariants}
-                className="text-foreground-dark-secondary mx-auto mb-8 max-w-[50ch] text-base sm:text-lg md:text-xl"
+                className="mx-auto mb-8 max-w-[50ch] text-base sm:text-lg md:text-xl"
               >
                 {description}
               </motion.p>

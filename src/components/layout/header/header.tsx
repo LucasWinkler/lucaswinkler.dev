@@ -49,15 +49,15 @@ export const Header = () => {
     <header
       role="banner"
       className={cn(
-        "ease-fluid sticky top-0 z-50 h-[var(--header-height)] w-full border-b transition-all duration-300",
+        "ease-snappy sticky top-0 z-50 h-[var(--header-height)] w-full border-b transition-all duration-300",
         hasScrolled
-          ? "border-border/90 bg-background-dark shadow-lg"
+          ? "border-border/90 bg-background shadow-lg"
           : "border-transparent bg-transparent shadow-transparent",
       )}
     >
       <a
         href="#main"
-        className="focus:bg-background-dark focus:ring-ring sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:block focus:rounded-md focus:px-4 focus:py-2 focus:text-white focus:ring-2 focus:outline-none"
+        className="focus:bg-background focus:ring-ring sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:block focus:rounded-md focus:px-4 focus:py-2 focus:text-white focus:ring-2 focus:outline-none"
       >
         Skip to main content
       </a>

@@ -15,7 +15,7 @@ export const DesktopNav = () => {
   const socialLinks = createSocialLinks();
 
   return (
-    <div className="text-foreground-dark-tertiary hidden items-center gap-4 md:flex">
+    <div className="text-foreground hidden items-center gap-4 md:flex">
       <NavigationMenu role="navigation">
         <NavigationMenuList className="gap-2">
           {NAV_LINKS.map(({ href, label, sublinks }) => {
@@ -49,7 +49,7 @@ export const DesktopNav = () => {
                               {sublinks.description && (
                                 <p
                                   id={`sublink-description-${label.toLowerCase()}`}
-                                  className="text-foreground-dark-secondary text-sm leading-tight transition-transform duration-150 ease-out group-hover/nav-sublink:scale-95"
+                                  className="text-foreground text-sm leading-tight transition-transform duration-150 ease-out group-hover/nav-sublink:scale-95"
                                 >
                                   {sublinks.description}
                                 </p>
@@ -75,7 +75,7 @@ export const DesktopNav = () => {
                                   </span>
                                   <p
                                     id={`sublink-description-${sublink.label.toLowerCase()}`}
-                                    className="text-foreground-dark-secondary line-clamp-2 text-sm leading-snug"
+                                    className="text-foreground line-clamp-2 text-sm leading-snug"
                                   >
                                     {sublink.description}
                                   </p>

@@ -8,9 +8,9 @@ export const Footer = () => {
     <footer className="border-border/40 mt-auto border-t">
       <Container className="flex flex-col items-center gap-6 py-12 sm:py-16">
         <FooterSocials />
-        <div className="text-foreground-dark-secondary flex flex-col items-center gap-3 text-center">
+        <div className="text-foreground flex flex-col items-center gap-3 text-center">
           <a
-            className="hover:text-foreground-dark text-sm transition-colors"
+            className="hover:text-foreground text-sm transition-colors"
             href={`mailto:${config.contactEmail}`}
             aria-label="Send me an email"
           >

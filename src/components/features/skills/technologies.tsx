@@ -42,7 +42,7 @@ export const Technologies = ({ technologies }: TechnologyProps) => {
                   ease: "easeInOut",
                 }}
               >
-                <Card className="flex h-full items-center gap-3 overflow-hidden rounded-xl border-transparent bg-zinc-900/90 p-3 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-800/90">
+                <Card className="flex h-full items-center gap-3 overflow-hidden rounded-xl border-transparent bg-secondary p-3 transition-all duration-300 hover:border-border-accent hover:bg-accent">
                   <div
                     className="shrink-0 rounded-lg"
                     style={{ backgroundColor: hexToRgba(tech.color, 0.2) }}
@@ -58,13 +58,13 @@ export const Technologies = ({ technologies }: TechnologyProps) => {
                   </div>
                   <div className="min-w-0 flex-1">
                     <h3
-                      className="text-foreground-dark truncate font-medium"
+                      className="truncate font-medium text-heading"
                       title={tech.name}
                     >
                       {tech.name}
                     </h3>
                     <p
-                      className="text-foreground-dark-secondary line-clamp-2 text-sm"
+                      className="line-clamp-2 text-sm"
                       title={tech.description}
                     >
                       {tech.description}
@@ -84,7 +84,7 @@ export const Technologies = ({ technologies }: TechnologyProps) => {
       >
         {showAll ? "Show less" : "Show more"}
         <MotionChevron
-          className="text-foreground-dark-secondary group-hover:text-foreground-dark h-4 w-4 transition-colors"
+          className="text-foreground group-hover:text-foreground h-4 w-4 transition-colors"
           initial={false}
           animate={{ rotate: showAll ? 180 : 0 }}
           transition={{ duration: 0.2, ease: "easeInOut" }}

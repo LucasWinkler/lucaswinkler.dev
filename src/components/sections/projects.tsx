@@ -1,20 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import Link from "next/link";
 
 import { ProjectCard } from "@/components/features/projects/project-card";
 import { ProjectCursor } from "@/components/features/projects/project-cursor";
 import { Container } from "@/components/layout/container";
-import { Button } from "@/components/ui/button";
 import { Cursor } from "@/components/ui/cursor";
 import { useTouchDevice } from "@/hooks/use-touch-device";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types/project";
-
-const isProduction = process.env.NODE_ENV === "production";
 
 const MotionProjectCard = motion.create(ProjectCard);
 
@@ -96,10 +91,10 @@ export const Projects = ({
           <span className="mb-3 inline-block text-xs leading-tight tracking-[0.2em] text-purple-400/80 uppercase sm:mb-4 sm:text-sm">
             {eyebrow}
           </span>
-          <h2 className="font-heading text-foreground-dark 2xs:text-[2.25rem] mb-4 text-[1.75rem] leading-[1.1] font-bold sm:mb-6 sm:text-4xl sm:tracking-normal md:mb-8 md:text-5xl lg:text-6xl lg:tracking-[-0.02em]">
+          <h2 className="font-heading text-heading 2xs:text-[2.25rem] mb-4 text-[1.75rem] leading-[1.1] font-bold sm:mb-6 sm:text-4xl sm:tracking-normal md:mb-8 md:text-5xl lg:text-6xl lg:tracking-[-0.02em]">
             {heading}
           </h2>
-          <p className="text-foreground-dark-secondary mx-auto mb-12 max-w-[50ch] text-base sm:mb-16 sm:text-lg md:text-xl">
+          <p className="mx-auto mb-12 max-w-[50ch] text-base sm:mb-16 sm:text-lg md:text-xl">
             {description}
           </p>
         </motion.div>
@@ -120,28 +115,6 @@ export const Projects = ({
             />
           ))}
         </ul>
-        {!isProduction && (
-          <motion.div
-            className="mt-12 text-center sm:mt-16"
-            variants={headerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{
-              once: true,
-              margin: "0px",
-            }}
-            transition={{
-              delay: projects.length * 0.15,
-            }}
-          >
-            <Button asChild variant="ghost" size="lg" className="group">
-              <Link href="/projects" className="inline-flex items-center gap-2">
-                View all projects
-                <ArrowRight className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
-              </Link>
-            </Button>
-          </motion.div>
-        )}
       </Container>
     </section>
   );
