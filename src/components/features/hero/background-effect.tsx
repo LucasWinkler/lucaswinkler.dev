@@ -12,13 +12,7 @@ export const BackgroundEffect = () => {
           {/* Blue gradient - right side */}
           <div className="absolute top-[100px] right-[-50px] h-[450px] w-[450px] bg-radial/oklch from-blue-500/[0.10] from-0% via-blue-500/[0.02] via-45% to-transparent to-75% sm:top-[75px] sm:right-[-150px] sm:h-[600px] sm:w-[600px] sm:from-blue-500/[0.11] md:-top-[25px] md:right-[-200px] md:h-[900px] md:w-[900px] md:from-blue-500/[0.12]" />
         </div>
-        <div
-          className="absolute inset-0 opacity-[0.15]"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.2) 1px, transparent 0)`,
-            backgroundSize: "32px 32px",
-          }}
-        />
+        <div className="absolute inset-0 opacity-[0.15] bg-radial-[circle_at_1px_1px] from-white/20 to-transparent from-[1px] to-[1px] bg-[size:32px_32px]" />
       </Container>
     </div>
   );
