@@ -9,8 +9,8 @@
   --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
 
-  --breakpoint-xs: 22.5rem;
-  --breakpoint-2xs: 30rem;
+  --breakpoint-xxs: 22.5rem;
+  --breakpoint-xs: 30rem;
 
   --header-height: 4rem;
 }

@@ -117,7 +117,7 @@ export const About = ({ eyebrow, heading, description }: AboutProps) => {
             </motion.span>
             <motion.h2
               variants={itemVariants}
-              className="font-heading text-heading 2xs:text-[2.25rem] mb-6 text-[1.75rem] leading-[1.1] font-bold sm:mb-8 sm:text-4xl sm:tracking-normal md:mb-8 md:text-5xl lg:text-6xl lg:tracking-[-0.02em]"
+              className="font-heading text-heading xs:text-[2.25rem] mb-6 text-[1.75rem] leading-[1.1] font-bold sm:mb-8 sm:text-4xl sm:tracking-normal md:mb-8 md:text-5xl lg:text-6xl lg:tracking-[-0.02em]"
             >
               {heading}
             </motion.h2>
