@@ -42,9 +42,11 @@ export const ThemeToggle = ({ variant = "default" }: ThemeToggleProps) => {
     ) =>
     () => {
       if (ref.current) {
-        action === "start"
-          ? ref.current.startAnimation()
-          : ref.current.stopAnimation();
+        if (action === "start") {
+          ref.current.startAnimation();
+        } else {
+          ref.current.stopAnimation();
+        }
       }
     };
 
@@ -76,7 +78,6 @@ export const ThemeToggle = ({ variant = "default" }: ThemeToggleProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger
         className={cn(
-          "",
           variant === "default" &&
             "transition-all size-10 duration-200 ease-out hover:bg-accent/50",
           variant === "ghost" &&
