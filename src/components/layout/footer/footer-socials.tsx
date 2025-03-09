@@ -1,9 +1,11 @@
 "use client";
 
+import { useMemo } from "react";
+
 import { createSocialLinks } from "@/constants/links";
 
 export const FooterSocials = () => {
-  const socialLinks = createSocialLinks();
+  const socialLinks = useMemo(() => createSocialLinks(), []);
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">

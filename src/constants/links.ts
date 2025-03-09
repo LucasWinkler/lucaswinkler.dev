@@ -31,7 +31,7 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Get in touch", href: "/#cta" },
 ] as const;
 
-// Create a function to generate social links with new refs
+// Dynamically create social links with appropriate refs for animations
 export const createSocialLinks = () =>
   [
     {

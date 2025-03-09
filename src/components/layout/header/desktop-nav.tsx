@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import Link from "next/link";
 
 import {
@@ -12,7 +13,7 @@ import {
 import { createSocialLinks, MAX_SUBLINKS, NAV_LINKS } from "@/constants/links";
 
 export const DesktopNav = () => {
-  const socialLinks = createSocialLinks();
+  const socialLinks = useMemo(() => createSocialLinks(), []);
 
   return (
     <div className="text-foreground hidden items-center gap-4 md:flex">

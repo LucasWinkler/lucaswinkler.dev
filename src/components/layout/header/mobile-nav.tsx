@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CaretRightIcon } from "@radix-ui/react-icons";
 import { Menu } from "lucide-react";
 import { motion } from "motion/react";
@@ -22,12 +22,12 @@ import { config } from "@/config";
 import { createSocialLinks, NAV_LINKS } from "@/constants/links";
 
 const MotionLink = motion.create(Link);
+const TRANSLATE_AMOUNT = 12;
 
 export const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const socialLinks = createSocialLinks();
-  const translateAmount = 12;
+  const socialLinks = useMemo(() => createSocialLinks(), []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -84,7 +84,7 @@ export const MobileNav = () => {
                               className="text-lg font-medium tracking-wide"
                               variants={{
                                 initial: { x: 0 },
-                                hover: { x: translateAmount },
+                                hover: { x: TRANSLATE_AMOUNT },
                               }}
                               transition={{
                                 duration: 0.2,
@@ -100,7 +100,7 @@ export const MobileNav = () => {
                                   opacity: 0,
                                   x: 0,
                                 },
-                                hover: { opacity: 1, x: -translateAmount },
+                                hover: { opacity: 1, x: -TRANSLATE_AMOUNT },
                               }}
                               transition={{
                                 duration: 0.2,
@@ -144,7 +144,7 @@ export const MobileNav = () => {
                                     <motion.span
                                       variants={{
                                         initial: { x: 0 },
-                                        hover: { x: translateAmount / 2 },
+                                        hover: { x: TRANSLATE_AMOUNT / 2 },
                                       }}
                                       transition={{
                                         duration: 0.2,
@@ -159,7 +159,7 @@ export const MobileNav = () => {
                                     variants={{
                                       initial: {
                                         opacity: 0,
-                                        x: translateAmount,
+                                        x: TRANSLATE_AMOUNT,
                                       },
                                       hover: { opacity: 1, x: 0 },
                                     }}
