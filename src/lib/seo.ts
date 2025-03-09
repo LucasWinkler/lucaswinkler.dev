@@ -57,6 +57,7 @@ export const createMetadata = ({
     other: {
       thumbnail:
         thumbnail || "https://www.lucaswinkler.dev/images/portrait.webp",
+      "yandex-verification": "053329650c32d210",
     },
   };
 };
