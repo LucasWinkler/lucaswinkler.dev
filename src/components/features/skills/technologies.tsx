@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,9 @@ const MotionChevron = motion.create(ChevronDown);
 
 export const Technologies = ({ technologies }: TechnologyProps) => {
   const [showAll, setShowAll] = useState(false);
+  const { resolvedTheme } = useTheme();
+
+  const isDark = resolvedTheme === "dark";
 
   const handleShowAll = () => {
     setShowAll((prev) => !prev);
@@ -45,10 +49,16 @@ export const Technologies = ({ technologies }: TechnologyProps) => {
                 <Card className="flex h-full items-center gap-3 overflow-hidden rounded-xl border-transparent bg-secondary p-3 transition-all duration-300 hover:border-border-accent hover:bg-accent">
                   <div
                     className="shrink-0 rounded-lg"
-                    style={{ backgroundColor: hexToRgba(tech.color, 0.2) }}
+                    style={{
+                      backgroundColor: isDark
+                        ? hexToRgba(tech.color, 0.2)
+                        : hexToRgba(tech.color, 0.6),
+                    }}
                   >
                     <Image
-                      className="aspect-square p-2"
+                      className={`aspect-square p-2 ${
+                        !isDark ? "brightness-[0.85] contrast-[1.2]" : ""
+                      }`}
                       src={tech.icon}
                       alt={`${tech.name} logo`}
                       width={48}
