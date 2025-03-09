@@ -1,10 +1,10 @@
 import { Analytics } from "@vercel/analytics/react";
 import { MotionConfig } from "motion/react";
-import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 
 import { Footer } from "@/components/layout/footer/footer";
 import { Header } from "@/components/layout/header/header";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 import { TooltipProvider } from "@/components/providers/tooltip-provider";
 import { config } from "@/config";
 import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
