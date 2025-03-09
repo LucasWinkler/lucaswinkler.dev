@@ -81,7 +81,7 @@ export const About = ({ eyebrow, heading, description }: AboutProps) => {
   return (
     <section
       id="about"
-      className="scroll-mt-[var(--header-height)] py-12 sm:py-16 md:py-20"
+      className="scroll-mt-[var(--header-height)] py-12 sm:py-16 md:py-20 overflow-hidden"
     >
       <Container>
         <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-16">

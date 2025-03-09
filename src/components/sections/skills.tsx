@@ -52,7 +52,7 @@ export const Skills = ({
   return (
     <section
       id="skills"
-      className="scroll-mt-[var(--header-height)] py-12 sm:py-16 md:py-20"
+      className="scroll-mt-[var(--header-height)] py-12 sm:py-16 md:py-20 overflow-hidden"
     >
       <Container>
         <motion.div

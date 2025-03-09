@@ -67,7 +67,7 @@ export const Projects = ({
     <section
       id="projects"
       className={cn(
-        "scroll-mt-[var(--header-height)] py-12 sm:py-16 md:py-20",
+        "scroll-mt-[var(--header-height)] py-12 sm:py-16 md:py-20 overflow-hidden",
         isHovering && "cursor-none",
       )}
     >
