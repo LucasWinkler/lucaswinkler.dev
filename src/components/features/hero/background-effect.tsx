@@ -12,8 +12,16 @@ export const BackgroundEffect = () => {
           {/* Blue gradient - right side */}
           <div className="absolute top-[100px] right-[-50px] h-[450px] w-[450px] bg-radial/oklch from-bg-circle-blue-from from-0% via-bg-circle-blue-via via-45% to-transparent to-75% sm:top-[75px] sm:right-[-150px] sm:h-[600px] sm:w-[600px] md:-top-[25px] md:right-[-200px] md:h-[900px] md:w-[900px]" />
         </div>
-        <div className="absolute inset-0 opacity-[0.15] bg-radial-[circle_at_1px_1px] from-slate-900/40 dark:from-white/20 to-transparent from-[1px] to-[1px] bg-[size:32px_32px]" />
       </Container>
+      {/* Dot pattern with fade-out via a mask */}
+      <div
+        className="absolute inset-0 opacity-[0.15] bg-radial-[circle_at_1px_1px] from-slate-900/40 dark:from-white/20 to-transparent from-[1px] to-[1px] bg-[size:32px_32px]"
+        style={{
+          maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, black 70%, transparent 100%)",
+        }}
+      />
     </div>
   );
 };
