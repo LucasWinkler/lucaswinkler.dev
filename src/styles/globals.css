@@ -78,12 +78,12 @@
 /* Light theme */
 :root {
   /* shadcn/ui */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
+  --background: oklch(97.31% 0 0);
+  --foreground: oklch(35.37% 0.0084 276.97);
+  --card: oklch(97.31% 0 0);
+  --card-foreground: oklch(35.37% 0.0084 276.97);
+  --popover: oklch(97.31% 0 0);
+  --popover-foreground: oklch(35.37% 0.0084 276.97);
   --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
@@ -104,7 +104,7 @@
   --chart-5: oklch(0.769 0.188 70.08);
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-foreground: oklch(35.37% 0.0084 276.97);
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
@@ -113,7 +113,7 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   /* Custom */
-  --heading: oklch(14.45% 0.0047 263.79);
+  --heading: oklch(15.82% 0.0072 258.37);
   --heading-from: var(--heading);
   --heading-via: var(--color-slate-900);
   --heading-to: var(--color-indigo-600);
@@ -124,32 +124,32 @@
   --bg-circle-blue: var(--color-blue-500);
   --bg-circle-purple-from: color-mix(
     in oklch,
-    var(--bg-circle-purple) 18%,
+    var(--bg-circle-purple) 14%,
     transparent
   );
   --bg-circle-purple-via: color-mix(
     in oklch,
-    var(--bg-circle-purple) 6%,
+    var(--bg-circle-purple) 4%,
     transparent
   );
   --bg-circle-indigo-from: color-mix(
     in oklch,
-    var(--bg-circle-indigo) 18%,
+    var(--bg-circle-indigo) 14%,
     transparent
   );
   --bg-circle-indigo-via: color-mix(
     in oklch,
-    var(--bg-circle-indigo) 6%,
+    var(--bg-circle-indigo) 4%,
     transparent
   );
   --bg-circle-blue-from: color-mix(
     in oklch,
-    var(--bg-circle-blue) 18%,
+    var(--bg-circle-blue) 14%,
     transparent
   );
   --bg-circle-blue-via: color-mix(
     in oklch,
-    var(--bg-circle-blue) 6%,
+    var(--bg-circle-blue) 4%,
     transparent
   );
 }
