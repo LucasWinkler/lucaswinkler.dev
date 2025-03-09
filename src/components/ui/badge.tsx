@@ -19,8 +19,8 @@ const badgeVariants = cva(
         outline:
           "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         status:
-          "rounded-full border-border/30 bg-slate-50/10 backdrop-blur-sm text-foreground-dark-secondary px-3 py-1 text-sm",
-        tag: "rounded-full bg-white/[0.08]  text-slate-200 px-3 py-1 text-[13px] font-normal transition-colors",
+          "rounded-full border-border/30 dark:bg-slate-50/10 bg-slate-600/10 backdrop-blur-sm text-foreground px-3 py-1 text-sm",
+        tag: "rounded-full dark:bg-white/[0.08] dark:text-slate-300 bg-white/[0.08] text-slate-900 px-3 py-1 text-[13px] font-normal transition-colors",
       },
     },
     defaultVariants: {

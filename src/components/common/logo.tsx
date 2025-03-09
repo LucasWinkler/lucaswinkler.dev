@@ -11,7 +11,7 @@ export const Logo = ({ type = "text", className }: LogoProps) => {
   return (
     <Link
       className={cn(
-        "text-white",
+        "text-heading",
         "transition-opacity duration-200 hover:opacity-90",
         type === "text" && "font-medium tracking-wide uppercase",
         className,

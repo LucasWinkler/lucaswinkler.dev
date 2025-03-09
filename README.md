@@ -105,8 +105,8 @@ To get a local copy up and running follow these simple example steps.
 
 - [ ] More background features for depth
 - [ ] Light mode with a Light/Dark/System toggle
-- [ ] Projects page
-- [ ] Project details page
+- [ ] Projects page (may not implement this)
+- [ ] Project details page (may not implement this)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -153,7 +153,8 @@ Project Link: [https://github.com/LucasWinkler/lucaswinkler.dev](https://github.
 
 ## Acknowledgments
 
-- Thanks to [andrijaweb](https://github.com/andrijaweb) for the technology section idea on their portfolio [https://andrijaweb.vercel.app/](https://andrijaweb.vercel.app/)
+- [andrijaweb](https://github.com/andrijaweb) for the technology section idea on their portfolio: [https://andrijaweb.vercel.app/](https://andrijaweb.vercel.app/)
+- [evilmartians](https://github.com/evilmartians) for the OKLCH colour picker and conversion tool: [https://oklch.com/](https://oklch.com/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

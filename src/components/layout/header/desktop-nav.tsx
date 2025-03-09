@@ -1,5 +1,7 @@
+import { useMemo } from "react";
 import Link from "next/link";
 
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,10 +14,10 @@ import {
 import { createSocialLinks, MAX_SUBLINKS, NAV_LINKS } from "@/constants/links";
 
 export const DesktopNav = () => {
-  const socialLinks = createSocialLinks();
+  const socialLinks = useMemo(() => createSocialLinks(), []);
 
   return (
-    <div className="text-foreground-dark-tertiary hidden items-center gap-4 md:flex">
+    <div className="text-foreground hidden items-center gap-4 md:flex">
       <NavigationMenu role="navigation">
         <NavigationMenuList className="gap-2">
           {NAV_LINKS.map(({ href, label, sublinks }) => {
@@ -49,7 +51,7 @@ export const DesktopNav = () => {
                               {sublinks.description && (
                                 <p
                                   id={`sublink-description-${label.toLowerCase()}`}
-                                  className="text-foreground-dark-secondary text-sm leading-tight transition-transform duration-150 ease-out group-hover/nav-sublink:scale-95"
+                                  className="text-foreground text-sm leading-tight transition-transform duration-150 ease-out group-hover/nav-sublink:scale-95"
                                 >
                                   {sublinks.description}
                                 </p>
@@ -75,7 +77,7 @@ export const DesktopNav = () => {
                                   </span>
                                   <p
                                     id={`sublink-description-${sublink.label.toLowerCase()}`}
-                                    className="text-foreground-dark-secondary line-clamp-2 text-sm leading-snug"
+                                    className="text-foreground line-clamp-2 text-sm leading-snug"
                                   >
                                     {sublink.description}
                                   </p>
@@ -101,23 +103,26 @@ export const DesktopNav = () => {
           })}
         </NavigationMenuList>
       </NavigationMenu>
-      {socialLinks.length > 0 && (
-        <ul className="border-border/90 flex items-center gap-1 border-l pl-4">
-          {socialLinks.map(({ label, href, icon: Icon }) => (
-            <li key={label}>
-              <Link
-                className="hover:text-accent-foreground focus:text-accent-foreground ring-ring/10 dark:ring-ring/20 dark:outline-ring/40 outline-ring/50 inline-flex items-center justify-center transition-[color,box-shadow] focus-visible:ring-4 focus-visible:outline-1"
-                href={href}
-                aria-label={`Visit my ${label} profile`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon className="m-2 size-5" aria-hidden />
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      <div className="flex items-center gap-1">
+        {socialLinks.length > 0 && (
+          <ul className="border-border/90 flex items-center gap-1 border-l pl-4">
+            {socialLinks.map(({ label, href, icon: Icon }) => (
+              <li key={label}>
+                <Link
+                  className="hover:text-accent-foreground focus:text-accent-foreground ring-ring/10 dark:ring-ring/20 dark:outline-ring/40 outline-ring/50 inline-flex items-center justify-center transition-[color,box-shadow] focus-visible:ring-4 focus-visible:outline-1"
+                  href={href}
+                  aria-label={`Visit my ${label} profile`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon className="m-2 size-5" aria-hidden />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+        <ThemeToggle variant="ghost" />
+      </div>
     </div>
   );
 };

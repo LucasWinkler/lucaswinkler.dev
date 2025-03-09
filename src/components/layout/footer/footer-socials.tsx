@@ -1,9 +1,11 @@
 "use client";
 
+import { useMemo } from "react";
+
 import { createSocialLinks } from "@/constants/links";
 
 export const FooterSocials = () => {
-  const socialLinks = createSocialLinks();
+  const socialLinks = useMemo(() => createSocialLinks(), []);
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
@@ -11,7 +13,7 @@ export const FooterSocials = () => {
         <a
           key={href}
           href={href}
-          className="text-foreground-dark-secondary hover:text-foreground-dark flex items-center gap-2 transition-colors"
+          className="hover:text-accent-foreground flex items-center gap-2 transition-colors"
           rel="noopener noreferrer"
           target="_blank"
           aria-label={`Visit ${label} profile`}

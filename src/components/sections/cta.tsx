@@ -81,14 +81,8 @@ export const CTA = ({ eyebrow, heading, description }: CTAProps) => {
           whileInView="visible"
           viewport={{ once: true, margin: "-10%" }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-blue-500/10" />
-          <div
-            className="absolute inset-0 opacity-[0.15]"
-            style={{
-              backgroundImage: `radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.2) 1px, transparent 0)`,
-              backgroundSize: "32px 32px",
-            }}
-          />
+          <div className="absolute inset-0 bg-gradient-to-br from-bg-cta-from via-bg-cta-via to-bg-cta-to" />
+          <div className="absolute inset-0 opacity-[0.15] bg-radial-[circle_at_1px_1px] from-slate-900/40 dark:from-white/20 to-transparent from-[1px] to-[1px] bg-[size:32px_32px]" />
           <div className="relative px-6 py-12 sm:px-12 sm:py-16 md:px-16 md:py-20">
             <motion.div
               className="mx-auto max-w-2xl text-center"
@@ -96,19 +90,19 @@ export const CTA = ({ eyebrow, heading, description }: CTAProps) => {
             >
               <motion.span
                 variants={contentVariants}
-                className="mb-3 inline-block text-xs leading-tight tracking-[0.2em] text-purple-400/80 uppercase sm:mb-4 sm:text-sm"
+                className="mb-3 inline-block text-xs leading-tight tracking-[0.2em] text-eyebrow uppercase sm:mb-4 sm:text-sm"
               >
                 {eyebrow}
               </motion.span>
               <motion.h2
                 variants={contentVariants}
-                className="font-heading text-foreground-dark 2xs:text-[2.25rem] mb-4 text-[1.75rem] leading-[1.1] font-bold tracking-tight sm:mb-6 sm:text-4xl sm:tracking-normal md:mb-8 md:text-5xl lg:text-6xl lg:tracking-[-0.02em]"
+                className="font-heading text-heading xs:text-[2.25rem] mb-4 text-[1.75rem] leading-[1.1] font-bold tracking-tight sm:mb-6 sm:text-4xl sm:tracking-normal md:mb-8 md:text-5xl lg:text-6xl lg:tracking-[-0.02em]"
               >
                 {heading}
               </motion.h2>
               <motion.p
                 variants={contentVariants}
-                className="text-foreground-dark-secondary mx-auto mb-8 max-w-[50ch] text-base sm:text-lg md:text-xl"
+                className="mx-auto mb-8 max-w-[50ch] text-base sm:text-lg md:text-xl"
               >
                 {description}
               </motion.p>

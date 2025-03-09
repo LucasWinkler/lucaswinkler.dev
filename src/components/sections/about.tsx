@@ -111,19 +111,19 @@ export const About = ({ eyebrow, heading, description }: AboutProps) => {
           >
             <motion.span
               variants={itemVariants}
-              className="mb-3 inline-block text-xs leading-tight tracking-[0.2em] text-purple-400/80 uppercase sm:mb-4 sm:text-sm"
+              className="mb-3 inline-block text-xs leading-tight tracking-[0.2em] text-eyebrow uppercase sm:mb-4 sm:text-sm"
             >
               {eyebrow}
             </motion.span>
             <motion.h2
               variants={itemVariants}
-              className="font-heading text-foreground-dark 2xs:text-[2.25rem] mb-6 text-[1.75rem] leading-[1.1] font-bold sm:mb-8 sm:text-4xl sm:tracking-normal md:mb-8 md:text-5xl lg:text-6xl lg:tracking-[-0.02em]"
+              className="font-heading text-heading xs:text-[2.25rem] mb-6 text-[1.75rem] leading-[1.1] font-bold sm:mb-8 sm:text-4xl sm:tracking-normal md:mb-8 md:text-5xl lg:text-6xl lg:tracking-[-0.02em]"
             >
               {heading}
             </motion.h2>
             <motion.p
               variants={itemVariants}
-              className="text-foreground-dark-secondary space-y-4 text-base sm:text-lg md:text-xl"
+              className="space-y-4 text-base sm:text-lg md:text-xl"
             >
               {description}
             </motion.p>

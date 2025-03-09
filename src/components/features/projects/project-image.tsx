@@ -16,13 +16,7 @@ export const ProjectImage = ({
     <div className="relative aspect-[16/9] md:aspect-[2/1] lg:aspect-[16/9]">
       <div aria-hidden="true" className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-blue-500/10" />
-        <div
-          className="absolute inset-0 opacity-[0.15]"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.2) 1px, transparent 0)`,
-            backgroundSize: "32px 32px",
-          }}
-        />
+        <div className="absolute inset-0 opacity-[0.15] bg-radial-[circle_at_1px_1px] from-slate-500 dark:from-white/20 to-transparent from-[1px] to-[1px] bg-[size:32px_32px]" />
       </div>
       <Image
         src={image.src || placeholder}

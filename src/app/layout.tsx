@@ -1,17 +1,16 @@
 import { Analytics } from "@vercel/analytics/react";
+import { MotionConfig } from "motion/react";
 import { Inter } from "next/font/google";
 
 import { Footer } from "@/components/layout/footer/footer";
 import { Header } from "@/components/layout/header/header";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 import { TooltipProvider } from "@/components/providers/tooltip-provider";
 import { config } from "@/config";
+import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
 import { createMetadata } from "@/lib/seo";
 
 import "@/styles/globals.css";
-
-import { MotionConfig } from "motion/react";
-
-import { generatePersonSchema, generateWebSiteSchema } from "@/lib/schema";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,7 +38,12 @@ export default function RootLayout({
   const schemas = [generatePersonSchema(), generateWebSiteSchema()];
 
   return (
-    <html lang="en" className={`${inter.variable} md:scroll-smooth`}>
+    <html
+      lang="en"
+      className={`${inter.variable} md:scroll-smooth antialiased`}
+      // Applies only 1 level deep to prevent hydration errors with next-themes
+      suppressHydrationWarning
+    >
       <head>
         <script
           type="application/ld+json"
@@ -48,7 +52,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="dark overflow-x-hidden antialiased">
+      <body className="overflow-x-hidden">
         <MotionConfig
           reducedMotion="user"
           transition={{
@@ -57,13 +61,20 @@ export default function RootLayout({
             damping: 10,
           }}
         >
-          <TooltipProvider>
-            <Header />
-            <main id="main" className="relative">
-              {children}
-            </main>
-            <Footer />
-          </TooltipProvider>
+          <ThemeProvider
+            attribute="class"
+            enableSystem
+            enableColorScheme
+            disableTransitionOnChange
+          >
+            <TooltipProvider>
+              <Header />
+              <main id="main" className="relative">
+                {children}
+              </main>
+              <Footer />
+            </TooltipProvider>
+          </ThemeProvider>
         </MotionConfig>
         <Analytics />
       </body>

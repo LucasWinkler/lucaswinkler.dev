@@ -15,8 +15,6 @@ import type { Project } from "@/types/project";
 
 import { ProjectImage } from "./project-image";
 
-const isProduction = process.env.NODE_ENV === "production";
-
 interface ProjectCardProps extends HTMLMotionProps<"li"> {
   project: Project;
   isReversed?: boolean;
@@ -45,12 +43,12 @@ export const ProjectCard = ({
     >
       <Link
         aria-label={`View ${project.title} demo`}
-        href={isProduction ? project.links.demo : `/projects/${project.slug}`}
-        className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900/90 to-slate-800/90 lg:w-7/12"
+        href={project.links.demo}
+        className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-br dark:from-slate-900/90 dark:to-slate-800/90 lg:w-7/12 from-slate-200/90 to-slate-100/90"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        target={isProduction ? "_blank" : undefined}
-        rel={isProduction ? "noopener noreferrer" : undefined}
+        target="_blank"
+        rel="noopener noreferrer"
       >
         <ProjectImage image={project.image} priority={priority} />
       </Link>
@@ -63,12 +61,10 @@ export const ProjectCard = ({
         <div className="mb-4 flex items-center justify-between">
           <Link
             aria-label={`View ${project.title} demo`}
-            href={
-              isProduction ? project.links.demo : `/projects/${project.slug}`
-            }
-            className="group hover:text-foreground/80 inline-flex items-center gap-2 transition-colors"
-            target={isProduction ? "_blank" : undefined}
-            rel={isProduction ? "noopener noreferrer" : undefined}
+            href={project.links.demo}
+            className="group text-heading hover:text-heading/80 inline-flex items-center gap-2 transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <h3 className="font-heading text-2xl font-bold sm:text-3xl">
               {project.title}
@@ -79,7 +75,7 @@ export const ProjectCard = ({
             />
           </Link>
         </div>
-        <p className="text-foreground-dark-secondary mb-6 line-clamp-4 text-base sm:text-lg">
+        <p className="text-foreground mb-6 line-clamp-4 text-base sm:text-lg">
           {project.description}
         </p>
         {project.tags && project.tags.length > 0 && (
@@ -97,7 +93,7 @@ export const ProjectCard = ({
               href={project.links.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="group 2xs:w-auto inline-flex w-full items-center gap-2"
+              className="group xs:w-auto inline-flex w-full items-center gap-2"
             >
               Live demo
               <ArrowUpRight
@@ -111,7 +107,7 @@ export const ProjectCard = ({
               href={project.links.source}
               target="_blank"
               rel="noopener noreferrer"
-              className="2xs:w-auto inline-flex w-full items-center gap-2"
+              className="xs:w-auto inline-flex w-full items-center gap-2"
               onMouseEnter={() => githubIconRef.current?.startAnimation()}
               onMouseLeave={() => githubIconRef.current?.stopAnimation()}
             >
