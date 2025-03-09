@@ -111,7 +111,7 @@ export const About = ({ eyebrow, heading, description }: AboutProps) => {
           >
             <motion.span
               variants={itemVariants}
-              className="mb-3 inline-block text-xs leading-tight tracking-[0.2em] text-purple-400/80 uppercase sm:mb-4 sm:text-sm"
+              className="mb-3 inline-block text-xs leading-tight tracking-[0.2em] text-eyebrow uppercase sm:mb-4 sm:text-sm"
             >
               {eyebrow}
             </motion.span>

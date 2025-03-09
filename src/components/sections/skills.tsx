@@ -61,7 +61,7 @@ export const Skills = ({
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          <span className="mb-3 inline-block text-xs leading-tight tracking-[0.2em] text-purple-400/80 uppercase sm:mb-4 sm:text-sm">
+          <span className="mb-3 inline-block text-xs leading-tight tracking-[0.2em] text-eyebrow uppercase sm:mb-4 sm:text-sm">
             {eyebrow}
           </span>
           <h2 className="font-heading text-heading 2xs:text-[2.25rem] mb-4 text-[1.75rem] leading-[1.1] font-bold sm:mb-6 sm:text-4xl md:mb-8 md:text-5xl lg:text-6xl">

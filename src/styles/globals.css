@@ -4,6 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Constants across all themes */
 @theme {
   --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
@@ -12,26 +13,10 @@
   --breakpoint-2xs: 30rem;
 
   --header-height: 4rem;
-
-  /* 
-  --background-dark: oklch(14.45% 0.0047 263.79);
-  --foreground-dark: oklch(92.25% 0.0027 286.35);
-  --foreground-dark-secondary: oklch(67.7% 0.0105 273.29);
-  --foreground-dark-tertiary: oklch(84.17% 0.006 264.53);
-
-  --background-light: #f9fafa;
-  --foreground-light: #4a4b50;
-  --heading-light: #0b0d10;
-  --subheading-light: #303236; */
-
-  /* --color-foreground-dark-secondary: var(--foreground-dark-secondary);
-  --color-foreground-dark-tertiary: var(--foreground-dark-tertiary);
-
-  --color-background-light: var(--background-light);
-  --color-foreground-light: var(--foreground-light); */
 }
 
 @theme inline {
+  /* shadcn/ui */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
@@ -77,9 +62,11 @@
   --color-heading-via: var(--heading-via);
   --color-heading-to: var(--heading-to);
   --color-border-accent: var(--border-accent);
+  --color-eyebrow: var(--eyebrow);
 }
 
 :root {
+  /* shadcn/ui */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -118,11 +105,13 @@
   --heading: oklch(14.45% 0.0047 263.79);
   --heading-from: var(--heading);
   --heading-via: var(--color-slate-900);
-  --heading-to: var(--color-indigo-900);
+  --heading-to: var(--color-indigo-600);
   --border-accent: var(--color-zinc-700);
+  --eyebrow: var(--color-purple-600);
 }
 
 .dark {
+  /* shadcn/ui */
   --background: oklch(14.45% 0.0047 263.79);
   --foreground: oklch(75.7% 0.0105 273.29);
   --card: oklch(14.45% 0.0047 263.79);
@@ -162,6 +151,7 @@
   --heading-via: var(--color-slate-200);
   --heading-to: var(--color-indigo-200);
   --border-accent: var(--color-zinc-700);
+  --eyebrow: var(--color-purple-400);
 }
 
 @layer base {
@@ -183,4 +173,8 @@
 
 @utility font-heading {
   font-variation-settings: "opsz" 32;
+}
+
+@utility gradient-heading {
+  @apply from-heading-from via-heading-via to-heading-to bg-gradient-to-br bg-clip-text text-transparent;
 }

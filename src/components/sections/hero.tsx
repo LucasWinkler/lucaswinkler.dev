@@ -59,7 +59,7 @@ export const Hero = ({ title, description, isAvailable }: HeroProps) => {
         )}
         <motion.h1
           variants={itemVariants}
-          className="font-heading 2xs:text-[3rem] mb-6 bg-gradient-to-br from-heading-from via-heading-via to-heading-to bg-clip-text text-[2.5rem] leading-[1.05] font-bold text-transparent sm:mb-8 sm:text-[4rem] md:text-7xl lg:text-8xl"
+          className="font-heading 2xs:text-[3rem] mb-6 text-heading text-[2.5rem] leading-[1.05] font-bold sm:mb-8 sm:text-[4rem] md:text-7xl lg:text-8xl"
         >
           {title}
         </motion.h1>
