@@ -5,6 +5,7 @@ import { config } from "@/config";
 type MetadataConfig = Metadata & {
   canonicalUrlRelative?: string;
   extraTags?: Record<string, string>;
+  thumbnail?: string;
 };
 
 export const createMetadata = ({
@@ -14,6 +15,7 @@ export const createMetadata = ({
   openGraph,
   canonicalUrlRelative,
   extraTags,
+  thumbnail,
 }: MetadataConfig): Metadata => {
   return {
     title: title || config.appName,
@@ -52,5 +54,9 @@ export const createMetadata = ({
     authors: [{ name: config.name, url: config.baseUrl }],
     creator: config.name,
     publisher: config.name,
+    other: {
+      thumbnail:
+        thumbnail || "https://www.lucaswinkler.dev/images/portrait.webp",
+    },
   };
 };
