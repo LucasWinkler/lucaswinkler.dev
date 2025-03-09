@@ -13,7 +13,7 @@ export const FooterSocials = () => {
         <a
           key={href}
           href={href}
-          className="text-foreground hover:text-foreground flex items-center gap-2 transition-colors"
+          className="hover:text-accent-foreground flex items-center gap-2 transition-colors"
           rel="noopener noreferrer"
           target="_blank"
           aria-label={`Visit ${label} profile`}
