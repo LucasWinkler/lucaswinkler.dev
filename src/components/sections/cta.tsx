@@ -81,8 +81,7 @@ export const CTA = ({ eyebrow, heading, description }: CTAProps) => {
           whileInView="visible"
           viewport={{ once: true, margin: "-10%" }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-blue-500/10" />
-
+          <div className="absolute inset-0 bg-gradient-to-br from-bg-cta-from via-bg-cta-via to-bg-cta-to" />
           <div className="absolute inset-0 opacity-[0.15] bg-radial-[circle_at_1px_1px] from-slate-900/40 dark:from-white/20 to-transparent from-[1px] to-[1px] bg-[size:32px_32px]" />
           <div className="relative px-6 py-12 sm:px-12 sm:py-16 md:px-16 md:py-20">
             <motion.div

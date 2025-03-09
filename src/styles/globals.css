@@ -73,6 +73,12 @@
   --color-bg-circle-indigo-via: var(--bg-circle-indigo-via);
   --color-bg-circle-blue-from: var(--bg-circle-blue-from);
   --color-bg-circle-blue-via: var(--bg-circle-blue-via);
+  --color-bg-cta-purple: var(--bg-cta-purple);
+  --color-bg-cta-indigo: var(--bg-cta-indigo);
+  --color-bg-cta-blue: var(--bg-cta-blue);
+  --color-bg-cta-from: var(--bg-cta-from);
+  --color-bg-cta-via: var(--bg-cta-via);
+  --color-bg-cta-to: var(--bg-cta-to);
 }
 
 /* Light theme */
@@ -152,6 +158,12 @@
     var(--bg-circle-blue) 4%,
     transparent
   );
+  --bg-cta-purple: var(--color-purple-500);
+  --bg-cta-indigo: var(--color-indigo-500);
+  --bg-cta-blue: var(--color-blue-500);
+  --bg-cta-from: color-mix(in oklch, var(--bg-cta-indigo) 20%, transparent);
+  --bg-cta-via: color-mix(in oklch, var(--bg-cta-purple) 20%, transparent);
+  --bg-cta-to: color-mix(in oklch, var(--bg-cta-blue) 20%, transparent);
 }
 
 .dark {
@@ -229,6 +241,12 @@
     var(--bg-circle-blue) 3%,
     transparent
   );
+  --bg-cta-purple: var(--color-purple-500);
+  --bg-cta-indigo: var(--color-indigo-500);
+  --bg-cta-blue: var(--color-blue-500);
+  --bg-cta-from: color-mix(in oklch, var(--bg-cta-indigo) 10%, transparent);
+  --bg-cta-via: color-mix(in oklch, var(--bg-cta-purple) 10%, transparent);
+  --bg-cta-to: color-mix(in oklch, var(--bg-cta-blue) 10%, transparent);
 }
 
 @layer base {
