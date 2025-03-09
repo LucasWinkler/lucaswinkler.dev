@@ -36,15 +36,17 @@ export const ProjectCard = ({
   return (
     <motion.li
       className={cn(
-        isReversed ? "lg:flex-row-reverse" : "lg:flex-row",
-        "relative flex flex-col gap-8 lg:flex lg:items-center lg:gap-12",
+        isReversed
+          ? "min-[56.25rem]:flex-row-reverse lg:flex-row-reverse"
+          : "min-[56.25rem]:flex-row lg:flex-row",
+        "relative flex flex-col gap-8 min-[56.25rem]:items-center min-[56.25rem]:gap-6 lg:items-center lg:gap-12",
       )}
       {...motionProps}
     >
       <Link
         aria-label={`View ${project.title} demo`}
         href={project.links.demo}
-        className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-br dark:from-slate-900/90 dark:to-slate-800/90 lg:w-7/12 from-slate-200/90 to-slate-100/90"
+        className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-br dark:from-slate-900/90 dark:to-slate-800/90 min-[56.25rem]:w-6/12 lg:w-7/12 from-slate-200/90 to-slate-100/90"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         target="_blank"
@@ -54,8 +56,10 @@ export const ProjectCard = ({
       </Link>
       <div
         className={cn(
-          "flex flex-col lg:w-5/12",
-          isReversed ? "lg:pr-4" : "lg:pl-4",
+          "flex flex-col min-[56.25rem]:w-6/12 lg:w-5/12",
+          isReversed
+            ? "min-[56.25rem]:pr-4 lg:pr-4"
+            : "min-[56.25rem]:pl-4 lg:pl-4",
         )}
       >
         <div className="mb-4 flex items-center justify-between">
