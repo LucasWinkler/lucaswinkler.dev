@@ -7,6 +7,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 
 import { CopyToClipboardButton } from "@/components/common/copy-to-clipboard-button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -182,7 +183,6 @@ export const MobileNav = () => {
               </nav>
             </div>
           </div>
-
           <div className="border-border/60 bg-background border-t p-6">
             <CopyToClipboardButton
               textToCopy={config.contactEmail}
@@ -192,27 +192,32 @@ export const MobileNav = () => {
               errorText="Failed to Copy Email"
               className="w-full"
             />
-
             <SheetFooter className="border-border/60 mt-6 border-t pt-6">
-              <ul className="flex items-center gap-3">
-                {socialLinks.map(({ href, icon: Icon, iconRef, label }) => (
-                  <li key={href}>
-                    <Link
-                      className="border-border hover:bg-accent/50 inline-flex size-10 items-center justify-center rounded-full border transition-all duration-200 ease-out"
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onMouseEnter={() => iconRef?.current?.startAnimation()}
-                      onMouseLeave={() => iconRef?.current?.stopAnimation()}
-                      onFocus={() => iconRef?.current?.startAnimation()}
-                      onBlur={() => iconRef?.current?.stopAnimation()}
-                    >
-                      <Icon ref={iconRef} className="size-4.5" aria-hidden />
-                      <span className="sr-only">{label}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <div className="flex items-center flex-wrap gap-3">
+                <ul
+                  aria-label="Social Links"
+                  className="flex items-center flex-wrap gap-3"
+                >
+                  {socialLinks.map(({ href, icon: Icon, iconRef, label }) => (
+                    <li key={href}>
+                      <Link
+                        className="border-border hover:bg-accent/50 inline-flex size-10 items-center justify-center rounded-full border transition-all duration-200 ease-out"
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onMouseEnter={() => iconRef?.current?.startAnimation()}
+                        onMouseLeave={() => iconRef?.current?.stopAnimation()}
+                        onFocus={() => iconRef?.current?.startAnimation()}
+                        onBlur={() => iconRef?.current?.stopAnimation()}
+                      >
+                        <Icon ref={iconRef} className="size-4.5" aria-hidden />
+                        <span className="sr-only">{label}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <ThemeToggle />
+              </div>
             </SheetFooter>
           </div>
         </div>

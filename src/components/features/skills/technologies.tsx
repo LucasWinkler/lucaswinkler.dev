@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useTheme } from "next-themes";
@@ -21,8 +21,15 @@ const MotionChevron = motion.create(ChevronDown);
 export const Technologies = ({ technologies }: TechnologyProps) => {
   const [showAll, setShowAll] = useState(false);
   const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  const isDark = resolvedTheme === "dark";
+  // Mount effect to prevent hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Default to light theme during SSR to ensure consistent rendering
+  const isDark = mounted ? resolvedTheme === "dark" : false;
 
   const handleShowAll = () => {
     setShowAll((prev) => !prev);
@@ -50,9 +57,10 @@ export const Technologies = ({ technologies }: TechnologyProps) => {
                   <div
                     className="shrink-0 rounded-lg"
                     style={{
-                      backgroundColor: isDark
-                        ? hexToRgba(tech.color, 0.2)
-                        : hexToRgba(tech.color, 0.6),
+                      backgroundColor: hexToRgba(
+                        tech.color,
+                        isDark ? 0.2 : 0.6,
+                      ),
                     }}
                   >
                     <Image

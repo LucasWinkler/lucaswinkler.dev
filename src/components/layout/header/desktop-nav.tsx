@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import Link from "next/link";
 
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -102,23 +103,26 @@ export const DesktopNav = () => {
           })}
         </NavigationMenuList>
       </NavigationMenu>
-      {socialLinks.length > 0 && (
-        <ul className="border-border/90 flex items-center gap-1 border-l pl-4">
-          {socialLinks.map(({ label, href, icon: Icon }) => (
-            <li key={label}>
-              <Link
-                className="hover:text-accent-foreground focus:text-accent-foreground ring-ring/10 dark:ring-ring/20 dark:outline-ring/40 outline-ring/50 inline-flex items-center justify-center transition-[color,box-shadow] focus-visible:ring-4 focus-visible:outline-1"
-                href={href}
-                aria-label={`Visit my ${label} profile`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon className="m-2 size-5" aria-hidden />
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      <div className="flex items-center gap-1">
+        {socialLinks.length > 0 && (
+          <ul className="border-border/90 flex items-center gap-1 border-l pl-4">
+            {socialLinks.map(({ label, href, icon: Icon }) => (
+              <li key={label}>
+                <Link
+                  className="hover:text-accent-foreground focus:text-accent-foreground ring-ring/10 dark:ring-ring/20 dark:outline-ring/40 outline-ring/50 inline-flex items-center justify-center transition-[color,box-shadow] focus-visible:ring-4 focus-visible:outline-1"
+                  href={href}
+                  aria-label={`Visit my ${label} profile`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon className="m-2 size-5" aria-hidden />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+        <ThemeToggle variant="ghost" />
+      </div>
     </div>
   );
 };
