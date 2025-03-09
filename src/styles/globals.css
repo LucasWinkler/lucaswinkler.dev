@@ -6,7 +6,6 @@
 
 /* Constants across all themes */
 @theme {
-  --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
 
   --breakpoint-xxs: 22.5rem;
@@ -63,8 +62,20 @@
   --color-heading-to: var(--heading-to);
   --color-border-accent: var(--border-accent);
   --color-eyebrow: var(--eyebrow);
+  --color-bg-circle-purple: var(--bg-circle-purple);
+  --color-bg-circle-indigo: var(--bg-circle-indigo);
+  --color-bg-circle-blue: var(--bg-circle-blue);
+  --opacity-bg-circle-from: var(--bg-circle-opacity-from);
+  --opacity-bg-circle-via: var(--bg-circle-opacity-via);
+  --color-bg-circle-purple-from: var(--bg-circle-purple-from);
+  --color-bg-circle-purple-via: var(--bg-circle-purple-via);
+  --color-bg-circle-indigo-from: var(--bg-circle-indigo-from);
+  --color-bg-circle-indigo-via: var(--bg-circle-indigo-via);
+  --color-bg-circle-blue-from: var(--bg-circle-blue-from);
+  --color-bg-circle-blue-via: var(--bg-circle-blue-via);
 }
 
+/* Light theme */
 :root {
   /* shadcn/ui */
   --background: oklch(1 0 0);
@@ -108,6 +119,39 @@
   --heading-to: var(--color-indigo-600);
   --border-accent: var(--color-zinc-700);
   --eyebrow: var(--color-purple-600);
+  --bg-circle-purple: var(--color-purple-500);
+  --bg-circle-indigo: var(--color-indigo-500);
+  --bg-circle-blue: var(--color-blue-500);
+  --bg-circle-purple-from: color-mix(
+    in oklch,
+    var(--bg-circle-purple) 18%,
+    transparent
+  );
+  --bg-circle-purple-via: color-mix(
+    in oklch,
+    var(--bg-circle-purple) 6%,
+    transparent
+  );
+  --bg-circle-indigo-from: color-mix(
+    in oklch,
+    var(--bg-circle-indigo) 18%,
+    transparent
+  );
+  --bg-circle-indigo-via: color-mix(
+    in oklch,
+    var(--bg-circle-indigo) 6%,
+    transparent
+  );
+  --bg-circle-blue-from: color-mix(
+    in oklch,
+    var(--bg-circle-blue) 18%,
+    transparent
+  );
+  --bg-circle-blue-via: color-mix(
+    in oklch,
+    var(--bg-circle-blue) 6%,
+    transparent
+  );
 }
 
 .dark {
@@ -152,6 +196,39 @@
   --heading-to: var(--color-indigo-200);
   --border-accent: var(--color-zinc-700);
   --eyebrow: var(--color-purple-400);
+  --bg-circle-purple: var(--color-purple-500);
+  --bg-circle-indigo: var(--color-indigo-500);
+  --bg-circle-blue: var(--color-blue-500);
+  --bg-circle-purple-from: color-mix(
+    in oklch,
+    var(--bg-circle-purple) 13%,
+    transparent
+  );
+  --bg-circle-purple-via: color-mix(
+    in oklch,
+    var(--bg-circle-purple) 3%,
+    transparent
+  );
+  --bg-circle-indigo-from: color-mix(
+    in oklch,
+    var(--bg-circle-indigo) 13%,
+    transparent
+  );
+  --bg-circle-indigo-via: color-mix(
+    in oklch,
+    var(--bg-circle-indigo) 3%,
+    transparent
+  );
+  --bg-circle-blue-from: color-mix(
+    in oklch,
+    var(--bg-circle-blue) 13%,
+    transparent
+  );
+  --bg-circle-blue-via: color-mix(
+    in oklch,
+    var(--bg-circle-blue) 3%,
+    transparent
+  );
 }
 
 @layer base {
