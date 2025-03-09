@@ -64,6 +64,7 @@ export default function RootLayout({
           <ThemeProvider
             attribute="class"
             enableSystem
+            enableColorScheme
             disableTransitionOnChange
           >
             <TooltipProvider>
