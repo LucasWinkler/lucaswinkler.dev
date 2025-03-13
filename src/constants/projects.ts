@@ -1,6 +1,7 @@
 import audiophile from "@/../public/images/audiophile.webp";
+import elevate from "@/../public/images/elevatecareers.webp";
 import poitogo from "@/../public/images/poitogo.webp";
-import { Project } from "@/types/project";
+import type { Project } from "@/types/project";
 
 export const PROJECTS: Project[] = [
   {
@@ -50,7 +51,7 @@ export const PROJECTS: Project[] = [
         "Demo is currently non-functional due to webscraping API costs. Please check out the source code instead!",
     },
     image: {
-      src: undefined,
+      src: elevate,
       alt: "Elevate Careers Homepage",
     },
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "Webscraping"],
