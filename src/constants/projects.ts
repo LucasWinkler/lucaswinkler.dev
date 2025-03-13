@@ -44,7 +44,7 @@ export const PROJECTS: Project[] = [
     title: "Elevate Careers",
     slug: "elevate-careers",
     description:
-      "A job board that scrapes job listings from Indeed and displays them in a clean and organized way. The goal was to practice webscraping and build a useful tool for job seekers.",
+      "A job board that scrapes job listings and displays them in a clean and organized way. The goal was to build a useful tool for job seekers with a clean UI.",
     alert: {
       type: "warning",
       message:
