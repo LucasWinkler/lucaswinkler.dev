@@ -13,4 +13,8 @@ export interface Project {
     demo: string;
     source: string;
   };
+  alert?: {
+    type: "warning" | "info" | "error" | "success";
+    message: string;
+  };
 }

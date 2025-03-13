@@ -82,6 +82,25 @@ export const ProjectCard = ({
         <p className="text-foreground mb-6 line-clamp-4 text-base sm:text-lg">
           {project.description}
         </p>
+
+        {project.alert && (
+          <div
+            className={cn(
+              "mb-6 rounded-lg border px-4 py-3 text-sm",
+              project.alert.type === "warning" &&
+                "border-yellow-500/20 bg-yellow-500/10 text-yellow-500",
+              project.alert.type === "error" &&
+                "border-red-500/20 bg-red-500/10 text-red-500",
+              project.alert.type === "info" &&
+                "border-blue-500/20 bg-blue-500/10 text-blue-500",
+              project.alert.type === "success" &&
+                "border-green-500/20 bg-green-500/10 text-green-500",
+            )}
+          >
+            {project.alert.message}
+          </div>
+        )}
+
         {project.tags && project.tags.length > 0 && (
           <div className="mb-8 flex flex-wrap gap-2">
             {project.tags.map((tag) => (
