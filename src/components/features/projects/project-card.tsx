@@ -86,15 +86,15 @@ export const ProjectCard = ({
         {project.alert && (
           <div
             className={cn(
-              "mb-6 rounded-lg border px-4 py-3 text-sm",
+              "mb-6 rounded-lg border px-4 py-3 text-sm font-medium",
               project.alert.type === "warning" &&
-                "border-yellow-500/20 bg-yellow-500/10 text-yellow-500",
+                "border-yellow-600/20 bg-yellow-50 text-yellow-800 dark:border-yellow-500/20 dark:bg-yellow-500/10 dark:text-yellow-500",
               project.alert.type === "error" &&
-                "border-red-500/20 bg-red-500/10 text-red-500",
+                "border-red-600/20 bg-red-50 text-red-800 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-500",
               project.alert.type === "info" &&
-                "border-blue-500/20 bg-blue-500/10 text-blue-500",
+                "border-blue-600/20 bg-blue-50 text-blue-800 dark:border-blue-500/20 dark:bg-blue-500/10 dark:text-blue-500",
               project.alert.type === "success" &&
-                "border-green-500/20 bg-green-500/10 text-green-500",
+                "border-green-600/20 bg-green-50 text-green-800 dark:border-green-500/20 dark:bg-green-500/10 dark:text-green-500",
             )}
           >
             {project.alert.message}
