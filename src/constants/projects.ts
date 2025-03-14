@@ -1,17 +1,17 @@
 import audiophile from "@/../public/images/audiophile.webp";
 import elevate from "@/../public/images/elevatecareers.webp";
-import poitogo from "@/../public/images/poitogo.webp";
+import expedius from "@/../public/images/expedius.webp";
 import type { Project } from "@/types/project";
 
 export const PROJECTS: Project[] = [
   {
-    title: "PoiToGo",
-    slug: "poitogo",
+    title: "Expedius",
+    slug: "expedius",
     description:
       "A web app that lets users discover and save points of interest. Features include custom list creation, nearby search, user profiles, and social sharing capabilities.",
     image: {
-      src: poitogo,
-      alt: "PoiToGo Homepage",
+      src: expedius,
+      alt: "Expedius Homepage",
     },
     tags: [
       "Next.js",
@@ -21,8 +21,8 @@ export const PROJECTS: Project[] = [
       "Drizzle ORM",
     ],
     links: {
-      demo: "https://poitogo.vercel.app/",
-      source: "https://github.com/LucasWinkler/poitogo",
+      demo: "https://www.expedius.app/",
+      source: "https://github.com/LucasWinkler/expedius",
     },
   },
   {
