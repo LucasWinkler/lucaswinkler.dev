@@ -14,7 +14,7 @@ import {
 export default function Home() {
   return (
     <>
-      <Hero {...HERO_CONTENT} />
+      <Hero {...HERO_CONTENT} isAvailable={false} />
       <Projects {...PROJECTS_CONTENT} />
       <Skills {...SKILLS_CONTENT} />
       <About {...ABOUT_CONTENT} />
