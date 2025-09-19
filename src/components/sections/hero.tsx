@@ -59,7 +59,9 @@ export const Hero = ({ title, description, isAvailable }: HeroProps) => {
         )}
         <motion.h1
           variants={itemVariants}
-          className="font-heading xs:text-[3rem] mb-6 text-heading text-[2.5rem] leading-[1.05] font-bold sm:mb-8 sm:text-[4rem] md:text-7xl lg:text-8xl"
+          className={`font-heading xs:text-[3rem] mb-6 text-heading text-[2.5rem] leading-[1.05] font-bold sm:mb-8 sm:text-[4rem] md:text-7xl lg:text-8xl ${
+            !isAvailable ? "mt-4 sm:mt-8" : ""
+          }`}
         >
           {title}
         </motion.h1>
