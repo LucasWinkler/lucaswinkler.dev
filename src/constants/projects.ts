@@ -20,6 +20,11 @@ export const PROJECTS: Project[] = [
       "PostgreSQL",
       "Drizzle ORM",
     ],
+    alert: {
+      type: "warning",
+      message:
+        "The live demo is currently paused. The site was receiving abusive traffic that was incurring hosting costs.",
+    },
     links: {
       demo: "https://www.expedius.app/",
       source: "https://github.com/LucasWinkler/expedius",
@@ -35,6 +40,11 @@ export const PROJECTS: Project[] = [
       alt: "Audiophile Ecommerce Homepage",
     },
     tags: ["Next.js", "TypeScript", "Tailwind CSS"],
+    alert: {
+      type: "warning",
+      message:
+        "The live demo is currently paused. The site was receiving abusive traffic that was incurring hosting costs.",
+    },
     links: {
       demo: "https://fem-audiophile-ecommerce.vercel.app/",
       source: "https://github.com/LucasWinkler/audiophile-ecommerce",
@@ -48,7 +58,7 @@ export const PROJECTS: Project[] = [
     alert: {
       type: "warning",
       message:
-        "Demo is currently non-functional due to webscraping API costs. Please check out the source code instead!",
+        "The live demo is currently paused. The site was receiving abusive traffic that was incurring hosting costs.",
     },
     image: {
       src: elevate,
