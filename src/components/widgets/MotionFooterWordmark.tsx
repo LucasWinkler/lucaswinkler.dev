@@ -5,13 +5,19 @@ import { FooterWordmarkSvg } from '@/components/widgets/FooterWordmarkSvg';
 
 const MAX_STRETCH_PX = 112;
 const RESISTANCE = 240;
-const WHEEL_RELEASE_MS = 160;
-const WHEEL_RELEASE_AT_CAP_MS = 70;
 const CAP_RATIO = 0.96;
-const STRAIN_GAIN = 0.1;
-const MAX_STRAIN_BUMP_PX = 8;
+const WHEEL_RELEASE_MS = 160;
+const CAP_IDLE_MS = 44;
+const CAP_INERTIA_DELTA = 4;
 const TOUCH_GAIN = 1.4;
+const STRAIN_GAIN = 0.12;
+const MAX_STRAIN_BUMP_PX = 10;
+const VELOCITY_ALPHA = 0.38;
+const VELOCITY_STRAIN_SCALE = 0.004;
+const KINETIC_OVERSHOOT_GAIN = 0.09;
+const MAX_KINETIC_OVERSHOOT_PX = 16;
 const SPRING = { type: 'spring' as const, stiffness: 420, damping: 32, mass: 0.8 };
+const CAP_RELEASE_SPRING = { type: 'spring' as const, stiffness: 360, damping: 28, mass: 0.85 };
 
 function stretchFromRawPull(rawPull: number): number {
   return MAX_STRETCH_PX * (1 - Math.exp(-rawPull / RESISTANCE));
@@ -21,16 +27,29 @@ function isAtCap(stretch: number): boolean {
   return stretch >= MAX_STRETCH_PX * CAP_RATIO;
 }
 
-function stretchWithStrain(baseStretch: number, delta: number): number {
-  if (delta <= 0 || !isAtCap(baseStretch)) {
+function updateVelocity(current: number, delta: number): number {
+  return current * (1 - VELOCITY_ALPHA) + Math.abs(delta) * VELOCITY_ALPHA;
+}
+
+function stretchWithStrain(baseStretch: number, delta: number, velocity: number): number {
+  if (!isAtCap(baseStretch)) {
     return baseStretch;
   }
 
-  return baseStretch + Math.min(delta * STRAIN_GAIN, MAX_STRAIN_BUMP_PX);
+  const velocityBoost = 1 + Math.min(velocity * VELOCITY_STRAIN_SCALE, 1.4);
+  const impulseStrain =
+    delta > 0 ? Math.min(delta * STRAIN_GAIN * velocityBoost, MAX_STRAIN_BUMP_PX * velocityBoost) : 0;
+  const kineticOvershoot = Math.min(velocity * KINETIC_OVERSHOOT_GAIN, MAX_KINETIC_OVERSHOOT_PX);
+
+  return baseStretch + impulseStrain + kineticOvershoot;
 }
 
 function isAtPageBottom(): boolean {
   return window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+}
+
+function isCapInertiaDelta(delta: number, atCap: boolean): boolean {
+  return atCap && delta > 0 && delta < CAP_INERTIA_DELTA;
 }
 
 export function MotionFooterWordmark() {
@@ -39,9 +58,10 @@ export function MotionFooterWordmark() {
   const scaleY = useMotionValue(1);
   const stretchPx = useMotionValue(0);
   const rawPullRef = useRef(0);
+  const velocityRef = useRef(0);
   const isPullingRef = useRef(false);
   const isReleasingRef = useRef(false);
-  const wheelReleaseTimerRef = useRef<number | undefined>(undefined);
+  const releaseTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     if (shouldReduceMotion) {
@@ -59,54 +79,54 @@ export function MotionFooterWordmark() {
       stretchPx.stop();
     };
 
-    const springToRest = () => {
+    const clearReleaseTimer = () => {
+      if (releaseTimerRef.current !== undefined) {
+        window.clearTimeout(releaseTimerRef.current);
+        releaseTimerRef.current = undefined;
+      }
+    };
+
+    const resetPullState = () => {
+      isPullingRef.current = false;
+      rawPullRef.current = 0;
+      velocityRef.current = 0;
+    };
+
+    const startRelease = (spring: typeof SPRING) => {
       if (isReleasingRef.current) {
         return;
       }
 
-      window.clearTimeout(wheelReleaseTimerRef.current);
+      clearReleaseTimer();
       stopAnimations();
-
-      isPullingRef.current = false;
-      rawPullRef.current = 0;
+      resetPullState();
       isReleasingRef.current = true;
 
-      void Promise.all([animate(scaleY, 1, SPRING), animate(stretchPx, 0, SPRING)]).then(() => {
+      void Promise.all([animate(stretchPx, 0, spring), animate(scaleY, 1, spring)]).then(() => {
         isReleasingRef.current = false;
       });
     };
 
-    const release = () => {
-      const hasStretch = stretchPx.get() > 0.5 || scaleY.get() > 1.005;
-
-      if (!hasStretch && !isPullingRef.current) {
-        return;
-      }
-
-      const baseStretch = stretchFromRawPull(rawPullRef.current);
-      if (isAtCap(baseStretch)) {
-        applyVisuals(baseStretch);
-      }
-
-      springToRest();
-    };
+    const springToRest = () => startRelease(SPRING);
+    const releaseFromCap = () => startRelease(CAP_RELEASE_SPRING);
 
     const scheduleRelease = (stretch: number) => {
-      window.clearTimeout(wheelReleaseTimerRef.current);
-      const delay = isAtCap(stretch) ? WHEEL_RELEASE_AT_CAP_MS : WHEEL_RELEASE_MS;
-      wheelReleaseTimerRef.current = window.setTimeout(release, delay);
+      clearReleaseTimer();
+      const delay = isAtCap(stretch) ? CAP_IDLE_MS : WHEEL_RELEASE_MS;
+      const release = isAtCap(stretch) ? releaseFromCap : springToRest;
+      releaseTimerRef.current = window.setTimeout(release, delay);
     };
 
     const applyPull = (delta: number) => {
       if (isReleasingRef.current) {
-        if (delta <= 0) {
-          return;
-        }
-
-        isReleasingRef.current = false;
+        return;
       }
 
-      stopAnimations();
+      if (Math.abs(stretchPx.getVelocity()) > 0.5 || Math.abs(scaleY.getVelocity()) > 0.0005) {
+        stopAnimations();
+      }
+
+      velocityRef.current = updateVelocity(velocityRef.current, delta);
 
       if (delta > 0) {
         isPullingRef.current = true;
@@ -122,11 +142,11 @@ export function MotionFooterWordmark() {
       }
 
       const baseStretch = stretchFromRawPull(rawPullRef.current);
-      applyVisuals(stretchWithStrain(baseStretch, delta));
+      applyVisuals(stretchWithStrain(baseStretch, delta, velocityRef.current));
     };
 
     const onWheel = (event: WheelEvent) => {
-      if (isReleasingRef.current && event.deltaY <= 0) {
+      if (isReleasingRef.current) {
         return;
       }
 
@@ -137,9 +157,19 @@ export function MotionFooterWordmark() {
         return;
       }
 
-      const stretchBefore = stretchFromRawPull(rawPullRef.current);
+      const baseStretch = stretchFromRawPull(rawPullRef.current);
+      const atCap = isAtCap(baseStretch);
+
+      if (isCapInertiaDelta(event.deltaY, atCap)) {
+        if (releaseTimerRef.current !== undefined) {
+          clearReleaseTimer();
+          releaseFromCap();
+        }
+        return;
+      }
+
       applyPull(event.deltaY);
-      scheduleRelease(stretchFromRawPull(rawPullRef.current) || stretchBefore);
+      scheduleRelease(stretchFromRawPull(rawPullRef.current) || baseStretch);
     };
 
     let touchStartY = 0;
@@ -167,7 +197,12 @@ export function MotionFooterWordmark() {
     };
 
     const onTouchEnd = () => {
-      release();
+      if (isAtCap(stretchFromRawPull(rawPullRef.current))) {
+        releaseFromCap();
+        return;
+      }
+
+      springToRest();
     };
 
     window.addEventListener('wheel', onWheel, { passive: true });
@@ -176,7 +211,7 @@ export function MotionFooterWordmark() {
     window.addEventListener('touchend', onTouchEnd, { passive: true });
 
     return () => {
-      window.clearTimeout(wheelReleaseTimerRef.current);
+      clearReleaseTimer();
       window.removeEventListener('wheel', onWheel);
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
