@@ -171,6 +171,45 @@
 }
 
 @layer utilities {
+  .skip-link {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .skip-link:focus-visible {
+    position: fixed;
+    top: max(0.75rem, env(safe-area-inset-top, 0px));
+    left: max(0.75rem, env(safe-area-inset-left, 0px));
+    z-index: var(--z-index-overlay);
+    width: auto;
+    height: auto;
+    padding: 0.625rem 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    border-radius: var(--header-link-radius);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    line-height: var(--leading-ui);
+    text-decoration: none;
+    box-shadow:
+      0 0 0 2px var(--color-bg),
+      0 0 0 4px var(--color-accent);
+  }
+
+  .scroll-anchor {
+    scroll-margin-top: calc(var(--header-inner-min-h) + 2rem + env(safe-area-inset-top, 0px));
+  }
+
   .type-display {
     font-family: var(--font-inter-display);
     font-feature-settings:

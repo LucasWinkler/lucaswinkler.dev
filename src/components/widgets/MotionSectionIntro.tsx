@@ -1,13 +1,12 @@
 import { motion, useReducedMotion } from 'motion/react';
 
+import { fadeEase, noMotion } from '@/lib/motion';
+
 import type { ReactNode } from 'react';
 
 type MotionSectionIntroProps = {
   children: ReactNode;
 };
-
-const fadeEase = [0.23, 1, 0.32, 1] as const;
-const noMotion = { duration: 0 };
 
 export function MotionSectionIntro({ children }: MotionSectionIntroProps) {
   const shouldReduceMotion = useReducedMotion() ?? false;

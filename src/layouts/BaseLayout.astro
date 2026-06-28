@@ -8,10 +8,7 @@ interface Props {
   description?: string;
 }
 
-const {
-  title = 'Lucas Winkler',
-  // description = 'TODO: add description'
-} = Astro.props;
+const { title = 'Lucas Winkler', description } = Astro.props;
 ---
 
 <!doctype html>
@@ -22,11 +19,12 @@ const {
     <link rel='icon' href='/favicon.ico' />
     <meta name='viewport' content='width=device-width, initial-scale=1' />
     <meta name='generator' content={Astro.generator} />
-    <!-- <meta name='description' content={description} /> -->
+    {description ? <meta name='description' content={description} /> : null}
     <Font cssVariable='--font-inter' preload={[{ style: 'normal' }]} />
     <title>{title}</title>
   </head>
   <body>
+    <a href='#content' class='skip-link'>Skip to content</a>
     <slot />
   </body>
 </html>

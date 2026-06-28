@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'motion/react';
 
 import { formatDateRange, sortReverseChronological } from '@/lib/experience';
+import { fadeEase, noMotion } from '@/lib/motion';
 
 import type { EducationItem, ExperienceItem } from '@/types/experience';
 import type { ReactNode } from 'react';
@@ -9,9 +10,6 @@ type MotionExperienceListProps = {
   experience: ExperienceItem[];
   education?: EducationItem[];
 };
-
-const fadeEase = [0.23, 1, 0.32, 1] as const;
-const noMotion = { duration: 0 };
 
 const eyebrowClass = 'type-eyebrow-label m-0 border-b border-border pb-4 text-text-muted';
 

@@ -9,6 +9,14 @@
 .site-header__brand,
 .site-header__link {
   white-space: nowrap;
+  outline: none;
+}
+
+.site-header__brand:focus-visible,
+.site-header__link:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--color-bg),
+    0 0 0 4px var(--color-accent);
 }
 
 .site-header__link {
@@ -36,7 +44,15 @@
   color: var(--color-hero-text-muted);
 }
 
-.site-header--hero .site-header__link:hover {
+.site-header--hero .site-header__brand:focus-visible,
+.site-header--hero .site-header__link:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--color-surface),
+    0 0 0 4px var(--color-accent);
+}
+
+.site-header--hero .site-header__link:hover,
+.site-header--hero .site-header__link:focus-visible {
   color: var(--color-hero-text);
 }
 
@@ -80,7 +96,8 @@
   color: var(--color-text-muted);
 }
 
-.site-header--sticky .site-header__link:hover {
+.site-header--sticky .site-header__link:hover,
+.site-header--sticky .site-header__link:focus-visible {
   color: var(--color-text);
   background-color: var(--color-hover-subtle);
 }

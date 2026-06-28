@@ -6,6 +6,8 @@ export type SelectedWorkItem = {
   description: string;
   tech: string[];
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   imagePosition?: string;
   logo?: string;
   brandColor: string;

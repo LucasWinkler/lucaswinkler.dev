@@ -1,5 +1,5 @@
-import { LayoutGroup, motion } from 'motion/react';
-import { type CSSProperties, type KeyboardEvent, memo, type PointerEvent } from 'react';
+import { LayoutGroup, motion, type Transition } from 'motion/react';
+import { type CSSProperties, type KeyboardEvent, memo, type PointerEvent, type SyntheticEvent } from 'react';
 
 import {
   contentDuration,
@@ -30,6 +30,42 @@ const logoLayoutTransition = { duration: 0.52, ease: logoEase };
 
 const logoShellClass =
   'flex items-center justify-center overflow-hidden bg-white rounded-(--radius-work-logo) max-[640px]:rounded-(--radius-work-logo-sm)';
+
+function hideBrokenImage(event: SyntheticEvent<HTMLImageElement>) {
+  event.currentTarget.style.display = 'none';
+}
+
+type WorkPanelLogoProps = {
+  variant: 'centered' | 'corner';
+  src: string;
+  transition: Transition;
+};
+
+function WorkPanelLogo({ variant, src, transition }: WorkPanelLogoProps) {
+  const wrapperClass =
+    variant === 'corner'
+      ? 'pointer-events-none absolute top-(--space-work-panel-inset) right-(--space-work-panel-inset) z-3 max-[640px]:top-(--space-work-panel-inset-sm) max-[640px]:right-(--space-work-panel-inset-sm)'
+      : 'pointer-events-none absolute inset-0 z-3 flex items-center justify-center';
+
+  const shellSizeClass = variant === 'corner' ? 'h-10 w-10' : 'h-[72px] w-[72px]';
+
+  return (
+    <div className={wrapperClass}>
+      <motion.div layoutId='logo' className={`${shellSizeClass} ${logoShellClass}`} transition={{ layout: transition }}>
+        <img
+          className='h-full w-full object-contain'
+          src={src}
+          alt=''
+          width={32}
+          height={32}
+          loading='lazy'
+          decoding='async'
+          onError={hideBrokenImage}
+        />
+      </motion.div>
+    </div>
+  );
+}
 
 function getImageRevealStyle(isActive: boolean, shouldReduceMotion: boolean): CSSProperties {
   if (shouldReduceMotion) {
@@ -126,7 +162,7 @@ export const WorkPanel = memo(function WorkPanel({
       onClick={isActive ? undefined : onActivate}
       onKeyDown={isActive ? undefined : handleKeyDown}
       role={isActive ? 'region' : 'button'}
-      tabIndex={isActive ? undefined : 0}
+      tabIndex={0}
       aria-expanded={isActive}
       aria-labelledby={isActive ? `work-${item.id}-title` : undefined}
       aria-label={isActive ? undefined : `Show ${item.brand} details`}
@@ -140,11 +176,10 @@ export const WorkPanel = memo(function WorkPanel({
                 style={item.imagePosition ? { objectPosition: item.imagePosition } : undefined}
                 src={item.image}
                 alt=''
+                {...(item.imageWidth && item.imageHeight ? { width: item.imageWidth, height: item.imageHeight } : {})}
                 loading='lazy'
                 decoding='async'
-                onError={event => {
-                  event.currentTarget.style.display = 'none';
-                }}
+                onError={hideBrokenImage}
               />
 
               <div
@@ -165,43 +200,7 @@ export const WorkPanel = memo(function WorkPanel({
 
         {item.logo ? (
           <LayoutGroup id={`work-logo-${item.id}`}>
-            {isActive ? (
-              <div className='pointer-events-none absolute top-(--space-work-panel-inset) right-(--space-work-panel-inset) z-3 max-[640px]:top-(--space-work-panel-inset-sm) max-[640px]:right-(--space-work-panel-inset-sm)'>
-                <motion.div
-                  layoutId='logo'
-                  className={`h-10 w-10 ${logoShellClass}`}
-                  transition={{ layout: logoTransition }}>
-                  <img
-                    className='h-full w-full object-contain'
-                    src={item.logo}
-                    alt=''
-                    loading='lazy'
-                    decoding='async'
-                    onError={event => {
-                      event.currentTarget.style.display = 'none';
-                    }}
-                  />
-                </motion.div>
-              </div>
-            ) : (
-              <div className='pointer-events-none absolute inset-0 z-3 flex items-center justify-center'>
-                <motion.div
-                  layoutId='logo'
-                  className={`h-[72px] w-[72px] ${logoShellClass}`}
-                  transition={{ layout: logoTransition }}>
-                  <img
-                    className='h-full w-full object-contain'
-                    src={item.logo}
-                    alt=''
-                    loading='lazy'
-                    decoding='async'
-                    onError={event => {
-                      event.currentTarget.style.display = 'none';
-                    }}
-                  />
-                </motion.div>
-              </div>
-            )}
+            <WorkPanelLogo variant={isActive ? 'corner' : 'centered'} src={item.logo} transition={logoTransition} />
           </LayoutGroup>
         ) : null}
 
@@ -217,7 +216,7 @@ export const WorkPanel = memo(function WorkPanel({
                 {item.brand}
               </h3>
               <a
-                className='type-caption relative w-fit max-w-full truncate text-white/88 underline-offset-2 no-underline transition-[color,text-decoration-color] duration-150 ease-out after:absolute after:inset-[-0.625rem] after:content-[""] hover:text-white hover:underline'
+                className='type-caption relative w-fit max-w-full truncate rounded-sm text-white/88 underline-offset-2 no-underline outline-none transition-[color,text-decoration-color] duration-150 ease-out after:absolute after:inset-[-0.625rem] after:content-[""] hover:text-white hover:underline focus-visible:text-white focus-visible:underline focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)]'
                 href={item.url}
                 target='_blank'
                 rel='noopener noreferrer'

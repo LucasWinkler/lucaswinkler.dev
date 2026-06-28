@@ -4,11 +4,12 @@ import Experience from '@/components/sections/Experience.astro';
 import Hero from '@/components/sections/hero/Hero.astro';
 import SelectedWork from '@/components/sections/SelectedWork.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { siteDescription } from '@/data/bio';
 ---
 
-<BaseLayout title='Lucas Winkler — Design Engineer'>
+<BaseLayout title='Lucas Winkler — Design Engineer' description={siteDescription}>
   <HeaderSticky />
-  <main>
+  <main id='content'>
     <Hero />
     <SelectedWork />
     <Experience />
