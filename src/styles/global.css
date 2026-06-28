@@ -82,8 +82,7 @@
   --color-header-sticky-text-muted: var(--color-hero-text-muted);
   --color-header-sticky-hover: oklch(1 0 0 / 0.08);
   --shadow-header-bar:
-    0 8px 32px -8px oklch(0.178 0.003 67.659 / 0.2), 0 2px 12px -4px oklch(0.178 0.003 67.659 / 0.12),
-    0 0 0 1px oklch(1 0 0 / 0.06);
+    0 8px 32px -8px oklch(0.178 0.003 67.659 / 0.2), 0 2px 12px -4px oklch(0.178 0.003 67.659 / 0.12);
 
   --space-work-panel-inset: 1.5rem;
   --space-work-panel-inset-sm: 1.25rem;
