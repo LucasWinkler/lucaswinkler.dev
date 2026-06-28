@@ -74,7 +74,7 @@
   padding-inline: var(--header-bar-padding-x);
   padding-block: var(--header-bar-padding-y);
   opacity: 0;
-  transform: translateY(-14px) scale(0.97);
+  transform: translateY(-10px) scale(0.98);
   transition:
     opacity var(--header-sticky-exit-duration) var(--ease-out),
     transform var(--header-sticky-exit-duration) var(--ease-out);
@@ -84,8 +84,8 @@
   opacity: 1;
   transform: translateY(0) scale(1);
   transition:
-    opacity var(--header-sticky-enter-duration) var(--ease-out),
-    transform var(--header-sticky-enter-duration) var(--ease-out);
+    opacity var(--header-sticky-enter-duration) var(--hero-enter-ease),
+    transform var(--header-sticky-enter-duration) var(--hero-enter-ease);
 }
 
 .site-header--sticky .site-header__brand {
