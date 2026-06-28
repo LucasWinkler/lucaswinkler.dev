@@ -208,10 +208,10 @@ export const WorkPanel = memo(function WorkPanel({
         ) : null}
 
         <div
-          className={`absolute inset-0 z-2 flex h-full flex-col p-(--space-work-panel-inset) max-[640px]:justify-start max-[640px]:p-(--space-work-panel-inset-sm) min-[641px]:justify-between ${isExpanded ? 'pointer-events-auto' : 'pointer-events-none'}`}
+          className={`absolute inset-0 z-2 flex h-full flex-col justify-start p-(--space-work-panel-inset) max-[640px]:p-(--space-work-panel-inset-sm) ${isExpanded ? 'pointer-events-auto' : 'pointer-events-none'}`}
           aria-hidden={!isExpanded}
           inert={!isExpanded}>
-          <div className='relative z-1 flex min-w-0 flex-col max-[640px]:flex-none min-[641px]:flex-1'>
+          <div className='relative z-1 flex min-w-0 flex-col'>
             <div
               className='flex max-w-[min(24ch,calc(100%-3.5rem))] flex-col gap-1.5 max-[640px]:max-w-full'
               style={getContentStyle(isExpanded, 0.05, revealMotion)}>
@@ -241,7 +241,7 @@ export const WorkPanel = memo(function WorkPanel({
             </div>
 
             <ul
-              className='relative z-1 m-0 mt-3 flex list-none flex-wrap gap-x-2 gap-y-1 p-0 min-[641px]:mt-auto'
+              className='relative z-1 m-0 mt-3 flex list-none flex-wrap gap-x-2 gap-y-1 p-0'
               aria-label={`${item.brand} tech stack`}
               style={getContentStyle(isExpanded, 0.2, revealMotion)}>
               {item.tech.map(stack => (
