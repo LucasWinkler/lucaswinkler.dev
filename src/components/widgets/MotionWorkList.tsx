@@ -163,6 +163,11 @@ function WorkPanel({
           aria-hidden='true'
         />
 
+        <div
+          className='texture-noise-overlay absolute inset-0 z-[1]'
+          aria-hidden='true'
+        />
+
         <motion.div
           className={`absolute inset-0 z-2 flex flex-col justify-between p-4 max-[640px]:p-3.5 ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}
           initial={false}

@@ -15,8 +15,25 @@
   --text-display-eyebrow: clamp(0.6875rem, 1.6vw, 0.8125rem);
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --section-max: 72rem;
+  --header-bar-max: var(--section-max);
+  --header-bar-max-sticky: 29rem;
+  --header-bar-padding-x: clamp(0.875rem, 2vw, 1.25rem);
+  --header-bar-padding-y: clamp(0.3125rem, 0.6vw, 0.4375rem);
+  --header-inner-min-h: 2.625rem;
+  --header-link-radius: 9999px;
+  --header-glass-bg: rgba(26, 51, 72, 0.05);
+  --header-glass-border: rgba(61, 90, 69, 0.14);
+  --header-glass-shadow: rgba(26, 51, 72, 0.12);
+  --header-glass-highlight: rgba(160, 196, 214, 0.22);
   --section-padding-x: clamp(1.25rem, 4vw, 3rem);
   --radius-panel: 1.25rem;
+  --radius-hero: clamp(1.125rem, 2.4vw, 1.75rem);
+  --hero-inset-x: clamp(0.75rem, 2.5vw, 1.25rem);
+  --hero-inset-y: clamp(0.75rem, 2.5vw, 1.25rem);
+  --hero-panel-min-h: calc(100svh - (var(--hero-inset-y) * 2));
+  --color-hero-text: #f7f6f3;
+  --color-hero-text-muted: rgba(247, 246, 243, 0.72);
+  --noise-tile: url("/textures/noise.png");
   --shadow-panel:
     0 0 0 1px rgba(0, 0, 0, 0.06),
     0 1px 2px -1px rgba(0, 0, 0, 0.06),
@@ -46,8 +63,25 @@
     font-size: 1.0625rem;
     line-height: 1.55;
     color: var(--color-text);
-    background: var(--color-bg);
+    background-color: var(--color-bg);
     font-variation-settings: "opsz" 14;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.045;
+    background-image: var(--noise-tile);
+    background-size: 180px 180px;
+  }
+
+  @supports (height: 100dvh) {
+    :root {
+      --hero-panel-min-h: calc(100dvh - (var(--hero-inset-y) * 2));
+    }
   }
 
   img {
@@ -87,5 +121,13 @@
     font-family: var(--font-sans);
     font-feature-settings: "liga" 1, "calt" 1;
     font-variation-settings: "opsz" 14;
+  }
+
+  .texture-noise-overlay {
+    pointer-events: none;
+    background-image: var(--noise-tile);
+    background-size: 180px 180px;
+    opacity: 0.06;
+    mix-blend-mode: soft-light;
   }
 }

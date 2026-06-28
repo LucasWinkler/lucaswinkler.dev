@@ -1,6 +1,7 @@
 ---
 import { Font } from 'astro:assets';
 import { DevInterfaceKit } from '@/components/common/DevInterfaceKit';
+import { isInterfaceKitEnabled } from '@/lib/interface-kit';
 import '@/styles/global.css';
 
 interface Props {
@@ -13,7 +14,7 @@ const {
   // description = 'TODO: add description'
 } = Astro.props;
 
-const isDev = import.meta.env.DEV;
+const showInterfaceKit = isInterfaceKitEnabled();
 ---
 
 <!doctype html>
@@ -30,6 +31,6 @@ const isDev = import.meta.env.DEV;
   </head>
   <body>
     <slot />
-    {isDev && <DevInterfaceKit client:load />}
+    {showInterfaceKit && <DevInterfaceKit client:load />}
   </body>
 </html>
