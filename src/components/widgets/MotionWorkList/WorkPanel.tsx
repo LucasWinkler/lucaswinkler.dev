@@ -1,3 +1,4 @@
+import { LayoutGroup, motion } from 'motion/react';
 import { type CSSProperties, type KeyboardEvent, memo, type PointerEvent } from 'react';
 
 import {
@@ -23,6 +24,12 @@ export type WorkPanelProps = {
   onActivate: () => void;
   onPointerEnter: (event: PointerEvent<HTMLElement>) => void;
 };
+
+const logoEase = [0.33, 1, 0.68, 1] as const;
+const logoLayoutTransition = { duration: 0.52, ease: logoEase };
+
+const logoShellClass =
+  'flex items-center justify-center overflow-hidden bg-white rounded-(--radius-work-logo) max-[640px]:rounded-(--radius-work-logo-sm)';
 
 function getMediaScale(isActive: boolean, isHovered: boolean): number {
   if (isActive) {
@@ -65,11 +72,12 @@ export const WorkPanel = memo(function WorkPanel({
   onPointerEnter,
 }: WorkPanelProps) {
   const mediaScale = getMediaScale(isActive, isHovered);
+  const logoTransition = shouldReduceMotion ? { duration: 0 } : logoLayoutTransition;
   const panelStyle: CSSProperties = {
     flexGrow,
     flexShrink: 1,
     flexBasis: 0,
-    opacity: isActive ? 1 : 0.76,
+    opacity: isActive ? 1 : 0.9,
   };
 
   if (!shouldReduceMotion) {
@@ -107,7 +115,7 @@ export const WorkPanel = memo(function WorkPanel({
       aria-labelledby={isActive ? `work-${item.id}-title` : undefined}
       aria-label={isActive ? undefined : `Show ${item.brand} details`}
       className={`${panelClass} outline-none focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)] ${isActive ? 'cursor-default select-text' : 'cursor-pointer'}`}>
-      <div className='relative h-full w-full overflow-hidden'>
+      <motion.div layoutRoot className='relative h-full w-full overflow-hidden'>
         <div className='pointer-events-none absolute inset-0 origin-center' style={mediaStyle} aria-hidden='true'>
           <div
             className='absolute inset-[-5%] bg-cover bg-center'
@@ -119,6 +127,7 @@ export const WorkPanel = memo(function WorkPanel({
           {item.image ? (
             <img
               className='absolute -inset-[5%] h-[110%] w-[110%] max-w-none object-cover outline -outline-offset-1 outline-black/10'
+              style={item.imagePosition ? { objectPosition: item.imagePosition } : undefined}
               src={item.image}
               alt=''
               loading='lazy'
@@ -131,28 +140,74 @@ export const WorkPanel = memo(function WorkPanel({
         </div>
 
         <div
-          className='pointer-events-none absolute inset-0 bg-linear-to-b from-black/6 via-transparent to-black/28'
+          className={`pointer-events-none absolute inset-0 bg-linear-to-b ${
+            isActive ? 'from-black/8 via-transparent to-black/22' : 'from-black/36 via-black/18 to-black/52'
+          }`}
           aria-hidden='true'
         />
 
-        <div className='texture-noise-overlay absolute inset-0 z-[1]' aria-hidden='true' />
+        {isActive ? (
+          <>
+            <div
+              className='pointer-events-none absolute inset-y-0 left-0 w-[min(100%,42rem)] bg-linear-to-r from-black/82 via-black/48 to-transparent'
+              aria-hidden='true'
+            />
+            <div
+              className='pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-linear-to-t from-black/72 to-transparent'
+              aria-hidden='true'
+            />
+          </>
+        ) : null}
+
+        {item.logo ? (
+          <LayoutGroup id={`work-logo-${item.id}`}>
+            {isActive ? (
+              <div className='pointer-events-none absolute top-(--space-work-panel-inset) right-(--space-work-panel-inset) z-3 max-[640px]:top-(--space-work-panel-inset-sm) max-[640px]:right-(--space-work-panel-inset-sm)'>
+                <motion.div
+                  layoutId='logo'
+                  className={`h-10 w-10 ${logoShellClass}`}
+                  transition={{ layout: logoTransition }}>
+                  <img
+                    className='h-full w-full object-contain'
+                    src={item.logo}
+                    alt=''
+                    loading='lazy'
+                    decoding='async'
+                    onError={event => {
+                      event.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </motion.div>
+              </div>
+            ) : (
+              <div className='pointer-events-none absolute inset-0 z-3 flex items-center justify-center'>
+                <motion.div
+                  layoutId='logo'
+                  className={`h-[72px] w-[72px] ${logoShellClass}`}
+                  transition={{ layout: logoTransition }}>
+                  <img
+                    className='h-full w-full object-contain'
+                    src={item.logo}
+                    alt=''
+                    loading='lazy'
+                    decoding='async'
+                    onError={event => {
+                      event.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </motion.div>
+              </div>
+            )}
+          </LayoutGroup>
+        ) : null}
 
         <div
-          className={`absolute inset-0 z-2 flex flex-col justify-between p-6 max-[640px]:p-5 ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}
+          className={`absolute inset-0 z-2 flex flex-col justify-between p-(--space-work-panel-inset) max-[640px]:p-(--space-work-panel-inset-sm) ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}
           aria-hidden={!isActive}
           inert={!isActive}>
-          <div
-            className='pointer-events-none absolute inset-x-0 top-0 h-[58%] bg-linear-to-b from-black/72 via-black/28 to-transparent'
-            aria-hidden='true'
-          />
-          <div
-            className='pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-black/68 to-transparent'
-            aria-hidden='true'
-          />
-
           <div className='relative z-1 flex min-w-0 flex-col'>
             <div
-              className='flex max-w-[24ch] flex-col gap-1.5'
+              className='flex max-w-[min(24ch,calc(100%-3.5rem))] flex-col gap-1.5'
               style={getContentStyle(isActive, 0.05, shouldReduceMotion)}>
               <h3 id={`work-${item.id}-title`} className='type-card-title m-0 text-balance text-white'>
                 {item.brand}
@@ -168,7 +223,7 @@ export const WorkPanel = memo(function WorkPanel({
             </div>
 
             <div
-              className='my-2 h-px w-full max-w-[24ch] bg-white/14'
+              className='my-2 h-px w-full max-w-[min(24ch,calc(100%-3.5rem))] bg-white/14'
               aria-hidden='true'
               style={getContentStyle(isActive, 0.08, shouldReduceMotion)}
             />
@@ -193,7 +248,7 @@ export const WorkPanel = memo(function WorkPanel({
             ))}
           </ul>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 });

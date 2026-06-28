@@ -6,6 +6,8 @@ export type SelectedWorkItem = {
   description: string;
   tech: string[];
   image?: string;
+  imagePosition?: string;
+  logo?: string;
   posterFrom: string;
   posterTo: string;
 };

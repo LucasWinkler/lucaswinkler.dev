@@ -79,7 +79,12 @@
   --shadow-header-bar:
     0 8px 32px -8px oklch(0.178 0.003 67.659 / 0.08), 0 2px 12px -4px oklch(0.178 0.003 67.659 / 0.04);
 
-  --radius-panel: 1.25rem;
+  --space-work-panel-inset: 1.5rem;
+  --space-work-panel-inset-sm: 1.25rem;
+  --radius-work-logo-target: 0.375rem;
+  --radius-panel: calc(var(--space-work-panel-inset) + var(--radius-work-logo-target));
+  --radius-work-logo: max(0px, calc(var(--radius-panel) - var(--space-work-panel-inset)));
+  --radius-work-logo-sm: max(0px, calc(var(--radius-panel) - var(--space-work-panel-inset-sm)));
   --radius-hero: clamp(1.125rem, 2.4vw, 1.75rem);
   --hero-inset-x: clamp(0.75rem, 2.5vw, 1.25rem);
   --hero-inset-y: clamp(0.75rem, 2.5vw, 1.25rem);
