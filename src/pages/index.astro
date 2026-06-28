@@ -1,12 +1,16 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/common/Header.astro';
+import Experience from '@/components/sections/Experience.astro';
 import Hero from '@/components/sections/Hero.astro';
 import SelectedWork from '@/components/sections/SelectedWork.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Lucas Winkler — Design Engineer">
+<BaseLayout title='Lucas Winkler — Design Engineer'>
+  <Header />
   <main>
     <Hero />
     <SelectedWork />
+    <Experience />
   </main>
 </BaseLayout>

@@ -9,8 +9,15 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "check": "astro check",
-    "astro": "astro"
+    "check": "pnpm run check:astro && pnpm run check:lint && pnpm run check:format",
+    "check:astro": "astro check",
+    "check:lint": "eslint .",
+    "check:format": "prettier --check .",
+    "fix": "pnpm run fix:lint && pnpm run fix:format",
+    "fix:lint": "eslint --fix .",
+    "fix:format": "prettier -w .",
+    "astro": "astro",
+    "prepare": "husky"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.0",
@@ -27,6 +34,16 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "typescript": "^6.0.3"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.5.0",
+    "eslint-plugin-astro": "^2.1.0",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "globals": "^17.7.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8",
+    "prettier": "3.8.4",
+    "prettier-plugin-astro": "0.14.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.62.0"
   }
 }

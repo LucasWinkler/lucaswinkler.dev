@@ -1,33 +1,29 @@
 ---
+import { MotionExperienceList } from '@/components/widgets/MotionExperienceList';
 import { MotionSectionIntro } from '@/components/widgets/MotionSectionIntro';
-import { MotionWorkList } from '@/components/widgets/MotionWorkList';
-import { selectedWork } from '@/data/selected-work';
+import { education } from '@/data/education';
+import { experience } from '@/data/experience';
 ---
 
 <section
-  id='selected-work'
+  id='experience'
   class='py-[clamp(4rem,10vw,7rem)] px-(--section-padding-x)'
-  aria-labelledby='selected-work-heading'>
+  aria-labelledby='experience-heading'>
   <div class='mx-auto w-full max-w-(--section-max)'>
     <MotionSectionIntro client:visible>
       <header class='mb-[clamp(2.5rem,6vw,4rem)] flex flex-col gap-4'>
-        <p
-          class='type-eyebrow m-0 text-(length:--text-display-eyebrow) font-semibold tracking-[0.14em] text-text-muted uppercase'>
-          Production Track Record
-        </p>
         <h2
-          id='selected-work-heading'
+          id='experience-heading'
           class='type-display m-0 max-w-[16ch] text-(length:--text-display-hero) leading-[1.02] font-semibold tracking-[-0.035em] text-balance'>
-          Selected Work
+          Experience
         </h2>
         <p
           class='type-display m-0 max-w-[48ch] text-(length:--text-display-lead) leading-[1.55] text-text-muted text-pretty'>
-          Corporate web properties I rebuilt as sole developer. Hover to preview, click a card for details, then open
-          the link for the live site.
+          Selected Work above covers standout projects from my current position.
         </p>
       </header>
     </MotionSectionIntro>
 
-    <MotionWorkList client:visible items={selectedWork} />
+    <MotionExperienceList client:visible experience={experience} education={education} />
   </div>
 </section>
