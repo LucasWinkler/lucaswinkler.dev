@@ -1,4 +1,6 @@
 ---
+import { Font } from 'astro:assets';
+import { DevInterfaceKit } from '@/components/common/DevInterfaceKit';
 import '@/styles/global.css';
 
 interface Props {
@@ -10,6 +12,8 @@ const {
   title = 'Lucas Winkler',
   // description = 'TODO: add description'
 } = Astro.props;
+
+const isDev = import.meta.env.DEV;
 ---
 
 <!doctype html>
@@ -21,15 +25,11 @@ const {
     <meta name='viewport' content='width=device-width, initial-scale=1' />
     <meta name='generator' content={Astro.generator} />
     <!-- <meta name='description' content={description} /> -->
-    <link rel='preconnect' href='https://fonts.googleapis.com' />
-    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
-    <link
-      href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap'
-      rel='stylesheet'
-    />
+    <Font cssVariable='--font-inter' preload={[{ style: 'normal' }]} />
     <title>{title}</title>
   </head>
   <body>
     <slot />
+    {isDev && <DevInterfaceKit client:load />}
   </body>
 </html>

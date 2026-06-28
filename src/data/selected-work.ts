@@ -1,0 +1,48 @@
+import type { SelectedWorkItem } from '@/types/work';
+
+export const selectedWork: SelectedWorkItem[] = [
+  {
+    id: 'eventcaddy',
+    brand: 'EventCaddy',
+    domain: 'dev-landing.eventcaddy.com',
+    url: 'https://dev-landing.eventcaddy.com',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    tech: ['Astro', 'React', 'TS'],
+    image: '/images/eventcaddy.webp',
+    posterFrom: '#142018',
+    posterTo: '#2f4a38',
+  },
+  {
+    id: 'tee-on',
+    brand: 'Tee-On',
+    domain: 'teeon.com',
+    url: 'https://www.teeon.com',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    tech: ['Astro', 'React', 'TS'],
+    image: '/images/tee-on.webp',
+    posterFrom: '#101820',
+    posterTo: '#1e3344',
+  },
+  {
+    id: '9fore',
+    brand: '9Fore',
+    domain: '9fore.ca',
+    url: 'https://9fore.ca',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    tech: ['Astro', 'React', 'TS'],
+    image: '/images/9fore.webp',
+    posterFrom: '#181410',
+    posterTo: '#3a3024',
+  },
+  {
+    id: 'golfnorth',
+    brand: 'GolfNorth International',
+    domain: 'golfnorthinternational.com',
+    url: 'https://golfnorthinternational.com',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    tech: ['Astro', 'React', 'TS'],
+    image: '/images/golfnorth.webp',
+    posterFrom: '#0f1812',
+    posterTo: '#264032',
+  },
+];
