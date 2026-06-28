@@ -69,7 +69,6 @@
   --section-padding-x: clamp(1.25rem, 4vw, 3rem);
 
   --header-bar-max: var(--section-max);
-  --header-bar-max-sticky: 29rem;
   --header-sticky-enter-duration: 480ms;
   --header-sticky-exit-duration: 220ms;
   --header-bar-padding-x: clamp(0.875rem, 2vw, 1.25rem);

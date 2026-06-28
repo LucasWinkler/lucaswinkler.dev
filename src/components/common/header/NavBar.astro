@@ -3,10 +3,10 @@ import { navItems, siteName } from '@/data/nav';
 ---
 
 <div class='site-header__bar'>
-  <div class='site-header__inner mx-auto flex max-w-full min-h-(--header-inner-min-h) items-center justify-between'>
+  <div class='site-header__inner mx-auto flex max-w-full min-h-(--header-inner-min-h) items-center'>
     <a
       href='#hero'
-      class='site-header__brand type-nav shrink-0 px-3 py-2 -mx-1 font-semibold tracking-(--tracking-snug) transition-[opacity] duration-300 ease-out hover:opacity-80'>
+      class='site-header__brand type-nav shrink-0 py-2 -mx-1 font-semibold tracking-(--tracking-snug) transition-[opacity] duration-300 ease-out hover:opacity-80'>
       {siteName}
     </a>
 
@@ -17,7 +17,7 @@ import { navItems, siteName } from '@/data/nav';
             <li class='shrink-0'>
               <a
                 href={item.href}
-                class='site-header__link type-nav px-3.5 py-2 font-medium transition-[opacity,transform,background-color] duration-300 ease-out active:scale-[0.96]'>
+                class='site-header__link type-nav py-2 font-medium transition-[opacity,transform,background-color] duration-300 ease-out active:scale-[0.96]'>
                 {item.label}
               </a>
             </li>

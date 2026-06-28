@@ -1,23 +1,9 @@
 const heroSection = document.getElementById('hero');
 const stickyHeader = document.getElementById('site-header-sticky');
-const stickyInner = stickyHeader?.querySelector('.site-header__inner');
-const stickyBrand = stickyHeader?.querySelector('.site-header__brand');
-const stickyNav = stickyHeader?.querySelector('.site-header__nav');
 
-if (heroSection && stickyHeader && stickyInner && stickyBrand && stickyNav) {
+if (heroSection && stickyHeader) {
   let ticking = false;
   let stickyVisible = false;
-
-  const syncStickyBarWidth = () => {
-    const rootStyles = getComputedStyle(document.documentElement);
-    const padX = parseFloat(rootStyles.getPropertyValue('--header-bar-padding-x')) * 2 || 32;
-    const gap = parseFloat(getComputedStyle(stickyInner).columnGap) || 0;
-    const contentWidth = Math.ceil(
-      stickyBrand.getBoundingClientRect().width + stickyNav.getBoundingClientRect().width + gap + padX,
-    );
-
-    stickyHeader.style.setProperty('--header-bar-max-sticky', `${contentWidth}px`);
-  };
 
   const setStickyVisible = (visible: boolean) => {
     if (visible === stickyVisible) {
@@ -64,20 +50,8 @@ if (heroSection && stickyHeader && stickyInner && stickyBrand && stickyNav) {
     });
   };
 
-  syncStickyBarWidth();
   syncHeader();
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener(
-    'resize',
-    () => {
-      syncStickyBarWidth();
-      syncHeader();
-    },
-    { passive: true },
-  );
-
-  if (document.fonts) {
-    document.fonts.ready.then(syncStickyBarWidth);
-  }
+  window.addEventListener('resize', syncHeader, { passive: true });
 }
