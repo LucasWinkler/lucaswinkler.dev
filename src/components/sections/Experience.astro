@@ -5,20 +5,12 @@ import { education } from '@/data/education';
 import { experience } from '@/data/experience';
 ---
 
-<section
-  id='experience'
-  class='py-[clamp(4rem,10vw,7rem)] px-(--section-padding-x)'
-  aria-labelledby='experience-heading'>
+<section id='experience' class='py-(--space-section-y) px-(--section-padding-x)' aria-labelledby='experience-heading'>
   <div class='mx-auto w-full max-w-(--section-max)'>
     <MotionSectionIntro client:visible>
-      <header class='mb-[clamp(2.5rem,6vw,4rem)] flex flex-col gap-4'>
-        <h2
-          id='experience-heading'
-          class='type-display m-0 max-w-[16ch] text-(length:--text-display-hero) leading-[1.02] font-semibold tracking-[-0.035em] text-balance'>
-          Experience
-        </h2>
-        <p
-          class='type-display m-0 max-w-[48ch] text-(length:--text-display-lead) leading-[1.55] text-text-muted text-pretty'>
+      <header class='mb-(--space-section-header) flex flex-col gap-4'>
+        <h2 id='experience-heading' class='type-hero m-0 max-w-[16ch] text-balance'>Experience</h2>
+        <p class='type-section-lead m-0 max-w-[48ch] text-text-muted text-pretty'>
           Selected Work above covers standout projects from my current position.
         </p>
       </header>

@@ -1,27 +1,19 @@
 ---
 import { MotionSectionIntro } from '@/components/widgets/MotionSectionIntro';
-import { MotionWorkList } from '@/components/widgets/MotionWorkList';
+import { MotionWorkList } from '@/components/widgets/MotionWorkList/MotionWorkList';
 import { selectedWork } from '@/data/selected-work';
 ---
 
 <section
   id='selected-work'
-  class='py-[clamp(4rem,10vw,7rem)] px-(--section-padding-x)'
+  class='py-(--space-section-y) px-(--section-padding-x)'
   aria-labelledby='selected-work-heading'>
   <div class='mx-auto w-full max-w-(--section-max)'>
     <MotionSectionIntro client:visible>
-      <header class='mb-[clamp(2.5rem,6vw,4rem)] flex flex-col gap-4'>
-        <p
-          class='type-eyebrow m-0 text-(length:--text-display-eyebrow) font-semibold tracking-[0.14em] text-text-muted uppercase'>
-          Production Track Record
-        </p>
-        <h2
-          id='selected-work-heading'
-          class='type-display m-0 max-w-[16ch] text-(length:--text-display-hero) leading-[1.02] font-semibold tracking-[-0.035em] text-balance'>
-          Selected Work
-        </h2>
-        <p
-          class='type-display m-0 max-w-[48ch] text-(length:--text-display-lead) leading-[1.55] text-text-muted text-pretty'>
+      <header class='mb-(--space-section-header) flex flex-col gap-4'>
+        <p class='type-eyebrow-label m-0 text-text-muted'>Production Track Record</p>
+        <h2 id='selected-work-heading' class='type-hero m-0 max-w-[16ch] text-balance'>Selected Work</h2>
+        <p class='type-section-lead m-0 max-w-[48ch] text-text-muted text-pretty'>
           Corporate web properties I rebuilt as sole developer. Hover to preview, click a card for details, then open
           the link for the live site.
         </p>

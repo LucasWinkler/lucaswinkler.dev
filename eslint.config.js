@@ -5,8 +5,9 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
+const astroFiles = ['**/*.astro'];
 const tsFiles = ['**/*.{ts,tsx,mts,cts}', '**/*.astro/*.ts', '**/*.astro/*.js'];
-const importSortFiles = [...tsFiles, '**/*.astro'];
+const importSortFiles = [...tsFiles, ...astroFiles];
 
 const importSortGroups = [
   ['^\\u0000'],
@@ -21,6 +22,15 @@ export default defineConfig(
   js.configs.recommended,
   ...eslintPluginAstro.configs.recommended,
   ...eslintPluginAstro.configs['jsx-a11y-recommended'],
+  {
+    files: astroFiles,
+    languageOptions: {
+      parserOptions: {
+        parser: tseslint.parser,
+        extraFileExtensions: ['.astro'],
+      },
+    },
+  },
   ...tseslint.configs.recommended.map(conf => ({
     ...conf,
     files: tsFiles,

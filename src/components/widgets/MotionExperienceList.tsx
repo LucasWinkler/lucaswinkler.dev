@@ -13,8 +13,7 @@ type MotionExperienceListProps = {
 const fadeEase = [0.23, 1, 0.32, 1] as const;
 const noMotion = { duration: 0 };
 
-const eyebrowClass =
-  'type-eyebrow m-0 border-b border-border pb-4 text-(length:--text-display-eyebrow) font-semibold tracking-[0.14em] text-text-muted uppercase';
+const eyebrowClass = 'type-eyebrow-label m-0 border-b border-border pb-4 text-text-muted';
 
 type RowProps = {
   index: number;
@@ -40,18 +39,16 @@ function ExperienceRow({
   const leftContent = leftDatetime ? (
     <time
       dateTime={leftDatetime}
-      className='type-ui m-0 w-[min(100%,10.5rem)] shrink-0 text-[0.8125rem] leading-[1.45] text-text-muted tabular-nums'>
+      className='type-caption m-0 w-[min(100%,10.5rem)] shrink-0 text-text-muted tabular-nums'>
       {left}
     </time>
   ) : (
-    <span className='type-ui m-0 w-[min(100%,10.5rem)] shrink-0 text-[0.8125rem] leading-[1.45] text-text-muted'>
-      {left}
-    </span>
+    <span className='type-caption m-0 w-[min(100%,10.5rem)] shrink-0 text-text-muted'>{left}</span>
   );
 
   return (
     <motion.li
-      className={`flex items-baseline justify-between gap-8 py-[clamp(1.25rem,3vw,1.75rem)] ${hasTopBorder ? 'border-t border-border' : ''}`}
+      className={`flex items-baseline justify-between gap-8 py-(--space-row-y) ${hasTopBorder ? 'border-t border-border' : ''}`}
       initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.55 }}
@@ -59,13 +56,9 @@ function ExperienceRow({
       style={{ backfaceVisibility: 'hidden' }}>
       {leftContent}
       <div className='min-w-0 flex-1 text-right'>
-        <p className='type-display m-0 text-[clamp(1rem,2.1vw,1.125rem)] leading-[1.2] font-semibold tracking-[-0.02em] text-text'>
-          {title}
-        </p>
-        <p className='type-ui m-0 mt-1 text-[0.875rem] leading-[1.45] text-text-muted'>{subtitle}</p>
-        {detail ? (
-          <p className='type-ui m-0 mt-0.5 text-[0.8125rem] leading-[1.45] text-text-muted opacity-80'>{detail}</p>
-        ) : null}
+        <p className='type-list-title m-0 text-text'>{title}</p>
+        <p className='type-caption m-0 mt-1 text-text-muted'>{subtitle}</p>
+        {detail ? <p className='type-caption m-0 mt-0.5 text-text-muted opacity-80'>{detail}</p> : null}
       </div>
     </motion.li>
   );
@@ -79,7 +72,7 @@ type SectionProps = {
 
 function ExperienceSection({ label, isFirst = false, children }: SectionProps) {
   return (
-    <section className={isFirst ? undefined : 'mt-[clamp(2rem,5vw,3rem)]'}>
+    <section className={isFirst ? undefined : 'mt-(--space-section-gap)'}>
       <h3 className={eyebrowClass}>{label}</h3>
       <ul className='m-0 flex list-none flex-col p-0'>{children}</ul>
     </section>

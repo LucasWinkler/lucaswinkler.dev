@@ -1,0 +1,44 @@
+---
+import './header.css';
+
+import { navItems, siteName } from '@/data/nav';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<header
+  id='site-header'
+  class:list={['site-header', 'type-ui', 'fixed', 'z-header', 'px-(--section-padding-x)', className]}
+  data-scrolled='false'>
+  <div class='site-header__bar'>
+    <div class='site-header__inner mx-auto flex max-w-full min-h-(--header-inner-min-h) items-center justify-between'>
+      <a
+        href='/'
+        class='site-header__brand type-nav shrink-0 px-3 py-2 -mx-1 font-semibold tracking-(--tracking-snug) transition-[color,opacity] duration-300 ease-out hover:opacity-80'>
+        {siteName}
+      </a>
+
+      <nav aria-label='Primary' class='site-header__nav shrink-0'>
+        <ul class='m-0 flex shrink-0 list-none items-center gap-0.5 p-0'>
+          {
+            navItems.map(item => (
+              <li class='shrink-0'>
+                <a
+                  href={item.href}
+                  class='site-header__link type-nav px-3.5 py-2 font-medium transition-[color,opacity,transform,background-color] duration-300 ease-out active:scale-[0.96]'>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script src='./header-sync.ts'></script>

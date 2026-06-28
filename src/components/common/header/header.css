@@ -1,0 +1,97 @@
+.site-header {
+  z-index: var(--z-index-header);
+  padding-top: max(0.625rem, env(safe-area-inset-top));
+  padding-bottom: 0.5rem;
+}
+
+.site-header__bar {
+  margin-inline: auto;
+  max-width: var(--header-bar-max);
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+  padding-inline: 0;
+  padding-block: 0;
+  overflow: hidden;
+  transition-property: max-width, background-color, box-shadow, border-radius;
+  transition-duration: 620ms;
+  transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.site-header__inner {
+  gap: clamp(1.5rem, 4vw, 3rem);
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+  padding-inline: 0;
+  padding-block: 0;
+}
+
+.site-header__brand,
+.site-header__link {
+  white-space: nowrap;
+}
+
+.site-header__link {
+  border-radius: var(--header-link-radius);
+}
+
+.site-header[data-scrolled='false'] {
+  padding-top: max(1.5rem, calc(env(safe-area-inset-top) + 0.75rem));
+}
+
+.site-header[data-scrolled='false'] .site-header__brand {
+  color: var(--color-hero-text);
+}
+
+.site-header[data-scrolled='false'] .site-header__link {
+  color: var(--color-hero-text-muted);
+}
+
+.site-header[data-scrolled='false'] .site-header__link:hover {
+  color: var(--color-hero-text);
+}
+
+.site-header[data-scrolled='true'] {
+  inset-inline: 0;
+  top: 0;
+  padding-top: max(0.625rem, calc(env(safe-area-inset-top) + 0.375rem));
+}
+
+.site-header[data-scrolled='true'] .site-header__bar {
+  max-width: min(var(--header-bar-max-sticky), calc(100% - 2rem));
+  border-radius: 9999px;
+  overflow: visible;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-header-bar);
+  padding-inline: var(--header-bar-padding-x);
+  padding-block: var(--header-bar-padding-y);
+  transition-duration: 380ms;
+}
+
+.site-header[data-scrolled='true'] .site-header__inner {
+  border-radius: 9999px;
+  background-color: transparent;
+  box-shadow: none;
+  padding-inline: 0;
+  padding-block: 0;
+}
+
+.site-header[data-scrolled='true'] .site-header__brand {
+  color: var(--color-text);
+}
+
+.site-header[data-scrolled='true'] .site-header__link {
+  color: var(--color-text-muted);
+}
+
+.site-header[data-scrolled='true'] .site-header__link:hover {
+  color: var(--color-text);
+  background-color: var(--color-hover-subtle);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header__bar {
+    transition-duration: 0.01ms;
+  }
+}
