@@ -5,6 +5,7 @@ import { getImage } from 'astro:assets';
 
 import HeaderHero from '@/components/common/header/HeaderHero.astro';
 import { hero } from '@/data/bio';
+import { nextEnterIndexFromNested, splitEnterByLines, splitEnterWordsByLine } from '@/lib/split-enter';
 import heroImage from '@/assets/images/hero-blue-abstract.png';
 
 const heroImageOptions = {
@@ -22,16 +23,8 @@ const [heroAvif, heroWebp, heroLqip, heroSrc] = await Promise.all([
 
 const { width, height } = heroWebp.attributes;
 
-const headlineWordsByLine = hero.headlineLines.map((line, lineIndex) => {
-  const offset = hero.headlineLines.slice(0, lineIndex).reduce((sum, entry) => sum + entry.split(' ').length, 0);
-
-  return line.split(' ').map((word, wordIndex) => ({
-    word,
-    enterIndex: offset + wordIndex + 1,
-  }));
-});
-
-const leadEnterIndex = headlineWordsByLine.flat().length + 1;
+const headlineWordsByLine = splitEnterWordsByLine(hero.headlineLines);
+const leadLines = splitEnterByLines(hero.leadLines, nextEnterIndexFromNested(headlineWordsByLine));
 ---
 
 <section id='hero' class='hero-shell' aria-labelledby='hero-heading'>
@@ -82,11 +75,11 @@ const leadEnterIndex = headlineWordsByLine.flat().length + 1;
             {
               headlineWordsByLine.map(words => (
                 <span class='block'>
-                  {words.map(({ word, enterIndex }, wordIndex) => (
+                  {words.map(({ text, enterIndex }, wordIndex) => (
                     <>
                       {wordIndex > 0 ? ' ' : ''}
                       <span class='hero-enter hero-enter--word inline-block' style={`--hero-enter-i: ${enterIndex}`}>
-                        {word}
+                        {text}
                       </span>
                     </>
                   ))}
@@ -94,10 +87,14 @@ const leadEnterIndex = headlineWordsByLine.flat().length + 1;
               ))
             }
           </h1>
-          <p
-            class='hero-enter hero-enter--lead type-section-lead m-0 max-w-[38ch] text-pretty text-hero-text-muted'
-            style={`--hero-enter-i: ${leadEnterIndex}`}>
-            {hero.lead}
+          <p class='type-section-lead m-0 max-w-[38ch] text-pretty text-hero-text-muted'>
+            {
+              leadLines.map(({ text, enterIndex }) => (
+                <span class='hero-enter hero-enter--line block' style={`--hero-enter-i: ${enterIndex}`}>
+                  {text}
+                </span>
+              ))
+            }
           </p>
         </div>
       </div>

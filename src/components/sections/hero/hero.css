@@ -41,7 +41,7 @@
 }
 
 .hero-enter--word,
-.hero-enter--lead {
+.hero-enter--line {
   transform-origin: left bottom;
   animation-delay: calc(var(--hero-enter-i) * var(--hero-enter-stagger));
 }

@@ -3,6 +3,6 @@ export const siteDescription =
 
 export const hero = {
   headlineLines: ['Polished web experiences', 'for brands that care.'],
-  lead: 'Sole developer on corporate rebuilds — from architecture to motion.',
+  leadLines: ['Sole developer on corporate rebuilds —', 'from architecture to motion.'],
   imageAlt: 'Blue abstract dithered texture',
 } as const;
