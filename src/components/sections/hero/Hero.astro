@@ -3,6 +3,7 @@ import './hero.css';
 
 import { getImage } from 'astro:assets';
 
+import HeaderHero from '@/components/common/header/HeaderHero.astro';
 import { hero } from '@/data/bio';
 import heroImage from '@/assets/images/hero-blue-abstract.png';
 
@@ -45,6 +46,8 @@ const leadEnterIndex = headlineWordsByLine.flat().length + 1;
     />
 
     <div class='hero-panel relative isolate overflow-hidden'>
+      <HeaderHero />
+
       <div class='hero-panel__media absolute inset-0'>
         <div class='hero-panel__lqip' style={`background-image: url(${heroLqip.src})`} aria-hidden='true'></div>
         <picture class='hero-panel__picture'>

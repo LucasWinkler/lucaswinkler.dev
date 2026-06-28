@@ -70,6 +70,8 @@
 
   --header-bar-max: var(--section-max);
   --header-bar-max-sticky: 29rem;
+  --header-sticky-enter-duration: 260ms;
+  --header-sticky-exit-duration: 180ms;
   --header-bar-padding-x: clamp(0.875rem, 2vw, 1.25rem);
   --header-bar-padding-y: clamp(0.3125rem, 0.6vw, 0.4375rem);
   --header-inner-min-h: 2.625rem;
@@ -97,6 +99,7 @@
   }
 
   html {
+    overscroll-behavior: none;
     scroll-behavior: smooth;
     scroll-padding-top: calc(var(--header-inner-min-h) + 2rem + env(safe-area-inset-top, 0px));
     -webkit-font-smoothing: antialiased;

@@ -1,71 +1,62 @@
-const header = document.getElementById('site-header');
-const heroPanel = document.querySelector('#hero .hero-panel');
-const headerInner = header?.querySelector('.site-header__inner');
-const headerBrand = header?.querySelector('.site-header__brand');
-const headerNav = header?.querySelector('.site-header__nav');
+const heroHeader = document.getElementById('site-header-hero');
+const stickyHeader = document.getElementById('site-header-sticky');
+const stickyInner = stickyHeader?.querySelector('.site-header__inner');
+const stickyBrand = stickyHeader?.querySelector('.site-header__brand');
+const stickyNav = stickyHeader?.querySelector('.site-header__nav');
 
-if (header && heroPanel && headerInner && headerBrand && headerNav) {
+if (heroHeader && stickyHeader && stickyInner && stickyBrand && stickyNav) {
   let ticking = false;
-  let wasPinned = false;
-
-  const readPaddingTop = (scrolled: 'true' | 'false') => {
-    header.dataset.scrolled = scrolled;
-    return parseFloat(getComputedStyle(header).paddingTop) || 0;
-  };
+  let stickyVisible = false;
 
   const syncStickyBarWidth = () => {
     const rootStyles = getComputedStyle(document.documentElement);
     const padX = parseFloat(rootStyles.getPropertyValue('--header-bar-padding-x')) * 2 || 32;
-    const gap = parseFloat(getComputedStyle(headerInner).columnGap) || 0;
+    const gap = parseFloat(getComputedStyle(stickyInner).columnGap) || 0;
     const contentWidth = Math.ceil(
-      headerBrand.getBoundingClientRect().width + headerNav.getBoundingClientRect().width + gap + padX,
+      stickyBrand.getBoundingClientRect().width + stickyNav.getBoundingClientRect().width + gap + padX,
     );
 
-    header.style.setProperty('--header-bar-max-sticky', `${contentWidth}px`);
+    stickyHeader.style.setProperty('--header-bar-max-sticky', `${contentWidth}px`);
   };
 
-  const readPinThreshold = () => {
-    const padFalse = readPaddingTop('false');
-    header.dataset.scrolled = 'true';
-    const padTrue = readPaddingTop('true');
-    const bar = header.querySelector('.site-header__bar');
-    const barPadY = bar ? parseFloat(getComputedStyle(bar).paddingTop) || 0 : 0;
-    header.dataset.scrolled = 'false';
+  const setStickyVisible = (visible: boolean) => {
+    if (visible === stickyVisible) {
+      return;
+    }
 
-    return padFalse - padTrue - barPadY;
+    stickyVisible = visible;
+
+    if (visible) {
+      stickyHeader.dataset.visible = 'true';
+      stickyHeader.removeAttribute('aria-hidden');
+      return;
+    }
+
+    stickyHeader.dataset.visible = 'false';
+    stickyHeader.setAttribute('aria-hidden', 'true');
   };
-
-  let pinThreshold = readPinThreshold();
-  header.dataset.scrolled = 'false';
 
   const syncHeader = () => {
-    const rect = heroPanel.getBoundingClientRect();
-    const pinned = rect.top <= -pinThreshold;
+    const heroBottom = heroHeader.getBoundingClientRect().bottom;
 
-    if (pinned) {
-      if (!wasPinned) {
-        header.dataset.scrolled = 'true';
-        header.style.removeProperty('top');
-        header.style.removeProperty('left');
-        header.style.removeProperty('width');
-        wasPinned = true;
+    if (stickyVisible) {
+      if (heroBottom > 8) {
+        setStickyVisible(false);
       }
 
       return;
     }
 
-    if (wasPinned) {
-      header.dataset.scrolled = 'false';
-      wasPinned = false;
+    if (heroBottom <= 0) {
+      setStickyVisible(true);
     }
-
-    header.style.top = `${rect.top}px`;
-    header.style.left = `${rect.left}px`;
-    header.style.width = `${rect.width}px`;
   };
 
   const onScroll = () => {
-    if (ticking) return;
+    if (ticking) {
+      return;
+    }
+
     ticking = true;
     requestAnimationFrame(() => {
       syncHeader();
@@ -81,8 +72,6 @@ if (header && heroPanel && headerInner && headerBrand && headerNav) {
     'resize',
     () => {
       syncStickyBarWidth();
-      pinThreshold = readPinThreshold();
-      header.dataset.scrolled = 'false';
       syncHeader();
     },
     { passive: true },

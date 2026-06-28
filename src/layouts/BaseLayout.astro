@@ -3,9 +3,6 @@ import '@/styles/global.css';
 
 import { Font } from 'astro:assets';
 
-import { DevInterfaceKit } from '@/components/common/DevInterfaceKit';
-import { isInterfaceKitEnabled } from '@/lib/interface-kit';
-
 interface Props {
   title?: string;
   description?: string;
@@ -15,8 +12,6 @@ const {
   title = 'Lucas Winkler',
   // description = 'TODO: add description'
 } = Astro.props;
-
-const showInterfaceKit = isInterfaceKitEnabled();
 ---
 
 <!doctype html>
@@ -33,6 +28,5 @@ const showInterfaceKit = isInterfaceKitEnabled();
   </head>
   <body>
     <slot />
-    {showInterfaceKit && <DevInterfaceKit client:load />}
   </body>
 </html>

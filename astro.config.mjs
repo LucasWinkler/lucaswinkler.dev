@@ -39,7 +39,7 @@ export default defineConfig({
       dedupe: ['react', 'react-dom', 'motion'],
     },
     optimizeDeps: {
-      include: ['interface-kit/react', 'motion/react'],
+      include: ['motion/react'],
     },
   },
 });
