@@ -1,4 +1,5 @@
 {
+  "eslint.useFlatConfig": true,
   "eslint.rules.customizations": [
     {
       "rule": "simple-import-sort/*",

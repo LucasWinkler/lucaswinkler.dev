@@ -6,8 +6,8 @@ import heroImage from '@/assets/images/hero-blue-abstract.png';
 
 const heroImageOptions = {
   src: heroImage,
-  layout: 'full-width' as const,
-  fit: 'cover' as const,
+  layout: 'full-width',
+  fit: 'cover',
 };
 
 const [heroAvif, heroWebp, heroLqip, heroSrc] = await Promise.all([
