@@ -12,8 +12,8 @@ export const experience: ExperienceItem[] = [
     industry: 'Golf SaaS',
     website: 'https://tee-on.com',
     websiteLabel: 'tee-on.com',
-    accentFrom: '#142018',
-    accentTo: '#2f4a38',
+    accentFrom: 'oklch(0.229 0.023 155.016)',
+    accentTo: 'oklch(0.382 0.045 154.548)',
     highlights: [
       'Built dashboard features and layout components from scratch for a high-traffic SaaS platform in React.',
       'Led ground-up rebuilds of four enterprise web properties as sole developer, working directly with marketing on design and copy.',
@@ -32,8 +32,8 @@ export const experience: ExperienceItem[] = [
     industry: 'Fintech',
     website: 'https://cashin.so',
     websiteLabel: 'cashin.so',
-    accentFrom: '#101820',
-    accentTo: '#1e3344',
+    accentFrom: 'oklch(0.205 0.02 248.83)',
+    accentTo: 'oklch(0.312 0.041 244.055)',
     highlights: [
       'Architected and rebuilt backend infrastructure with Node.js, Express 5, and TypeScript.',
       'Shipped new marketing pages and user platform to improve brand presence and product experience.',
@@ -50,8 +50,8 @@ export const experience: ExperienceItem[] = [
     end: '2025-11',
     employmentType: 'volunteer',
     industry: 'Nonprofit',
-    accentFrom: '#181410',
-    accentTo: '#3a3024',
+    accentFrom: 'oklch(0.195 0.01 67.169)',
+    accentTo: 'oklch(0.316 0.025 71.817)',
     highlights: [
       'Built responsive Next.js features with React, TypeScript, and Tailwind CSS.',
       'Set up ESLint, Prettier, and pre-commit hooks to improve team workflow.',

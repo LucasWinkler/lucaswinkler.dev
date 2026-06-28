@@ -228,9 +228,9 @@ const leadEnterIndex = headlineWordsByLine.flat().length + 1;
     min-height: calc(100svh - (var(--hero-inset-y-px) * var(--hero-progress) * 2));
     border-radius: calc(var(--hero-radius-px) * var(--hero-progress));
     box-shadow:
-      0 0 0 1px rgba(0, 0, 0, calc(0.06 * var(--hero-progress))),
-      0 1px 2px -1px rgba(0, 0, 0, calc(0.06 * var(--hero-progress))),
-      0 2px 4px 0 rgba(0, 0, 0, calc(0.04 * var(--hero-progress)));
+      0 0 0 1px oklch(0 0 0 / calc(0.06 * var(--hero-progress))),
+      0 1px 2px -1px oklch(0 0 0 / calc(0.06 * var(--hero-progress))),
+      0 2px 4px 0 oklch(0 0 0 / calc(0.04 * var(--hero-progress)));
   }
 
   .hero-panel__content {
@@ -289,7 +289,7 @@ const leadEnterIndex = headlineWordsByLine.flat().length + 1;
   }
 
   .hero-panel__media {
-    background-color: #1a3348;
+    background-color: oklch(0.311 0.049 245.613);
     transform: translateZ(0);
   }
 
@@ -321,7 +321,7 @@ const leadEnterIndex = headlineWordsByLine.flat().length + 1;
     object-position: center;
     opacity: 0;
     transition: opacity var(--hero-media-duration) var(--hero-enter-ease);
-    outline: 1px solid rgba(255, 255, 255, 0.1);
+    outline: 1px solid oklch(1 0 0 / 0.1);
     outline-offset: -1px;
   }
 

@@ -203,8 +203,8 @@ const { class: className } = Astro.props;
     overflow: visible;
     background-color: var(--color-surface);
     box-shadow:
-      0 8px 32px -8px rgba(18, 17, 16, 0.08),
-      0 2px 12px -4px rgba(18, 17, 16, 0.04);
+      0 8px 32px -8px oklch(0.178 0.003 67.659 / 0.08),
+      0 2px 12px -4px oklch(0.178 0.003 67.659 / 0.04);
     padding-inline: var(--header-bar-padding-x);
     padding-block: var(--header-bar-padding-y);
     transition-duration: 380ms;
@@ -228,7 +228,7 @@ const { class: className } = Astro.props;
 
   .site-header[data-scrolled='true'] .site-header__link:hover {
     color: var(--color-text);
-    background-color: rgba(18, 17, 16, 0.05);
+    background-color: oklch(0.178 0.003 67.659 / 0.05);
   }
 
   @media (prefers-reduced-motion: reduce) {

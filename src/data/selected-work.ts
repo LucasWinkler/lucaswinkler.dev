@@ -9,8 +9,8 @@ export const selectedWork: SelectedWorkItem[] = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     tech: ['Astro', 'React', 'TS'],
     image: '/images/eventcaddy.webp',
-    posterFrom: '#142018',
-    posterTo: '#2f4a38',
+    posterFrom: 'oklch(0.229 0.023 155.016)',
+    posterTo: 'oklch(0.382 0.045 154.548)',
   },
   {
     id: 'tee-on',
@@ -20,8 +20,8 @@ export const selectedWork: SelectedWorkItem[] = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     tech: ['Astro', 'React', 'TS'],
     image: '/images/tee-on.webp',
-    posterFrom: '#101820',
-    posterTo: '#1e3344',
+    posterFrom: 'oklch(0.205 0.02 248.83)',
+    posterTo: 'oklch(0.312 0.041 244.055)',
   },
   {
     id: '9fore',
@@ -31,8 +31,8 @@ export const selectedWork: SelectedWorkItem[] = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     tech: ['Astro', 'React', 'TS'],
     image: '/images/9fore.webp',
-    posterFrom: '#181410',
-    posterTo: '#3a3024',
+    posterFrom: 'oklch(0.195 0.01 67.169)',
+    posterTo: 'oklch(0.316 0.025 71.817)',
   },
   {
     id: 'golfnorth',
@@ -42,7 +42,7 @@ export const selectedWork: SelectedWorkItem[] = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     tech: ['Astro', 'React', 'TS'],
     image: '/images/golfnorth.webp',
-    posterFrom: '#0f1812',
-    posterTo: '#264032',
+    posterFrom: 'oklch(0.198 0.018 155.252)',
+    posterTo: 'oklch(0.346 0.041 159.767)',
   },
 ];
