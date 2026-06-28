@@ -97,6 +97,8 @@
   }
 
   html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-inner-min-h) + 2rem + env(safe-area-inset-top, 0px));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: var(--font-inter-display);
@@ -146,6 +148,10 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
     *,
     *::before,
     *::after {
