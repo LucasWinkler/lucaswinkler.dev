@@ -68,7 +68,7 @@
 
 .site-header--sticky .site-header__bar {
   max-width: min(var(--header-bar-max-sticky), calc(100% - 2rem));
-  border-radius: 9999px;
+  border-radius: var(--radius-header-bar);
   background-color: var(--color-surface);
   box-shadow: var(--shadow-header-bar);
   padding-inline: var(--header-bar-padding-x);
@@ -94,6 +94,7 @@
 
 .site-header--sticky .site-header__link {
   color: var(--color-text-muted);
+  border-radius: var(--radius-header-link);
 }
 
 .site-header--sticky .site-header__link:hover,

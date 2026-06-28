@@ -76,6 +76,8 @@
   --header-bar-padding-y: clamp(0.3125rem, 0.6vw, 0.4375rem);
   --header-inner-min-h: 2.625rem;
   --header-link-radius: 9999px;
+  --radius-header-bar: 0.5rem;
+  --radius-header-link: 0.375rem;
   --shadow-header-bar:
     0 8px 32px -8px oklch(0.178 0.003 67.659 / 0.08), 0 2px 12px -4px oklch(0.178 0.003 67.659 / 0.04);
 
