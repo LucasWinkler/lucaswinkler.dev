@@ -11,7 +11,7 @@ export const selectedWork: SelectedWorkItem[] = [
     brand: 'Tee-On',
     domain: 'teeon.com',
     url: 'https://www.teeon.com',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    description: 'All-in-one golf course management software. Marketing site redesign on the existing React platform.',
     tech: ['React', 'TS', 'SCSS'],
     image: teeonCoverImage.src,
     logo: '/images/tee-on.ico',
@@ -22,7 +22,8 @@ export const selectedWork: SelectedWorkItem[] = [
     brand: 'GolfNorth International',
     domain: 'golfnorthinternational.com',
     url: 'https://golfnorthinternational.com',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    description:
+      'Corporate site for a national golf operator — course management, software, leasing, hospitality, and retail.',
     tech: ['Astro', 'React', 'TS', 'SCSS'],
     image: golfNorthCoverImage.src,
     logo: '/images/golfnorth.svg',
@@ -33,7 +34,8 @@ export const selectedWork: SelectedWorkItem[] = [
     brand: '9Fore',
     domain: '9fore.ca',
     url: 'https://9fore.ca',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    description:
+      'Canadian distributor of turf equipment and golf carts for golf facilities across Ontario and select provinces.',
     tech: ['Astro', 'React', 'TS', 'SCSS'],
     image: nineForeCoverImage.src,
     logo: '/images/9fore.svg',
@@ -44,7 +46,8 @@ export const selectedWork: SelectedWorkItem[] = [
     brand: 'EventCaddy',
     domain: 'dev-landing.eventcaddy.com',
     url: 'https://dev-landing.eventcaddy.com',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    description:
+      'Tournament management platform for golf events — registration, sponsorships, payments, and live scoring.',
     tech: ['Astro', 'React', 'TS', 'SCSS'],
     image: eventcaddyCoverImage.src,
     logo: '/images/eventcaddy.svg',

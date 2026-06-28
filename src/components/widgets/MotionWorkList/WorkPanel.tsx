@@ -233,7 +233,7 @@ export const WorkPanel = memo(function WorkPanel({
             />
 
             <div
-              className='w-[min(48ch,100%)] min-[901px]:w-[min(48ch,calc(50cqw-3rem))]'
+              className='w-[min(38ch,100%)] min-[901px]:w-[min(38ch,calc(50cqw-3rem))]'
               style={getContentStyle(isActive, 0.12, shouldReduceMotion)}>
               <p className='type-caption m-0 text-white/78 text-pretty'>{item.description}</p>
             </div>
