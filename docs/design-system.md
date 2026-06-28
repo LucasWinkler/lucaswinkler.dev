@@ -28,7 +28,7 @@ Four layers — pick the right one, don't mix unnecessarily.
 | Component CSS    | Co-located `*.css` next to a component | Scroll/state selectors, keyframes            |
 | Inline `style`   | React components only                  | Runtime values (`flexGrow`, `scale`, delays) |
 
-No `@apply`. Scroll-driven `calc()` in component CSS (e.g. hero shadow opacity tied to `--hero-progress`) is allowed — those values can't be expressed as static utilities.
+No `@apply`. State-driven `calc()` in component CSS is allowed when those values can't be expressed as static utilities.
 
 Complex components use co-located subfolders: markup in the main file, styles in `*.css`, client logic in `*.ts`.
 
@@ -186,7 +186,7 @@ Respect `prefers-reduced-motion` — already handled globally in `global.css`.
 | ---------------------------------------- | --------------------------------------------------- |
 | `src/styles/global.css`                  | All tokens + typography presets                     |
 | `src/components/common/header/`          | Header markup, `header.css`, `header-sync.ts`       |
-| `src/components/sections/hero/`          | Hero markup, `hero.css`, `hero-scroll.ts`           |
+| `src/components/sections/hero/`          | Hero markup, `hero.css`, `hero-image.ts`            |
 | `src/components/widgets/MotionWorkList/` | Work list, panel, constants, Tailwind class strings |
 | `docs/design-system.md`                  | This reference                                      |
 | `astro.config.mjs`                       | Inter font loading (`--font-inter`)                 |

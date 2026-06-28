@@ -1,34 +1,10 @@
-.hero-scroll-track {
-  --hero-scroll-range: 140px;
-  height: calc(100svh + var(--hero-scroll-range));
-}
-
-.hero-scroll-track[data-motion='reduce'] {
-  height: auto;
-}
-
 .hero-shell {
-  --hero-progress: 0;
-  --hero-inset-x-px: 0px;
-  --hero-inset-y-px: 0px;
-  --hero-radius-px: 0px;
-  position: sticky;
-  top: 0;
   min-height: 100svh;
-  padding-inline: calc(var(--hero-inset-x-px) * var(--hero-progress));
-  padding-block: calc(var(--hero-inset-y-px) * var(--hero-progress));
-}
-
-.hero-scroll-track[data-motion='reduce'] .hero-shell {
-  position: static;
-  min-height: 0;
+  padding-inline: var(--hero-inset-x);
+  padding-block: var(--hero-inset-y);
 }
 
 @supports (height: 100dvh) {
-  .hero-scroll-track {
-    height: calc(100dvh + var(--hero-scroll-range));
-  }
-
   .hero-shell {
     min-height: 100dvh;
   }
@@ -36,35 +12,13 @@
 
 .hero-panel {
   contain: layout paint;
-  min-height: calc(100svh - (var(--hero-inset-y-px) * var(--hero-progress) * 2));
-  border-radius: calc(var(--hero-radius-px) * var(--hero-progress));
-  box-shadow:
-    0 0 0 1px oklch(0 0 0 / calc(0.06 * var(--hero-progress))),
-    0 1px 2px -1px oklch(0 0 0 / calc(0.06 * var(--hero-progress))),
-    0 2px 4px 0 oklch(0 0 0 / calc(0.04 * var(--hero-progress)));
+  min-height: var(--hero-panel-min-h);
+  border-radius: var(--radius-hero);
+  box-shadow: var(--shadow-panel);
 }
 
 .hero-panel__content {
-  min-height: calc(100svh - (var(--hero-inset-y-px) * var(--hero-progress) * 2));
-}
-
-@supports (height: 100dvh) {
-  .hero-panel,
-  .hero-panel__content {
-    min-height: calc(100dvh - (var(--hero-inset-y-px) * var(--hero-progress) * 2));
-  }
-}
-
-@keyframes hero-enter-header {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  min-height: var(--hero-panel-min-h);
 }
 
 @keyframes hero-enter-content {
@@ -84,13 +38,6 @@
 .hero-enter {
   opacity: 0;
   animation: hero-enter-content var(--hero-enter-duration) var(--hero-enter-ease) forwards;
-}
-
-.hero-enter--header {
-  transform-origin: top left;
-  animation-name: hero-enter-header;
-  animation-timing-function: var(--ease-out);
-  animation-delay: 0ms;
 }
 
 .hero-enter--word,
@@ -141,13 +88,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-scroll-track {
-    height: auto;
-  }
-
   .hero-shell {
-    --hero-progress: 1;
-    position: static;
     min-height: 0;
   }
 
