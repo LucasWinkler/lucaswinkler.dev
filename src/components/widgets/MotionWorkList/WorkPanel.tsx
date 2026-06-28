@@ -31,6 +31,22 @@ const logoLayoutTransition = { duration: 0.52, ease: logoEase };
 const logoShellClass =
   'flex items-center justify-center overflow-hidden bg-white rounded-(--radius-work-logo) max-[640px]:rounded-(--radius-work-logo-sm)';
 
+function getImageRevealStyle(isActive: boolean, shouldReduceMotion: boolean): CSSProperties {
+  if (shouldReduceMotion) {
+    return {
+      opacity: isActive ? 1 : 0,
+    };
+  }
+
+  return {
+    opacity: isActive ? 1 : 0,
+    filter: isActive ? 'blur(0px)' : 'blur(4px)',
+    transitionProperty: 'opacity, filter',
+    transitionDuration: mediaDuration,
+    transitionTimingFunction: fadeEase,
+  };
+}
+
 function getMediaScale(isActive: boolean, isHovered: boolean): number {
   if (isActive) {
     return 1.045;
@@ -77,11 +93,11 @@ export const WorkPanel = memo(function WorkPanel({
     flexGrow,
     flexShrink: 1,
     flexBasis: 0,
-    opacity: isActive ? 1 : 0.9,
+    backgroundColor: item.brandColor,
   };
 
   if (!shouldReduceMotion) {
-    panelStyle.transitionProperty = 'flex-grow, opacity';
+    panelStyle.transitionProperty = 'flex-grow';
     panelStyle.transitionDuration = isHovering ? hoverPanelDuration : panelDuration;
     panelStyle.transitionTimingFunction = fadeEase;
   }
@@ -116,47 +132,35 @@ export const WorkPanel = memo(function WorkPanel({
       aria-label={isActive ? undefined : `Show ${item.brand} details`}
       className={`${panelClass} outline-none focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)] ${isActive ? 'cursor-default select-text' : 'cursor-pointer'}`}>
       <motion.div layoutRoot className='relative h-full w-full overflow-hidden'>
-        <div className='pointer-events-none absolute inset-0 origin-center' style={mediaStyle} aria-hidden='true'>
-          <div
-            className='absolute inset-[-5%] bg-cover bg-center'
-            style={{
-              backgroundImage: `linear-gradient(145deg, ${item.posterFrom} 0%, ${item.posterTo} 100%)`,
-            }}
-          />
+        {item.image ? (
+          <div className='pointer-events-none absolute inset-0 origin-center' style={mediaStyle} aria-hidden='true'>
+            <div className='absolute inset-[-5%]' style={getImageRevealStyle(isActive, shouldReduceMotion)}>
+              <img
+                className='absolute inset-0 h-full w-full max-w-none object-cover outline -outline-offset-1 outline-black/10'
+                style={item.imagePosition ? { objectPosition: item.imagePosition } : undefined}
+                src={item.image}
+                alt=''
+                loading='lazy'
+                decoding='async'
+                onError={event => {
+                  event.currentTarget.style.display = 'none';
+                }}
+              />
 
-          {item.image ? (
-            <img
-              className='absolute -inset-[5%] h-[110%] w-[110%] max-w-none object-cover outline -outline-offset-1 outline-black/10'
-              style={item.imagePosition ? { objectPosition: item.imagePosition } : undefined}
-              src={item.image}
-              alt=''
-              loading='lazy'
-              decoding='async'
-              onError={event => {
-                event.currentTarget.style.display = 'none';
-              }}
-            />
-          ) : null}
-        </div>
-
-        <div
-          className={`pointer-events-none absolute inset-0 bg-linear-to-b ${
-            isActive ? 'from-black/8 via-transparent to-black/22' : 'from-black/36 via-black/18 to-black/52'
-          }`}
-          aria-hidden='true'
-        />
-
-        {isActive ? (
-          <>
-            <div
-              className='pointer-events-none absolute inset-y-0 left-0 w-[min(100%,42rem)] bg-linear-to-r from-black/82 via-black/48 to-transparent'
-              aria-hidden='true'
-            />
-            <div
-              className='pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-linear-to-t from-black/72 to-transparent'
-              aria-hidden='true'
-            />
-          </>
+              <div
+                className='pointer-events-none absolute inset-0 bg-linear-to-b from-black/5 via-transparent to-black/16'
+                aria-hidden='true'
+              />
+              <div
+                className='pointer-events-none absolute inset-y-0 left-0 w-[min(100%,42rem)] bg-linear-to-r from-black/72 via-black/40 to-transparent'
+                aria-hidden='true'
+              />
+              <div
+                className='pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-linear-to-t from-black/62 to-transparent'
+                aria-hidden='true'
+              />
+            </div>
+          </div>
         ) : null}
 
         {item.logo ? (

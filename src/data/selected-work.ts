@@ -1,4 +1,7 @@
-import teeonMarshalImage from '@/assets/images/teeon-marshal.png';
+import nineForeCoverImage from '@/assets/images/9fore-cover.png';
+import eventcaddyCoverImage from '@/assets/images/eventcaddy-cover.png';
+import golfNorthCoverImage from '@/assets/images/gn-cover.png';
+import teeonCoverImage from '@/assets/images/teeon-cover.png';
 
 import type { SelectedWorkItem } from '@/types/work';
 
@@ -10,11 +13,9 @@ export const selectedWork: SelectedWorkItem[] = [
     url: 'https://www.teeon.com',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     tech: ['React', 'TS', 'SCSS'],
-    image: teeonMarshalImage.src,
-    imagePosition: '62% 22%',
+    image: teeonCoverImage.src,
     logo: '/images/tee-on.ico',
-    posterFrom: 'oklch(0.205 0.02 248.83)',
-    posterTo: 'oklch(0.312 0.041 244.055)',
+    brandColor: '#4168B1',
   },
   {
     id: 'golfnorth',
@@ -23,9 +24,9 @@ export const selectedWork: SelectedWorkItem[] = [
     url: 'https://golfnorthinternational.com',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     tech: ['Astro', 'React', 'TS', 'SCSS'],
-    image: '/images/golfnorth.webp',
-    posterFrom: 'oklch(0.198 0.018 155.252)',
-    posterTo: 'oklch(0.346 0.041 159.767)',
+    image: golfNorthCoverImage.src,
+    logo: '/images/golfnorth.svg',
+    brandColor: '#212221',
   },
   {
     id: '9fore',
@@ -34,9 +35,9 @@ export const selectedWork: SelectedWorkItem[] = [
     url: 'https://9fore.ca',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     tech: ['Astro', 'React', 'TS', 'SCSS'],
-    image: '/images/9fore.webp',
-    posterFrom: 'oklch(0.195 0.01 67.169)',
-    posterTo: 'oklch(0.316 0.025 71.817)',
+    image: nineForeCoverImage.src,
+    logo: '/images/9fore.svg',
+    brandColor: '#0F2043',
   },
   {
     id: 'eventcaddy',
@@ -45,8 +46,8 @@ export const selectedWork: SelectedWorkItem[] = [
     url: 'https://dev-landing.eventcaddy.com',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     tech: ['Astro', 'React', 'TS', 'SCSS'],
-    image: '/images/eventcaddy.webp',
-    posterFrom: 'oklch(0.229 0.023 155.016)',
-    posterTo: 'oklch(0.382 0.045 154.548)',
+    image: eventcaddyCoverImage.src,
+    logo: '/images/eventcaddy.svg',
+    brandColor: '#1E241D',
   },
 ];

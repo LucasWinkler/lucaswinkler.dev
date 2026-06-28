@@ -8,6 +8,5 @@ export type SelectedWorkItem = {
   image?: string;
   imagePosition?: string;
   logo?: string;
-  posterFrom: string;
-  posterTo: string;
+  brandColor: string;
 };
