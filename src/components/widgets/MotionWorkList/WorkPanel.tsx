@@ -215,17 +215,30 @@ export const WorkPanel = memo(function WorkPanel({
             <div
               className='flex max-w-[min(24ch,calc(100%-3.5rem))] flex-col gap-1.5 max-[640px]:max-w-full'
               style={getContentStyle(isExpanded, 0.05, revealMotion)}>
-              <h3 id={`work-${item.id}-title`} className='type-card-title m-0 text-balance text-white'>
-                {item.brand}
-              </h3>
-              <a
-                className={`type-caption relative w-fit max-w-full rounded-sm text-white/88 underline-offset-2 no-underline outline-none transition-[color,text-decoration-color] duration-150 ease-out after:absolute after:inset-[-0.625rem] after:content-[""] hover:text-white hover:underline focus-visible:text-white focus-visible:underline focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)] ${isExpanded ? 'max-[640px]:overflow-visible max-[640px]:whitespace-normal' : 'truncate'}`}
-                href={item.url}
-                target='_blank'
-                rel='noopener noreferrer'
-                tabIndex={isExpanded ? undefined : -1}>
-                {item.domain}
-              </a>
+              {isExpanded ? (
+                <h3 id={`work-${item.id}-title`} className='type-card-title m-0 text-balance text-white'>
+                  <a
+                    className='group flex w-fit max-w-full flex-col gap-1.5 rounded-sm text-white no-underline outline-none transition-[color] duration-150 ease-out focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)] max-[640px]:overflow-visible max-[640px]:whitespace-normal'
+                    href={item.url}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    aria-label={`Visit ${item.brand} at ${item.domain}`}>
+                    <span>{item.brand}</span>
+                    <span className='type-caption text-white/88 underline-offset-2 no-underline transition-[color,text-decoration-color] duration-150 ease-out group-hover:text-white group-hover:underline group-focus-visible:text-white group-focus-visible:underline'>
+                      {item.domain}
+                    </span>
+                  </a>
+                </h3>
+              ) : (
+                <>
+                  <h3 id={`work-${item.id}-title`} className='type-card-title m-0 text-balance text-white'>
+                    {item.brand}
+                  </h3>
+                  <span className='type-caption truncate text-white/88' aria-hidden='true'>
+                    {item.domain}
+                  </span>
+                </>
+              )}
             </div>
 
             <div
