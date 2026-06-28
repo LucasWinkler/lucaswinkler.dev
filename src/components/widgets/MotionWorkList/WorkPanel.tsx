@@ -1,16 +1,8 @@
 import { LayoutGroup, motion, type Transition } from 'motion/react';
 import { type CSSProperties, type KeyboardEvent, memo, type PointerEvent, type SyntheticEvent } from 'react';
 
-import {
-  contentDuration,
-  contentEase,
-  fadeEase,
-  hoverMediaDuration,
-  hoverPanelDuration,
-  mediaDuration,
-  panelDuration,
-} from './constants';
-import { panelClass } from './styles';
+import { contentDuration, contentEase, fadeEase, hoverMediaDuration, mediaDuration } from './constants';
+import { panelClass, panelEndInsetClass, panelGapClass, panelInsetClass, panelSnapClass } from './styles';
 
 import type { SelectedWorkItem } from '@/types/work';
 
@@ -18,8 +10,11 @@ export type WorkPanelProps = {
   item: SelectedWorkItem;
   flexGrow: number;
   isActive: boolean;
+  isFirst: boolean;
+  isLast: boolean;
   isHovered: boolean;
   isHovering: boolean;
+  isMobileLayout: boolean;
   shouldReduceMotion: boolean;
   onActivate: () => void;
   onPointerEnter: (event: PointerEvent<HTMLElement>) => void;
@@ -38,10 +33,11 @@ function hideBrokenImage(event: SyntheticEvent<HTMLImageElement>) {
 type WorkPanelLogoProps = {
   variant: 'centered' | 'corner';
   src: string;
+  scale?: number;
   transition: Transition;
 };
 
-function WorkPanelLogo({ variant, src, transition }: WorkPanelLogoProps) {
+function WorkPanelLogo({ variant, src, scale, transition }: WorkPanelLogoProps) {
   const wrapperClass =
     variant === 'corner'
       ? 'pointer-events-none absolute top-(--space-work-panel-inset) right-(--space-work-panel-inset) z-3 max-[640px]:top-(--space-work-panel-inset-sm) max-[640px]:right-(--space-work-panel-inset-sm)'
@@ -54,6 +50,7 @@ function WorkPanelLogo({ variant, src, transition }: WorkPanelLogoProps) {
       <motion.div layoutId='logo' className={`${shellSizeClass} ${logoShellClass}`} transition={{ layout: transition }}>
         <img
           className='h-full w-full object-contain'
+          style={scale !== undefined ? { transform: `scale(${scale})` } : undefined}
           src={src}
           alt=''
           width={32}
@@ -117,26 +114,23 @@ export const WorkPanel = memo(function WorkPanel({
   item,
   flexGrow,
   isActive,
+  isFirst,
+  isLast,
   isHovered,
   isHovering,
+  isMobileLayout,
   shouldReduceMotion,
   onActivate,
   onPointerEnter,
 }: WorkPanelProps) {
-  const mediaScale = getMediaScale(isActive, isHovered);
+  const isExpanded = isMobileLayout || isActive;
+  const revealMotion = shouldReduceMotion || isMobileLayout;
+  const mediaScale = isMobileLayout ? 1 : getMediaScale(isActive, isHovered);
   const logoTransition = shouldReduceMotion ? { duration: 0 } : logoLayoutTransition;
-  const panelStyle: CSSProperties = {
-    flexGrow,
-    flexShrink: 1,
-    flexBasis: 0,
+  const panelStyle = {
     backgroundColor: item.brandColor,
-  };
-
-  if (!shouldReduceMotion) {
-    panelStyle.transitionProperty = 'flex-grow';
-    panelStyle.transitionDuration = isHovering ? hoverPanelDuration : panelDuration;
-    panelStyle.transitionTimingFunction = fadeEase;
-  }
+    '--panel-grow': flexGrow,
+  } as CSSProperties;
 
   const mediaStyle: CSSProperties = {
     transform: `translate3d(0, 0, 0) scale(${mediaScale})`,
@@ -149,6 +143,10 @@ export const WorkPanel = memo(function WorkPanel({
   }
 
   const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (isMobileLayout || isActive) {
+      return;
+    }
+
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       onActivate();
@@ -158,19 +156,19 @@ export const WorkPanel = memo(function WorkPanel({
   return (
     <div
       style={panelStyle}
-      onPointerEnter={onPointerEnter}
-      onClick={isActive ? undefined : onActivate}
-      onKeyDown={isActive ? undefined : handleKeyDown}
-      role={isActive ? 'region' : 'button'}
-      tabIndex={0}
-      aria-expanded={isActive}
-      aria-labelledby={isActive ? `work-${item.id}-title` : undefined}
-      aria-label={isActive ? undefined : `Show ${item.brand} details`}
-      className={`${panelClass} outline-none focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)] ${isActive ? 'cursor-default select-text' : 'cursor-pointer'}`}>
+      onPointerEnter={isMobileLayout ? undefined : onPointerEnter}
+      onClick={isMobileLayout || isActive ? undefined : onActivate}
+      onKeyDown={isMobileLayout || isActive ? undefined : handleKeyDown}
+      role={isExpanded ? 'region' : 'button'}
+      tabIndex={isMobileLayout ? -1 : 0}
+      aria-expanded={isMobileLayout ? undefined : isActive}
+      aria-labelledby={isExpanded ? `work-${item.id}-title` : undefined}
+      aria-label={isExpanded ? undefined : `Show ${item.brand} details`}
+      className={`${panelClass} ${panelSnapClass} ${isFirst ? panelInsetClass : panelGapClass} ${isLast ? panelEndInsetClass : ''} outline-none focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)] ${isExpanded ? 'cursor-default select-text' : 'cursor-pointer'}`}>
       <motion.div layoutRoot className='relative h-full w-full overflow-hidden'>
         {item.image ? (
           <div className='pointer-events-none absolute inset-0 origin-center' style={mediaStyle} aria-hidden='true'>
-            <div className='absolute inset-[-5%]' style={getImageRevealStyle(isActive, shouldReduceMotion)}>
+            <div className='absolute inset-[-5%]' style={getImageRevealStyle(isExpanded, revealMotion)}>
               <img
                 className='absolute inset-0 h-full w-full max-w-none object-cover outline -outline-offset-1 outline-black/10'
                 style={item.imagePosition ? { objectPosition: item.imagePosition } : undefined}
@@ -200,56 +198,61 @@ export const WorkPanel = memo(function WorkPanel({
 
         {item.logo ? (
           <LayoutGroup id={`work-logo-${item.id}`}>
-            <WorkPanelLogo variant={isActive ? 'corner' : 'centered'} src={item.logo} transition={logoTransition} />
+            <WorkPanelLogo
+              variant={isExpanded ? 'corner' : 'centered'}
+              src={item.logo}
+              scale={item.logoScale}
+              transition={logoTransition}
+            />
           </LayoutGroup>
         ) : null}
 
         <div
-          className={`absolute inset-0 z-2 flex flex-col justify-between p-(--space-work-panel-inset) max-[640px]:p-(--space-work-panel-inset-sm) ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}
-          aria-hidden={!isActive}
-          inert={!isActive}>
-          <div className='relative z-1 flex min-w-0 flex-col'>
+          className={`absolute inset-0 z-2 flex h-full flex-col p-(--space-work-panel-inset) max-[640px]:justify-start max-[640px]:p-(--space-work-panel-inset-sm) min-[641px]:justify-between ${isExpanded ? 'pointer-events-auto' : 'pointer-events-none'}`}
+          aria-hidden={!isExpanded}
+          inert={!isExpanded}>
+          <div className='relative z-1 flex min-w-0 flex-col max-[640px]:flex-none min-[641px]:flex-1'>
             <div
-              className='flex max-w-[min(24ch,calc(100%-3.5rem))] flex-col gap-1.5'
-              style={getContentStyle(isActive, 0.05, shouldReduceMotion)}>
+              className='flex max-w-[min(24ch,calc(100%-3.5rem))] flex-col gap-1.5 max-[640px]:max-w-full'
+              style={getContentStyle(isExpanded, 0.05, revealMotion)}>
               <h3 id={`work-${item.id}-title`} className='type-card-title m-0 text-balance text-white'>
                 {item.brand}
               </h3>
               <a
-                className='type-caption relative w-fit max-w-full truncate rounded-sm text-white/88 underline-offset-2 no-underline outline-none transition-[color,text-decoration-color] duration-150 ease-out after:absolute after:inset-[-0.625rem] after:content-[""] hover:text-white hover:underline focus-visible:text-white focus-visible:underline focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)]'
+                className={`type-caption relative w-fit max-w-full rounded-sm text-white/88 underline-offset-2 no-underline outline-none transition-[color,text-decoration-color] duration-150 ease-out after:absolute after:inset-[-0.625rem] after:content-[""] hover:text-white hover:underline focus-visible:text-white focus-visible:underline focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)] ${isExpanded ? 'max-[640px]:overflow-visible max-[640px]:whitespace-normal' : 'truncate'}`}
                 href={item.url}
                 target='_blank'
                 rel='noopener noreferrer'
-                tabIndex={isActive ? undefined : -1}>
+                tabIndex={isExpanded ? undefined : -1}>
                 {item.domain}
               </a>
             </div>
 
             <div
-              className='my-2 h-px w-full max-w-[min(24ch,calc(100%-3.5rem))] bg-white/14'
+              className='my-2 h-px w-full max-w-[min(24ch,calc(100%-3.5rem))] bg-white/14 max-[640px]:max-w-full'
               aria-hidden='true'
-              style={getContentStyle(isActive, 0.08, shouldReduceMotion)}
+              style={getContentStyle(isExpanded, 0.08, revealMotion)}
             />
 
             <div
               className='w-[min(38ch,100%)] min-[901px]:w-[min(38ch,calc(50cqw-3rem))]'
-              style={getContentStyle(isActive, 0.12, shouldReduceMotion)}>
+              style={getContentStyle(isExpanded, 0.12, revealMotion)}>
               <p className='type-caption m-0 text-white/78 text-pretty'>{item.description}</p>
             </div>
-          </div>
 
-          <ul
-            className='relative z-1 m-0 flex list-none flex-wrap gap-x-2 gap-y-1 p-0'
-            aria-label={`${item.brand} tech stack`}
-            style={getContentStyle(isActive, 0.2, shouldReduceMotion)}>
-            {item.tech.map(stack => (
-              <li
-                key={stack}
-                className="type-caption font-medium tracking-(--tracking-chip) text-white/72 uppercase not-last:after:ms-2 not-last:after:font-normal not-last:after:text-white/40 not-last:after:content-['·']">
-                {stack}
-              </li>
-            ))}
-          </ul>
+            <ul
+              className='relative z-1 m-0 mt-3 flex list-none flex-wrap gap-x-2 gap-y-1 p-0 min-[641px]:mt-auto'
+              aria-label={`${item.brand} tech stack`}
+              style={getContentStyle(isExpanded, 0.2, revealMotion)}>
+              {item.tech.map(stack => (
+                <li
+                  key={stack}
+                  className="type-caption font-medium tracking-(--tracking-chip) text-white/72 uppercase not-last:after:ms-2 not-last:after:font-normal not-last:after:text-white/40 not-last:after:content-['·']">
+                  {stack}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </motion.div>
     </div>

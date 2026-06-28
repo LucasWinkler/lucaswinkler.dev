@@ -45,6 +45,7 @@ export const selectedWork: SelectedWorkItem[] = [
     imageWidth: nineForeCoverImage.width,
     imageHeight: nineForeCoverImage.height,
     logo: '/images/9fore.svg',
+    logoScale: 0.75,
     brandColor: '#0F2043',
   },
   {

@@ -1,7 +1,9 @@
 import { useReducedMotion } from 'motion/react';
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
-import { activeShare, distanceDecay, hoverBoost, minWeight, selectedPeak } from './constants';
+import { useMediaQuery } from '@/lib/useMediaQuery';
+
+import { activeShare, distanceDecay, hoverBoost, minWeight, mobileLayoutMediaQuery, selectedPeak } from './constants';
 import { listClass } from './styles';
 import { WorkPanel } from './WorkPanel';
 
@@ -50,6 +52,8 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [activeId, setActiveId] = useState<string | null>(() => items[0]?.id ?? null);
   const shouldReduceMotion = useReducedMotion();
+  const isMobileLayout = useMediaQuery(mobileLayoutMediaQuery);
+  const listRef = useRef<HTMLDivElement>(null);
 
   const activeIndex = Math.max(
     0,
@@ -59,16 +63,27 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
 
   const flexWeights = getPanelFlexWeights(activeIndex, hoveredIndex, items.length);
 
+  useLayoutEffect(() => {
+    if (!isMobileLayout || !listRef.current) {
+      return;
+    }
+
+    listRef.current.scrollLeft = 0;
+  }, [isMobileLayout, items.length]);
+
   return (
-    <div className={listClass} onMouseLeave={() => setHoveredId(null)}>
+    <div ref={listRef} className={listClass} onMouseLeave={() => setHoveredId(null)}>
       {items.map((item, index) => (
         <WorkPanel
           key={item.id}
           item={item}
           flexGrow={flexWeights[index]}
           isActive={activeId === item.id}
+          isFirst={index === 0}
+          isLast={index === items.length - 1}
           isHovered={hoveredId === item.id}
           isHovering={hoveredIndex >= 0}
+          isMobileLayout={isMobileLayout}
           shouldReduceMotion={shouldReduceMotion ?? false}
           onActivate={() => setActiveId(item.id)}
           onPointerEnter={event => {

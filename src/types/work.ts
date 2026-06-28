@@ -10,5 +10,6 @@ export type SelectedWorkItem = {
   imageHeight?: number;
   imagePosition?: string;
   logo?: string;
+  logoScale?: number;
   brandColor: string;
 };

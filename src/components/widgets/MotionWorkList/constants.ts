@@ -1,4 +1,5 @@
 export { fadeEaseCss as fadeEase } from '@/lib/motion';
+export const mobileLayoutMediaQuery = '(max-width: 640px)';
 export const contentEase = 'cubic-bezier(0.33, 1, 0.68, 1)';
 export const panelDuration = '0.44s';
 export const hoverPanelDuration = '0.68s';
