@@ -1,10 +1,10 @@
-const heroHeader = document.getElementById('site-header-hero');
+const heroSection = document.getElementById('hero');
 const stickyHeader = document.getElementById('site-header-sticky');
 const stickyInner = stickyHeader?.querySelector('.site-header__inner');
 const stickyBrand = stickyHeader?.querySelector('.site-header__brand');
 const stickyNav = stickyHeader?.querySelector('.site-header__nav');
 
-if (heroHeader && stickyHeader && stickyInner && stickyBrand && stickyNav) {
+if (heroSection && stickyHeader && stickyInner && stickyBrand && stickyNav) {
   let ticking = false;
   let stickyVisible = false;
 
@@ -37,7 +37,7 @@ if (heroHeader && stickyHeader && stickyInner && stickyBrand && stickyNav) {
   };
 
   const syncHeader = () => {
-    const heroBottom = heroHeader.getBoundingClientRect().bottom;
+    const heroBottom = heroSection.getBoundingClientRect().bottom;
 
     if (stickyVisible) {
       if (heroBottom > 8) {
