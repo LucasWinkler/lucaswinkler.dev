@@ -8,7 +8,7 @@ interface Props {
   canonicalPath?: string;
 }
 
-const { title, description, canonicalPath = '/' } = Astro.props;
+const { title, description, canonicalPath = Astro.url.pathname } = Astro.props;
 const canonical = new URL(canonicalPath, Astro.site);
 const ogImage = new URL(heroImage.src, Astro.site);
 

@@ -64,7 +64,6 @@ export default defineConfig(
           destructuredArrayIgnorePattern: '^_',
         },
       ],
-      '@typescript-eslint/no-non-null-assertion': 'off',
     },
   },
   {

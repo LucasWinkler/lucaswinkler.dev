@@ -4,15 +4,13 @@ import './footer.css';
 import { MotionFooterWordmark } from '@/components/widgets/MotionFooterWordmark';
 import { footerLinks } from '@/data/footer';
 import { siteName } from '@/data/nav';
-
-const year = new Date().getFullYear();
 ---
 
 <footer class='overflow-visible px-(--section-padding-x) pt-(--space-section-header) pb-0' aria-label='Site footer'>
   <div class='mx-auto w-full max-w-(--section-max)'>
     <div class='footer-meta mb-(--space-row-y) flex flex-wrap items-center justify-between gap-x-6 gap-y-3'>
       <p class='type-caption text-text-muted'>
-        &copy; {year}{' '}
+        &copy; <time data-footer-year></time>{' '}
         <span translate='no'>{siteName}</span>
       </p>
       <nav aria-label='Footer'>
@@ -24,7 +22,7 @@ const year = new Date().getFullYear();
               return (
                 <li>
                   <a
-                    class='type-nav -mx-1 touch-manipulation rounded-sm px-1 py-2 text-text-muted outline-none transition-[color,box-shadow,transform] duration-200 hover:text-text focus-visible:text-text focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)] active:scale-[0.96]'
+                    class='type-nav -mx-1 touch-manipulation rounded-sm px-1 py-2 text-text-muted outline-none transition-[color,box-shadow,transform] duration-200 hover:text-text focus-visible:text-text focus-ring active:scale-[0.96]'
                     href={link.href}
                     target={isExternal ? '_blank' : undefined}
                     rel={isExternal ? 'noopener noreferrer' : undefined}
@@ -42,3 +40,13 @@ const year = new Date().getFullYear();
     <MotionFooterWordmark client:visible />
   </div>
 </footer>
+
+<script>
+  const year = String(new Date().getFullYear());
+  const footerYear = document.querySelector('[data-footer-year]');
+
+  if (footerYear instanceof HTMLTimeElement) {
+    footerYear.dateTime = year;
+    footerYear.textContent = year;
+  }
+</script>

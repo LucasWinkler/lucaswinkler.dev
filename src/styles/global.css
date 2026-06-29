@@ -17,6 +17,8 @@
   --color-text: var(--color-neutral-950);
   --color-text-muted: var(--color-neutral-500);
   --color-accent: var(--color-accent-600);
+  --color-focus-ring: var(--color-text);
+  --color-focus-ring-inverse: var(--color-neutral-0);
   --color-border: oklch(0.178 0.003 67.659 / 0.12);
   --color-dim: oklch(0.178 0.003 67.659 / 0.38);
   --color-shell-outer: oklch(0.178 0.003 67.659 / 0.04);
@@ -193,9 +195,19 @@
     font-size: var(--text-sm);
     line-height: var(--leading-ui);
     text-decoration: none;
-    box-shadow:
-      0 0 0 2px var(--color-bg),
-      0 0 0 4px var(--color-accent);
+    box-shadow: 0 0 0 2px var(--color-focus-ring);
+  }
+
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+
+  .focus-ring-inverse:focus-visible {
+    outline: 2px solid var(--color-focus-ring-inverse);
+    outline-offset: 2px;
+    box-shadow: none;
   }
 
   .scroll-anchor {

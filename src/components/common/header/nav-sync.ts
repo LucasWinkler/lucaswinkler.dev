@@ -21,7 +21,7 @@ function setActiveSection(sectionId: string | null) {
     const href = link.getAttribute('href');
 
     if (sectionId && linkHash(href) === `#${sectionId}`) {
-      link.setAttribute('aria-current', 'page');
+      link.setAttribute('aria-current', 'location');
       return;
     }
 

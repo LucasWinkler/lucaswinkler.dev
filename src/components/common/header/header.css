@@ -53,9 +53,15 @@
 
 .site-header__brand:focus-visible,
 .site-header__link:focus-visible {
-  box-shadow:
-    0 0 0 2px var(--color-bg),
-    0 0 0 4px var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-focus-ring-inverse);
+}
+
+@media (forced-colors: active) {
+  .site-header__brand:focus-visible,
+  .site-header__link:focus-visible {
+    outline: 2px solid Highlight;
+    box-shadow: none;
+  }
 }
 
 .site-header__link {
@@ -77,13 +83,6 @@
 
 .site-header--hero .site-header__link {
   color: var(--color-hero-text-muted);
-}
-
-.site-header--hero .site-header__brand:focus-visible,
-.site-header--hero .site-header__link:focus-visible {
-  box-shadow:
-    0 0 0 2px var(--color-surface),
-    0 0 0 4px var(--color-accent);
 }
 
 .site-header--hero .site-header__link:hover,
@@ -122,13 +121,6 @@
   transition:
     opacity var(--header-sticky-exit-duration) var(--ease-out),
     transform var(--header-sticky-exit-duration) var(--ease-out);
-}
-
-.site-header--sticky .site-header__brand:focus-visible,
-.site-header--sticky .site-header__link:focus-visible {
-  box-shadow:
-    0 0 0 2px var(--color-header-sticky-bg),
-    0 0 0 4px var(--color-accent);
 }
 
 .site-header--sticky[data-visible='true'] .site-header__bar {

@@ -1,43 +1,63 @@
-# Astro Starter Kit: Minimal
+# lucaswinkler.dev
+
+Personal portfolio rebuild — Astro, React, TypeScript, Tailwind CSS v4, and Motion.
+
+## Setup
 
 ```sh
-pnpm create astro@latest -- --template minimal
+pnpm install
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Requires Node.js 24.x (see `package.json` engines).
 
-## 🚀 Project Structure
+## Development
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+pnpm dev
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Runs the dev server at `http://localhost:4321`.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+For Cursor background mode:
 
-Any static assets, like images, can be placed in the `public/` directory.
+```sh
+astro dev --background
+```
 
-## 🧞 Commands
+## Build
 
-All commands are run from the root of the project, from a terminal:
+```sh
+pnpm build
+```
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `pnpm install`         | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+Runs `astro check` and outputs a static site to `dist/`.
 
-## 👀 Want to learn more?
+## Preview
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```sh
+pnpm preview
+```
+
+Serves the production build locally.
+
+## Quality checks
+
+```sh
+pnpm check
+```
+
+Runs Astro type checking, ESLint, and Prettier.
+
+```sh
+pnpm fix
+```
+
+Auto-fixes lint and format issues.
+
+## Deployment
+
+Pushes to the default branch deploy via Vercel (`pnpm run build`, output `dist/`). See `vercel.json` for project settings.
+
+## Project layout
+
+See [AGENTS.md](./AGENTS.md) for folder conventions and contributor guidance.

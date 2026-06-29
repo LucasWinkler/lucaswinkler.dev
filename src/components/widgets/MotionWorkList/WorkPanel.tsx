@@ -203,8 +203,8 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
       aria-expanded={isMobileLayout ? undefined : panelActive}
       aria-labelledby={isExpanded ? `work-${item.id}-title` : undefined}
       aria-label={isExpanded ? undefined : `Show ${item.brand} details`}
-      className={`${panelClass} ${panelSnapClass} ${isFirst(index) ? panelInsetClass : panelGapClass} ${isLast(index) ? panelEndInsetClass : ''} outline-none focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)] ${isExpanded ? 'cursor-default select-text' : 'cursor-pointer'}`}>
-      <motion.div layoutRoot className='relative h-full w-full overflow-hidden'>
+      className={`${panelClass} ${panelSnapClass} ${isFirst(index) ? panelInsetClass : panelGapClass} ${isLast(index) ? panelEndInsetClass : ''} outline-none focus-ring ${isExpanded ? 'cursor-default select-text' : 'cursor-pointer'}`}>
+      <motion.div layoutRoot className='relative h-full w-full overflow-hidden rounded-(--radius-panel)'>
         {item.image ? (
           <div className='pointer-events-none absolute inset-0 origin-center' style={mediaStyle} aria-hidden='true'>
             <div className='absolute inset-[-5%]' style={getImageRevealStyle(isExpanded, revealMotion)}>
@@ -258,7 +258,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
               {isExpanded ? (
                 <h3 id={`work-${item.id}-title`} className='type-card-title m-0 text-balance text-white'>
                   <a
-                    className='group flex w-fit max-w-full flex-col gap-1.5 rounded-sm text-white no-underline outline-none transition-[color] duration-150 ease-out focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)] max-[640px]:overflow-visible max-[640px]:whitespace-normal'
+                    className='group flex w-fit max-w-full flex-col gap-1.5 rounded-sm text-white no-underline outline-none transition-[color] duration-150 ease-out focus-ring-inverse max-[640px]:overflow-visible max-[640px]:whitespace-normal'
                     href={item.url}
                     target='_blank'
                     rel='noopener noreferrer'>
