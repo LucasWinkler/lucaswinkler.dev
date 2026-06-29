@@ -9,13 +9,11 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { siteDescription } from '@/data/bio';
 ---
 
-<BaseLayout title='Lucas Winkler — Software Developer' description={siteDescription}>
-  <HeaderSticky />
-  <main id='content'>
-    <Hero />
-    <Approach />
-    <SelectedWork />
-    <Experience />
-  </main>
-  <Footer />
+<BaseLayout title='Lucas Winkler — Software Developer' description={siteDescription} skipTarget='#hero-heading'>
+  <HeaderSticky slot='before-content' />
+  <Hero />
+  <Approach />
+  <SelectedWork />
+  <Experience />
+  <Footer slot='after-content' />
 </BaseLayout>

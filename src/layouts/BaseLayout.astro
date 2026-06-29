@@ -10,9 +10,10 @@ interface Props {
   title?: string;
   description?: string;
   canonicalPath?: string;
+  skipTarget?: string;
 }
 
-const { title = 'Lucas Winkler', description = '', canonicalPath } = Astro.props;
+const { title = 'Lucas Winkler', description = '', canonicalPath, skipTarget = '#content' } = Astro.props;
 ---
 
 <!doctype html>
@@ -30,7 +31,11 @@ const { title = 'Lucas Winkler', description = '', canonicalPath } = Astro.props
     <Analytics />
   </head>
   <body>
-    <a href='#content' class='skip-link'>Skip to content</a>
-    <slot />
+    <a href={skipTarget} class='skip-link'>Skip to content</a>
+    <slot name='before-content' />
+    <main id='content'>
+      <slot />
+    </main>
+    <slot name='after-content' />
   </body>
 </html>
