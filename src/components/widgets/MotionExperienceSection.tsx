@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
+import { useEffect, useState } from 'react';
 
 import { MotionExperienceList } from '@/components/widgets/MotionExperienceList';
 import { fadeEase, noMotion } from '@/lib/motion';
@@ -13,12 +14,17 @@ type MotionExperienceSectionProps = {
 
 export function MotionExperienceSection({ title, experience, education }: MotionExperienceSectionProps) {
   const shouldReduceMotion = useReducedMotion() ?? false;
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   return (
     <>
       <motion.div
         className='mb-(--space-section-header)'
-        initial={shouldReduceMotion ? false : { opacity: 0, y: '0.75rem' }}
+        initial={shouldReduceMotion || !hasMounted ? false : { opacity: 0, y: '0.75rem' }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.6 }}
         transition={shouldReduceMotion ? noMotion : { duration: 0.65, ease: fadeEase }}

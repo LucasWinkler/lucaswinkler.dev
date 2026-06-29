@@ -57,6 +57,20 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
   const listRef = useRef<HTMLDivElement>(null);
   const itemIds = useMemo(() => items.map(item => item.id), [items]);
 
+  useLayoutEffect(() => {
+    const validIds = new Set(itemIds);
+
+    setHoveredId(current => (current !== null && validIds.has(current) ? current : null));
+
+    setActiveId(current => {
+      if (itemIds.length === 0) {
+        return null;
+      }
+
+      return current !== null && validIds.has(current) ? current : itemIds[0];
+    });
+  }, [itemIds]);
+
   const activeIndex = Math.max(
     0,
     items.findIndex(item => item.id === activeId),

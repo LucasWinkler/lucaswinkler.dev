@@ -152,11 +152,16 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
   }
 
   const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
-    if (isMobileLayout || panelActive) {
+    if (isMobileLayout) {
       return;
     }
 
     if (event.key === 'Enter' || event.key === ' ') {
+      if (panelActive) {
+        event.preventDefault();
+        return;
+      }
+
       event.preventDefault();
       activate(item.id);
       return;
@@ -192,7 +197,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
       style={panelStyle}
       onPointerEnter={isMobileLayout ? undefined : event => onPanelPointerEnter(item.id, event)}
       onClick={isMobileLayout || panelActive ? undefined : () => activate(item.id)}
-      onKeyDown={isMobileLayout || panelActive ? undefined : handleKeyDown}
+      onKeyDown={isMobileLayout ? undefined : handleKeyDown}
       role={isExpanded ? 'region' : 'button'}
       tabIndex={isMobileLayout ? -1 : 0}
       aria-expanded={isMobileLayout ? undefined : panelActive}
