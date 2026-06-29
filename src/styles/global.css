@@ -103,12 +103,6 @@
 }
 
 @layer base {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
   html {
     overscroll-behavior: none;
     scroll-behavior: smooth;
@@ -127,7 +121,6 @@
   }
 
   body {
-    margin: 0;
     font-size: var(--text-base);
     line-height: var(--leading-body);
     color: var(--color-text);
@@ -154,15 +147,6 @@
     :root {
       --hero-panel-min-h: calc(100dvh - (var(--hero-inset-y) * 2));
     }
-  }
-
-  img {
-    display: block;
-    max-width: 100%;
-  }
-
-  a {
-    color: inherit;
   }
 
   @media (prefers-reduced-motion: reduce) {
