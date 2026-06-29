@@ -16,7 +16,7 @@ export function MotionSectionIntro({ children }: MotionSectionIntroProps) {
       initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.6 }}
-      transition={shouldReduceMotion ? noMotion : { duration: 0.45, ease: fadeEase }}
+      transition={shouldReduceMotion ? noMotion : { duration: 0.65, ease: fadeEase }}
       style={{ backfaceVisibility: 'hidden' }}>
       {children}
     </motion.div>

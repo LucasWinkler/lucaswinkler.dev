@@ -4,6 +4,7 @@ const stickyHeader = document.getElementById('site-header-sticky');
 if (heroSection && stickyHeader) {
   let ticking = false;
   let stickyVisible = false;
+  let insetOffset = parseFloat(getComputedStyle(heroSection).paddingBottom) || 0;
 
   const setStickyVisible = (visible: boolean) => {
     if (visible === stickyVisible) {
@@ -24,16 +25,17 @@ if (heroSection && stickyHeader) {
 
   const syncHeader = () => {
     const heroBottom = heroSection.getBoundingClientRect().bottom;
+    const hideThreshold = insetOffset + 8;
 
     if (stickyVisible) {
-      if (heroBottom > 8) {
+      if (heroBottom > hideThreshold) {
         setStickyVisible(false);
       }
 
       return;
     }
 
-    if (heroBottom <= 0) {
+    if (heroBottom <= insetOffset) {
       setStickyVisible(true);
     }
   };
@@ -53,5 +55,12 @@ if (heroSection && stickyHeader) {
   syncHeader();
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', syncHeader, { passive: true });
+  window.addEventListener(
+    'resize',
+    () => {
+      insetOffset = parseFloat(getComputedStyle(heroSection).paddingBottom) || 0;
+      syncHeader();
+    },
+    { passive: true },
+  );
 }

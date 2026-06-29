@@ -1,0 +1,13 @@
+---
+import { MotionApproachBridge } from '@/components/widgets/MotionApproachBridge';
+import { approach } from '@/data/approach';
+---
+
+<section
+  id='approach'
+  class='px-(--section-padding-x) pb-(--space-section-header) pt-(--space-section-header)'
+  aria-label='Approach'>
+  <div class='mx-auto w-full max-w-(--section-max)'>
+    <MotionApproachBridge client:visible items={approach} />
+  </div>
+</section>

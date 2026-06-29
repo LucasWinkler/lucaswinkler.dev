@@ -6,13 +6,13 @@
   --color-neutral-800: oklch(0.196 0.003 67.678);
   --color-neutral-500: oklch(0.515 0.012 81.778);
   --color-neutral-400: oklch(0.681 0.01 78.262);
-  --color-neutral-50: oklch(0.973 0.004 91.446);
+  --color-neutral-50: oklch(0.972 0.004 91.446);
   --color-neutral-0: oklch(1 0 0);
   --color-accent-600: oklch(0.438 0.049 152.661);
   --color-accent-glass: oklch(0.311 0.049 245.613);
   --color-accent-highlight: oklch(0.8 0.046 229.673);
 
-  --color-bg: var(--color-neutral-50);
+  --color-bg: oklch(0.988 0.002 91.446);
   --color-surface: var(--color-neutral-0);
   --color-text: var(--color-neutral-950);
   --color-text-muted: var(--color-neutral-500);
@@ -115,16 +115,15 @@
     scroll-padding-top: calc(var(--header-inner-min-h) + 2rem + env(safe-area-inset-top, 0px));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-family: var(--font-inter-display);
+    font-family: var(--font-inter-text);
     font-feature-settings:
       'liga' 1,
-      'calt' 1,
-      'ss03' 1;
+      'calt' 1;
     font-variant-ligatures: common-ligatures contextual;
     font-optical-sizing: auto;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
-    font-variation-settings: 'opsz' 32;
+    font-variation-settings: 'opsz' 14;
   }
 
   body {
@@ -307,7 +306,7 @@
     font-size: var(--text-md);
     line-height: var(--leading-title);
     font-weight: 600;
-    letter-spacing: var(--tracking-snug);
+    letter-spacing: var(--tracking-tight);
   }
 
   .type-eyebrow-label {

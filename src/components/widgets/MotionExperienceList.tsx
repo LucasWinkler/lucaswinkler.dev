@@ -37,7 +37,7 @@ function ExperienceRow({
   const leftContent = leftDatetime ? (
     <time
       dateTime={leftDatetime}
-      className='type-caption m-0 w-[min(100%,10.5rem)] shrink-0 text-text-muted tabular-nums'>
+      className='type-caption m-0 w-[min(100%,10.5rem)] shrink-0 whitespace-nowrap text-text-muted tabular-nums'>
       {left}
     </time>
   ) : (

@@ -1,7 +1,8 @@
-export const siteDescription = 'Software developer building polished web experiences from architecture to motion.';
+export const siteDescription =
+  'Lucas Winkler — software developer focused on polished, accessible web interfaces. React, Astro, TypeScript.';
 
 export const hero = {
-  headlineLines: ['Polished web experiences', 'for brands that care.'],
-  leadLines: ['From architecture to motion, start to finish.'],
+  headlineLines: ['Clean interfaces', 'that feel finished.'],
+  leadLines: ['Software developer with a focus on UI — motion, accessibility, the details most teams skip.'],
   imageAlt: 'Blue abstract dithered texture',
 } as const;

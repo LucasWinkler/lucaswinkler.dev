@@ -11,7 +11,7 @@ export const selectedWork: SelectedWorkItem[] = [
     brand: 'Tee-On',
     domain: 'teeon.com',
     url: 'https://www.teeon.com',
-    description: 'All-in-one golf course management software. Marketing site redesign on the existing React platform.',
+    description: 'Marketing site redesign on the existing React platform. Sole developer.',
     tech: ['React', 'TS', 'SCSS'],
     image: teeonCoverImage.src,
     imageWidth: teeonCoverImage.width,
@@ -24,8 +24,7 @@ export const selectedWork: SelectedWorkItem[] = [
     brand: 'GolfNorth International',
     domain: 'golfnorthinternational.com',
     url: 'https://golfnorthinternational.com',
-    description:
-      'Corporate site for a national golf operator — course management, software, leasing, hospitality, and retail.',
+    description: 'Full corporate rebuild — Astro, component system, responsive across every section.',
     tech: ['Astro', 'React', 'TS', 'SCSS'],
     image: golfNorthCoverImage.src,
     imageWidth: golfNorthCoverImage.width,
@@ -38,8 +37,7 @@ export const selectedWork: SelectedWorkItem[] = [
     brand: '9Fore',
     domain: '9fore.ca',
     url: 'https://9fore.ca',
-    description:
-      'Canadian distributor of turf equipment and golf carts for golf facilities across Ontario and select provinces.',
+    description: 'New site from scratch. Product catalog, dealer info, built to be fast.',
     tech: ['Astro', 'React', 'TS', 'SCSS'],
     image: nineForeCoverImage.src,
     imageWidth: nineForeCoverImage.width,
@@ -53,8 +51,7 @@ export const selectedWork: SelectedWorkItem[] = [
     brand: 'EventCaddy',
     domain: 'eventcaddy.com',
     url: 'https://www.eventcaddy.com',
-    description:
-      'Tournament management platform for golf events — registration, sponsorships, payments, and live scoring.',
+    description: 'Marketing site for a tournament platform — registration flows, feature pages, live product.',
     tech: ['Astro', 'React', 'TS', 'SCSS'],
     image: eventcaddyCoverImage.src,
     imageWidth: eventcaddyCoverImage.width,
