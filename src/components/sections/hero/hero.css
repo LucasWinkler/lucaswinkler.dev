@@ -11,6 +11,9 @@
   min-height: var(--hero-panel-min-h);
   border-radius: var(--radius-hero);
   box-shadow: var(--shadow-panel);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .hero-panel__content {
@@ -44,12 +47,14 @@
 
 .hero-panel__media {
   background-color: var(--color-hero-media);
-  transform: translateZ(0);
+  border-radius: inherit;
+  overflow: hidden;
 }
 
 .hero-panel__lqip {
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   background-size: cover;
   background-position: center;
   transform: scale(1.06);
@@ -65,12 +70,15 @@
   position: absolute;
   inset: 0;
   display: block;
+  border-radius: inherit;
+  overflow: hidden;
 }
 
 .hero-panel__image {
   width: 100%;
   height: 100%;
   max-width: none;
+  border-radius: inherit;
   object-fit: cover;
   object-position: center;
   opacity: 0;
