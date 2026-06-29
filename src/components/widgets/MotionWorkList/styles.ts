@@ -1,5 +1,5 @@
 export const panelClass =
-  'relative isolate min-w-0 shrink-0 rounded-(--radius-panel) shadow-(--shadow-panel) [contain:layout_style] max-[640px]:flex-[0_0_calc(100vw-var(--section-padding-x)-1.5rem)] min-[641px]:[flex:var(--panel-grow)_1_0] min-[641px]:[transition:flex-grow_0.44s_cubic-bezier(0.23,1,0.32,1)]';
+  'relative isolate min-w-0 shrink-0 overflow-hidden rounded-(--radius-panel) shadow-(--shadow-panel) [contain:layout_style] max-[640px]:flex-[0_0_calc(100vw-var(--section-padding-x)-1.5rem)] min-[641px]:[flex:var(--panel-grow)_1_0] min-[641px]:[transition:flex-grow_0.44s_cubic-bezier(0.23,1,0.32,1)]';
 
 export const panelSnapClass = 'max-[640px]:snap-start';
 

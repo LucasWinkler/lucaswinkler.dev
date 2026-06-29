@@ -4,13 +4,15 @@ import './footer.css';
 import { MotionFooterWordmark } from '@/components/widgets/MotionFooterWordmark';
 import { footerLinks } from '@/data/footer';
 import { siteName } from '@/data/nav';
+
+const year = new Date().getFullYear();
 ---
 
 <footer class='overflow-visible px-(--section-padding-x) pt-(--space-section-header) pb-0' aria-label='Site footer'>
   <div class='mx-auto w-full max-w-(--section-max)'>
     <div class='footer-meta mb-(--space-row-y) flex flex-wrap items-center justify-between gap-x-6 gap-y-3'>
       <p class='type-caption text-text-muted'>
-        &copy; <time data-footer-year></time>{' '}
+        &copy; {year}{' '}
         <span translate='no'>{siteName}</span>
       </p>
       <nav aria-label='Footer'>
@@ -40,13 +42,3 @@ import { siteName } from '@/data/nav';
     <MotionFooterWordmark client:visible />
   </div>
 </footer>
-
-<script>
-  const year = String(new Date().getFullYear());
-  const footerYear = document.querySelector('[data-footer-year]');
-
-  if (footerYear instanceof HTMLTimeElement) {
-    footerYear.dateTime = year;
-    footerYear.textContent = year;
-  }
-</script>
