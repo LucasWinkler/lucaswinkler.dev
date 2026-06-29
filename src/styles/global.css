@@ -38,6 +38,7 @@
   --text-md: clamp(1rem, 2.1vw, 1.125rem);
   --text-lg: clamp(1.125rem, 2.5vw, 1.625rem);
   --text-hero: clamp(2.75rem, 7vw, 4.5rem);
+  --text-section-title: clamp(2rem, 4.5vw, 3rem);
 
   --leading-tight: 1.02;
   --leading-snug: 1.08;
@@ -257,6 +258,19 @@
     line-height: var(--leading-tight);
     font-weight: 600;
     letter-spacing: var(--tracking-tighter);
+  }
+
+  .type-section-title {
+    font-family: var(--font-inter-display);
+    font-feature-settings:
+      'liga' 1,
+      'calt' 1,
+      'ss03' 1;
+    font-variation-settings: 'opsz' 32;
+    font-size: var(--text-section-title);
+    line-height: var(--leading-snug);
+    font-weight: 500;
+    letter-spacing: var(--tracking-tight);
   }
 
   .type-section-lead {
