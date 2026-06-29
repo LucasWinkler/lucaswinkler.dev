@@ -1,6 +1,15 @@
-# lucaswinkler.dev
+<p align="center">
+  <img alt="lucaswinkler.dev" src="https://shieldcn.dev/header/surface.svg?logo=false&amp;mode=dark&amp;image=https%3A%2F%2Fraw.githubusercontent.com%2FLucasWinkler%2Flucaswinkler.dev%2Frewrite%2Fastro%2Fsrc%2Fassets%2Fimages%2Fhero-blue-abstract.png&amp;overlay=0" />
+</p>
 
-Personal portfolio rebuild — Astro, React, TypeScript, Tailwind CSS v4, and Motion.
+Personal portfolio for [lucaswinkler.dev](https://www.lucaswinkler.dev).
+
+[![Live site](https://shieldcn.dev/badge/lucaswinkler.dev-view-438052.svg?variant=outline&logo=lu%3AExternalLink)](https://www.lucaswinkler.dev)
+[![Astro](https://shieldcn.dev/badge/Astro-7-171717.svg?variant=secondary&logo=astro)](https://astro.build)
+[![React](https://shieldcn.dev/badge/React-19-171717.svg?variant=secondary&logo=react)](https://react.dev)
+[![TypeScript](https://shieldcn.dev/badge/TypeScript-6-171717.svg?variant=secondary&logo=typescript)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://shieldcn.dev/badge/Tailwind-v4-171717.svg?variant=secondary&logo=tailwindcss)](https://tailwindcss.com)
+[![Motion](https://shieldcn.dev/badge/Motion-171717.svg?variant=secondary&logo=framer)](https://motion.dev)
 
 ## Setup
 
@@ -8,7 +17,7 @@ Personal portfolio rebuild — Astro, React, TypeScript, Tailwind CSS v4, and Mo
 pnpm install
 ```
 
-Requires Node.js 24.x (see `package.json` engines).
+Node.js 24.x (`package.json` engines).
 
 ## Development
 
@@ -16,48 +25,30 @@ Requires Node.js 24.x (see `package.json` engines).
 pnpm dev
 ```
 
-Runs the dev server at `http://localhost:4321`.
+<http://localhost:4321>
 
-For Cursor background mode:
+Cursor background mode: `astro dev --background`
 
-```sh
-astro dev --background
-```
-
-## Build
+## Build & preview
 
 ```sh
 pnpm build
-```
-
-Runs `astro check` and outputs a static site to `dist/`.
-
-## Preview
-
-```sh
 pnpm preview
 ```
 
-Serves the production build locally.
+Build runs `astro check` and outputs to `dist/`. Preview serves the production build locally.
 
-## Quality checks
-
-```sh
-pnpm check
-```
-
-Runs Astro type checking, ESLint, and Prettier.
+## Quality
 
 ```sh
-pnpm fix
+pnpm check   # astro check, eslint, prettier
+pnpm fix     # auto-fix lint and format
 ```
-
-Auto-fixes lint and format issues.
 
 ## Deployment
 
-Pushes to the default branch deploy via Vercel (`pnpm run build`, output `dist/`). See `vercel.json` for project settings.
+Pushes to the default branch deploy via Vercel. See `vercel.json`.
 
 ## Project layout
 
-See [AGENTS.md](./AGENTS.md) for folder conventions and contributor guidance.
+[AGENTS.md](./AGENTS.md) — folder conventions and contributor guidance.
