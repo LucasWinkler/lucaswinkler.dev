@@ -56,7 +56,7 @@ function ExperienceRow({
       <div className='min-w-0 flex-1 text-right'>
         <p className='type-list-title m-0 text-pretty text-text'>{title}</p>
         <p className='type-caption m-0 mt-1 text-text-muted'>{subtitle}</p>
-        {detail ? <p className='type-caption m-0 mt-0.5 text-text-muted opacity-80'>{detail}</p> : null}
+        {detail ? <p className='type-caption m-0 mt-0.5 text-text-muted'>{detail}</p> : null}
       </div>
     </motion.li>
   );

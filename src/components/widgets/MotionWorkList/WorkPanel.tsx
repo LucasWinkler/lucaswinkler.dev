@@ -244,8 +244,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
                     className='group flex w-fit max-w-full flex-col gap-1.5 rounded-sm text-white no-underline outline-none transition-[color] duration-150 ease-out focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)] max-[640px]:overflow-visible max-[640px]:whitespace-normal'
                     href={item.url}
                     target='_blank'
-                    rel='noopener noreferrer'
-                    aria-label={`Visit ${item.brand} at ${item.domain}`}>
+                    rel='noopener noreferrer'>
                     <span>{item.brand}</span>
                     <span className='type-caption text-white/88 underline-offset-2 no-underline transition-[color,text-decoration-color] duration-150 ease-out group-hover:text-white group-hover:underline group-focus-visible:text-white group-focus-visible:underline'>
                       {item.domain}
