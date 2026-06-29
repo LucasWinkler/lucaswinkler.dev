@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react';
 
-import { formatDateRange, formatExperienceDateTime, sortReverseChronological } from '@/lib/experience';
+import { formatDateRangeParts, sortReverseChronological, toIsoDate } from '@/lib/experience';
 import { fadeEase, noMotion } from '@/lib/motion';
 
 import type { EducationItem, ExperienceItem } from '@/types/experience';
@@ -15,8 +15,11 @@ const eyebrowClass = 'type-eyebrow-label m-0 border-b border-border pb-4 text-te
 
 type RowProps = {
   index: number;
-  left: string;
-  leftDatetime?: string;
+  left?: string;
+  leftStart?: string;
+  leftEnd?: string;
+  leftStartDatetime?: string;
+  leftEndDatetime?: string;
   title: string;
   subtitle: string;
   detail?: string;
@@ -27,22 +30,28 @@ type RowProps = {
 function ExperienceRow({
   index,
   left,
-  leftDatetime,
+  leftStart,
+  leftEnd,
+  leftStartDatetime,
+  leftEndDatetime,
   title,
   subtitle,
   detail,
   hasTopBorder,
   shouldReduceMotion,
 }: RowProps) {
-  const leftContent = leftDatetime ? (
-    <time
-      dateTime={leftDatetime}
-      className='type-caption m-0 max-w-42 shrink-0 whitespace-nowrap text-text-muted tabular-nums'>
-      {left}
-    </time>
-  ) : (
-    <span className='type-caption m-0 max-w-42 shrink-0 text-text-muted'>{left}</span>
-  );
+  const leftClassName = 'type-caption m-0 max-w-42 shrink-0 whitespace-nowrap text-text-muted tabular-nums';
+
+  const leftContent =
+    leftStartDatetime && leftStart && leftEnd ? (
+      <span className={leftClassName}>
+        <time dateTime={leftStartDatetime}>{leftStart}</time>
+        {' – '}
+        {leftEndDatetime ? <time dateTime={leftEndDatetime}>{leftEnd}</time> : leftEnd}
+      </span>
+    ) : left ? (
+      <span className='type-caption m-0 max-w-42 shrink-0 text-text-muted'>{left}</span>
+    ) : null;
 
   return (
     <motion.li
@@ -85,19 +94,25 @@ export function MotionExperienceList({ experience, education = [] }: MotionExper
   return (
     <div className='flex flex-col'>
       <ExperienceSection label='Work' isFirst>
-        {orderedExperience.map((item, index) => (
-          <ExperienceRow
-            key={item.id}
-            index={index}
-            hasTopBorder={index > 0}
-            left={formatDateRange(item.start, item.end)}
-            leftDatetime={formatExperienceDateTime(item.start, item.end)}
-            title={item.company}
-            subtitle={item.role}
-            detail={item.location}
-            shouldReduceMotion={shouldReduceMotion}
-          />
-        ))}
+        {orderedExperience.map((item, index) => {
+          const { start, end } = formatDateRangeParts(item.start, item.end);
+
+          return (
+            <ExperienceRow
+              key={item.id}
+              index={index}
+              hasTopBorder={index > 0}
+              leftStart={start}
+              leftEnd={end}
+              leftStartDatetime={toIsoDate(item.start)}
+              leftEndDatetime={item.end ? toIsoDate(item.end) : undefined}
+              title={item.company}
+              subtitle={item.role}
+              detail={item.location}
+              shouldReduceMotion={shouldReduceMotion}
+            />
+          );
+        })}
       </ExperienceSection>
 
       {hasEducation ? (
