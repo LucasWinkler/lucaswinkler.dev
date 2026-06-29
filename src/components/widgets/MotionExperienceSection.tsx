@@ -18,7 +18,7 @@ export function MotionExperienceSection({ title, experience, education }: Motion
     <>
       <motion.div
         className='mb-(--space-section-header)'
-        initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+        initial={shouldReduceMotion ? false : { opacity: 0, y: '0.75rem' }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.6 }}
         transition={shouldReduceMotion ? noMotion : { duration: 0.65, ease: fadeEase }}

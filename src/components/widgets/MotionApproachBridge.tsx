@@ -17,7 +17,7 @@ export function MotionApproachBridge({ items }: MotionApproachBridgeProps) {
         <motion.div
           key={item.id}
           className='flex flex-col gap-2'
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: '0.625rem' }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.65 }}
           transition={shouldReduceMotion ? noMotion : { duration: 0.75, ease: fadeEase, delay: index * 0.1 }}

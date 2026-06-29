@@ -89,13 +89,13 @@ function getContentStyle(isActive: boolean, delay: number, shouldReduceMotion: b
   if (shouldReduceMotion) {
     return {
       opacity: isActive ? 1 : 0,
-      transform: isActive ? 'translate3d(0, 0, 0)' : 'translate3d(0, 4px, 0)',
+      transform: isActive ? 'translate3d(0, 0, 0)' : 'translate3d(0, 0.25rem, 0)',
     };
   }
 
   return {
     opacity: isActive ? 1 : 0,
-    transform: isActive ? 'translate3d(0, 0, 0)' : 'translate3d(0, 4px, 0)',
+    transform: isActive ? 'translate3d(0, 0, 0)' : 'translate3d(0, 0.25rem, 0)',
     transitionProperty: 'opacity, transform',
     transitionDuration: contentDuration,
     transitionTimingFunction: contentEase,

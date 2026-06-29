@@ -47,7 +47,7 @@ function ExperienceRow({
   return (
     <motion.li
       className={`flex items-baseline justify-between gap-10 py-(--space-row-y) ${hasTopBorder ? 'border-t border-border' : ''}`}
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+      initial={shouldReduceMotion ? false : { opacity: 0, y: '1rem' }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.55 }}
       transition={shouldReduceMotion ? noMotion : { duration: 0.55, ease: fadeEase, delay: index * 0.08 }}

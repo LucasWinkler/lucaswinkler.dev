@@ -18,7 +18,7 @@ export function MotionSelectedWorkSection({ title, intro, items }: MotionSelecte
     <>
       <motion.div
         className='mb-(--space-section-header) flex flex-col gap-4'
-        initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+        initial={shouldReduceMotion ? false : { opacity: 0, y: '0.75rem' }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.6 }}
         transition={shouldReduceMotion ? noMotion : { duration: 0.65, ease: fadeEase }}

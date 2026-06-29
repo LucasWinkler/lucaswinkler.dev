@@ -112,7 +112,7 @@
   padding-inline: var(--header-bar-padding-x);
   padding-block: var(--header-bar-padding-y);
   opacity: 0;
-  transform: translateY(-10px) scale(0.98);
+  transform: translateY(-0.625rem) scale(0.98);
   transition:
     opacity var(--header-sticky-exit-duration) var(--ease-out),
     transform var(--header-sticky-exit-duration) var(--ease-out);
