@@ -74,6 +74,7 @@
   --header-bar-max: var(--section-max);
   --header-sticky-enter-duration: 480ms;
   --header-sticky-exit-duration: 220ms;
+  --header-sticky-exit-duration-mobile: 320ms;
   --header-bar-padding-x: clamp(0.875rem, 2vw, 1.25rem);
   --header-bar-padding-y: clamp(0.3125rem, 0.6vw, 0.4375rem);
   --header-inner-min-h: 2.625rem;

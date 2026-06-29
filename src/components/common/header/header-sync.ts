@@ -5,6 +5,53 @@ if (heroSection && stickyHeader) {
   let ticking = false;
   let stickyVisible = false;
   let insetOffset = parseFloat(getComputedStyle(heroSection).paddingBottom) || 0;
+  let hideAccessibilityTimer: ReturnType<typeof setTimeout> | undefined;
+  let onBarTransitionEnd: ((event: TransitionEvent) => void) | undefined;
+  const headerBar = stickyHeader.querySelector<HTMLElement>('.site-header__bar');
+
+  const clearHideAccessibility = () => {
+    if (hideAccessibilityTimer !== undefined) {
+      clearTimeout(hideAccessibilityTimer);
+      hideAccessibilityTimer = undefined;
+    }
+
+    if (headerBar && onBarTransitionEnd) {
+      headerBar.removeEventListener('transitionend', onBarTransitionEnd);
+      onBarTransitionEnd = undefined;
+    }
+  };
+
+  const applyHideAccessibility = () => {
+    stickyHeader.setAttribute('aria-hidden', 'true');
+    stickyHeader.setAttribute('inert', '');
+  };
+
+  const scheduleHideAccessibility = () => {
+    clearHideAccessibility();
+
+    const finishHideAccessibility = () => {
+      if (stickyHeader.dataset.visible !== 'false') {
+        return;
+      }
+
+      clearHideAccessibility();
+      applyHideAccessibility();
+    };
+
+    onBarTransitionEnd = (event: TransitionEvent) => {
+      if (event.target !== headerBar || event.propertyName !== 'opacity') {
+        return;
+      }
+
+      finishHideAccessibility();
+    };
+
+    if (headerBar) {
+      headerBar.addEventListener('transitionend', onBarTransitionEnd);
+    }
+
+    hideAccessibilityTimer = setTimeout(finishHideAccessibility, 400);
+  };
 
   const setStickyVisible = (visible: boolean) => {
     if (visible === stickyVisible) {
@@ -14,6 +61,7 @@ if (heroSection && stickyHeader) {
     stickyVisible = visible;
 
     if (visible) {
+      clearHideAccessibility();
       stickyHeader.dataset.visible = 'true';
       stickyHeader.removeAttribute('aria-hidden');
       stickyHeader.removeAttribute('inert');
@@ -21,8 +69,7 @@ if (heroSection && stickyHeader) {
     }
 
     stickyHeader.dataset.visible = 'false';
-    stickyHeader.setAttribute('aria-hidden', 'true');
-    stickyHeader.setAttribute('inert', '');
+    scheduleHideAccessibility();
   };
 
   const syncHeader = () => {
