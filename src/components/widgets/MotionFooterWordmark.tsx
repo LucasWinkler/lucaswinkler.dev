@@ -1,4 +1,4 @@
-import { animate, motion, useMotionValue, useReducedMotion } from 'motion/react';
+import { animate, motion, useMotionValue, useMotionValueEvent, useReducedMotion, useTransform } from 'motion/react';
 import { useEffect, useRef } from 'react';
 
 import { FooterWordmarkSvg } from '@/components/widgets/FooterWordmarkSvg';
@@ -16,8 +16,8 @@ const VELOCITY_ALPHA = 0.38;
 const VELOCITY_STRAIN_SCALE = 0.004;
 const KINETIC_OVERSHOOT_GAIN = 0.09;
 const MAX_KINETIC_OVERSHOOT_PX = 16;
-const SPRING = { type: 'spring' as const, stiffness: 420, damping: 32, mass: 0.8 };
-const CAP_RELEASE_SPRING = { type: 'spring' as const, stiffness: 360, damping: 28, mass: 0.85 };
+const SPRING = { type: 'spring' as const, stiffness: 420, damping: 32, mass: 0.8, bounce: 0 };
+const CAP_RELEASE_SPRING = { type: 'spring' as const, stiffness: 360, damping: 28, mass: 0.85, bounce: 0 };
 
 function stretchFromRawPull(rawPull: number): number {
   return MAX_STRETCH_PX * (1 - Math.exp(-rawPull / RESISTANCE));
@@ -52,30 +52,36 @@ function isCapInertiaDelta(delta: number, atCap: boolean): boolean {
   return atCap && delta > 0 && delta < CAP_INERTIA_DELTA;
 }
 
+function setFooterStretch(stretch: number) {
+  document.documentElement.style.setProperty('--footer-stretch', `${stretch}px`);
+}
+
 export function MotionFooterWordmark() {
   const shouldReduceMotion = useReducedMotion() ?? false;
   const wordmarkRef = useRef<HTMLDivElement>(null);
-  const scaleY = useMotionValue(1);
+  const baseHeightRef = useRef(93.65);
   const stretchPx = useMotionValue(0);
+  const scaleY = useTransform(stretchPx, stretch => 1 + stretch / baseHeightRef.current);
   const rawPullRef = useRef(0);
   const velocityRef = useRef(0);
   const isPullingRef = useRef(false);
   const isReleasingRef = useRef(false);
   const releaseTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
+  useMotionValueEvent(stretchPx, 'change', latest => {
+    setFooterStretch(latest);
+  });
+
   useEffect(() => {
     if (shouldReduceMotion) {
       return;
     }
 
-    const applyVisuals = (stretch: number) => {
-      const baseHeight = wordmarkRef.current?.offsetHeight ?? 93.65;
-      scaleY.set(1 + stretch / baseHeight);
-      stretchPx.set(stretch);
-    };
+    if (wordmarkRef.current) {
+      baseHeightRef.current = wordmarkRef.current.offsetHeight;
+    }
 
     const stopAnimations = () => {
-      scaleY.stop();
       stretchPx.stop();
     };
 
@@ -102,7 +108,7 @@ export function MotionFooterWordmark() {
       resetPullState();
       isReleasingRef.current = true;
 
-      void Promise.all([animate(stretchPx, 0, spring), animate(scaleY, 1, spring)]).then(() => {
+      void animate(stretchPx, 0, spring).then(() => {
         isReleasingRef.current = false;
       });
     };
@@ -122,7 +128,7 @@ export function MotionFooterWordmark() {
         return;
       }
 
-      if (Math.abs(stretchPx.getVelocity()) > 0.5 || Math.abs(scaleY.getVelocity()) > 0.0005) {
+      if (Math.abs(stretchPx.getVelocity()) > 0.5) {
         stopAnimations();
       }
 
@@ -142,7 +148,7 @@ export function MotionFooterWordmark() {
       }
 
       const baseStretch = stretchFromRawPull(rawPullRef.current);
-      applyVisuals(stretchWithStrain(baseStretch, delta, velocityRef.current));
+      stretchPx.set(stretchWithStrain(baseStretch, delta, velocityRef.current));
     };
 
     const onWheel = (event: WheelEvent) => {
@@ -212,25 +218,32 @@ export function MotionFooterWordmark() {
 
     return () => {
       clearReleaseTimer();
+      setFooterStretch(0);
       window.removeEventListener('wheel', onWheel);
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('touchend', onTouchEnd);
     };
-  }, [scaleY, stretchPx, shouldReduceMotion]);
+  }, [stretchPx, shouldReduceMotion]);
+
+  if (shouldReduceMotion) {
+    return (
+      <div className='w-full text-text' aria-hidden='true'>
+        <FooterWordmarkSvg />
+      </div>
+    );
+  }
 
   return (
-    <div className='pointer-events-none overflow-visible' aria-hidden='true'>
-      <motion.div
-        ref={wordmarkRef}
-        className='relative w-full text-text'
-        style={{
-          scaleY,
-          transformOrigin: 'top center',
-        }}>
-        <FooterWordmarkSvg />
-      </motion.div>
-      <motion.div className='w-full' style={{ height: stretchPx }} />
-    </div>
+    <motion.div
+      ref={wordmarkRef}
+      className='pointer-events-none w-full text-text'
+      style={{
+        scaleY,
+        transformOrigin: 'bottom center',
+      }}
+      aria-hidden='true'>
+      <FooterWordmarkSvg />
+    </motion.div>
   );
 }

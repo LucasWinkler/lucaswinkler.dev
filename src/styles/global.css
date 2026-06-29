@@ -134,6 +134,11 @@
     background-color: var(--color-bg);
   }
 
+  #content,
+  .footer-meta {
+    transform: translateY(calc(-1 * var(--footer-stretch, 0px)));
+  }
+
   body::before {
     content: '';
     position: fixed;
