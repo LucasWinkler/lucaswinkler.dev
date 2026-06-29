@@ -8,8 +8,10 @@ import NavBar from './NavBar.astro';
   id='site-header-sticky'
   class='site-header site-header--sticky type-ui fixed inset-x-0 top-0 z-header'
   data-visible='false'
-  aria-hidden='true'>
+  aria-hidden='true'
+  inert>
   <NavBar />
 </header>
 
 <script src='./header-sync.ts'></script>
+<script src='./nav-sync.ts'></script>

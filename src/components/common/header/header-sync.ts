@@ -16,11 +16,13 @@ if (heroSection && stickyHeader) {
     if (visible) {
       stickyHeader.dataset.visible = 'true';
       stickyHeader.removeAttribute('aria-hidden');
+      stickyHeader.removeAttribute('inert');
       return;
     }
 
     stickyHeader.dataset.visible = 'false';
     stickyHeader.setAttribute('aria-hidden', 'true');
+    stickyHeader.setAttribute('inert', '');
   };
 
   const syncHeader = () => {
@@ -52,6 +54,7 @@ if (heroSection && stickyHeader) {
     });
   };
 
+  setStickyVisible(false);
   syncHeader();
 
   window.addEventListener('scroll', onScroll, { passive: true });

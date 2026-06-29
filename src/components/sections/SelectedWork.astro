@@ -1,6 +1,5 @@
 ---
-import { MotionSectionIntro } from '@/components/widgets/MotionSectionIntro';
-import { MotionWorkList } from '@/components/widgets/MotionWorkList/MotionWorkList';
+import { MotionSelectedWorkSection } from '@/components/widgets/MotionSelectedWorkSection';
 import { selectedWork, selectedWorkIntro } from '@/data/selected-work';
 ---
 
@@ -9,15 +8,6 @@ import { selectedWork, selectedWorkIntro } from '@/data/selected-work';
   class='py-(--space-section-y) px-(--section-padding-x)'
   aria-labelledby='selected-work-heading'>
   <div class='mx-auto w-full max-w-(--section-max)'>
-    <MotionSectionIntro client:visible>
-      <header class='mb-(--space-section-header) flex flex-col gap-4'>
-        <h2 id='selected-work-heading' class='scroll-anchor type-section-title m-0 max-w-[12ch] text-balance'>
-          Recent Work
-        </h2>
-        <p class='type-section-lead m-0 max-w-[44ch] text-balance text-text-muted'>{selectedWorkIntro}</p>
-      </header>
-    </MotionSectionIntro>
-
-    <MotionWorkList client:visible items={selectedWork} />
+    <MotionSelectedWorkSection client:visible title='Recent Work' intro={selectedWorkIntro} items={selectedWork} />
   </div>
 </section>

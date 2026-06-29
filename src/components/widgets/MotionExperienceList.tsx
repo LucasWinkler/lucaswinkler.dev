@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react';
 
-import { formatDateRange, sortReverseChronological } from '@/lib/experience';
+import { formatDateRange, formatExperienceDateTime, sortReverseChronological } from '@/lib/experience';
 import { fadeEase, noMotion } from '@/lib/motion';
 
 import type { EducationItem, ExperienceItem } from '@/types/experience';
@@ -91,7 +91,7 @@ export function MotionExperienceList({ experience, education = [] }: MotionExper
             index={index}
             hasTopBorder={index > 0}
             left={formatDateRange(item.start, item.end)}
-            leftDatetime={`${item.start}/${item.end ?? ''}`}
+            leftDatetime={formatExperienceDateTime(item.start, item.end)}
             title={item.company}
             subtitle={item.role}
             detail={item.location}

@@ -2,8 +2,14 @@
 import './header.css';
 
 import NavBar from './NavBar.astro';
+
+interface Props {
+  brandHref?: string;
+}
+
+const { brandHref } = Astro.props;
 ---
 
 <header id='site-header-hero' class='site-header site-header--hero type-ui z-header'>
-  <NavBar />
+  <NavBar brandHref={brandHref} />
 </header>

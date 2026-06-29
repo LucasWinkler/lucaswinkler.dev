@@ -12,6 +12,14 @@ export function formatDateRange(start: string, end: string | null): string {
   return `${startDate} – ${endDate}`;
 }
 
+export function formatExperienceDateTime(start: string, end: string | null): string {
+  if (!end) {
+    return start;
+  }
+
+  return `${start}/${end}`;
+}
+
 export function sortReverseChronological(items: ExperienceItem[]): ExperienceItem[] {
   return [...items].sort((a, b) => b.start.localeCompare(a.start));
 }

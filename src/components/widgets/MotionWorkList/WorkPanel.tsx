@@ -1,23 +1,16 @@
 import { LayoutGroup, motion, type Transition } from 'motion/react';
-import { type CSSProperties, type KeyboardEvent, memo, type PointerEvent, type SyntheticEvent } from 'react';
+import { type CSSProperties, type KeyboardEvent, memo, type SyntheticEvent } from 'react';
 
 import { contentDuration, contentEase, fadeEase, hoverMediaDuration, mediaDuration } from './constants';
 import { panelClass, panelEndInsetClass, panelGapClass, panelInsetClass, panelSnapClass } from './styles';
+import { useWorkList } from './WorkListContext';
 
 import type { SelectedWorkItem } from '@/types/work';
 
 export type WorkPanelProps = {
   item: SelectedWorkItem;
   flexGrow: number;
-  isActive: boolean;
-  isFirst: boolean;
-  isLast: boolean;
-  isHovered: boolean;
-  isHovering: boolean;
-  isMobileLayout: boolean;
-  shouldReduceMotion: boolean;
-  onActivate: () => void;
-  onPointerEnter: (event: PointerEvent<HTMLElement>) => void;
+  index: number;
 };
 
 const logoEase = [0.33, 1, 0.68, 1] as const;
@@ -110,22 +103,27 @@ function getContentStyle(isActive: boolean, delay: number, shouldReduceMotion: b
   };
 }
 
-export const WorkPanel = memo(function WorkPanel({
-  item,
-  flexGrow,
-  isActive,
-  isFirst,
-  isLast,
-  isHovered,
-  isHovering,
-  isMobileLayout,
-  shouldReduceMotion,
-  onActivate,
-  onPointerEnter,
-}: WorkPanelProps) {
-  const isExpanded = isMobileLayout || isActive;
+export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: WorkPanelProps) {
+  const {
+    isMobileLayout,
+    shouldReduceMotion,
+    isHovering,
+    itemCount,
+    activate,
+    activateByIndex,
+    onPanelPointerEnter,
+    registerPanelRef,
+    isFirst,
+    isLast,
+    isActive,
+    isHovered,
+  } = useWorkList();
+
+  const panelActive = isActive(item.id);
+  const panelHovered = isHovered(item.id);
+  const isExpanded = isMobileLayout || panelActive;
   const revealMotion = shouldReduceMotion || isMobileLayout;
-  const mediaScale = isMobileLayout ? 1 : getMediaScale(isActive, isHovered);
+  const mediaScale = isMobileLayout ? 1 : getMediaScale(panelActive, panelHovered);
   const logoTransition = shouldReduceMotion ? { duration: 0 } : logoLayoutTransition;
   const panelStyle = {
     backgroundColor: item.brandColor,
@@ -138,33 +136,58 @@ export const WorkPanel = memo(function WorkPanel({
 
   if (!shouldReduceMotion) {
     mediaStyle.transitionProperty = 'transform';
-    mediaStyle.transitionDuration = !isActive && isHovering ? hoverMediaDuration : mediaDuration;
+    mediaStyle.transitionDuration = !panelActive && isHovering ? hoverMediaDuration : mediaDuration;
     mediaStyle.transitionTimingFunction = fadeEase;
   }
 
   const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
-    if (isMobileLayout || isActive) {
+    if (isMobileLayout || panelActive) {
       return;
     }
 
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
-      onActivate();
+      activate(item.id);
+      return;
+    }
+
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      activateByIndex(Math.min(index + 1, itemCount - 1));
+      return;
+    }
+
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      activateByIndex(Math.max(index - 1, 0));
+      return;
+    }
+
+    if (event.key === 'Home') {
+      event.preventDefault();
+      activateByIndex(0);
+      return;
+    }
+
+    if (event.key === 'End') {
+      event.preventDefault();
+      activateByIndex(itemCount - 1);
     }
   };
 
   return (
     <div
+      ref={element => registerPanelRef(index, element)}
       style={panelStyle}
-      onPointerEnter={isMobileLayout ? undefined : onPointerEnter}
-      onClick={isMobileLayout || isActive ? undefined : onActivate}
-      onKeyDown={isMobileLayout || isActive ? undefined : handleKeyDown}
+      onPointerEnter={isMobileLayout ? undefined : event => onPanelPointerEnter(item.id, event)}
+      onClick={isMobileLayout || panelActive ? undefined : () => activate(item.id)}
+      onKeyDown={isMobileLayout || panelActive ? undefined : handleKeyDown}
       role={isExpanded ? 'region' : 'button'}
       tabIndex={isMobileLayout ? -1 : 0}
-      aria-expanded={isMobileLayout ? undefined : isActive}
+      aria-expanded={isMobileLayout ? undefined : panelActive}
       aria-labelledby={isExpanded ? `work-${item.id}-title` : undefined}
       aria-label={isExpanded ? undefined : `Show ${item.brand} details`}
-      className={`${panelClass} ${panelSnapClass} ${isFirst ? panelInsetClass : panelGapClass} ${isLast ? panelEndInsetClass : ''} outline-none focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)] ${isExpanded ? 'cursor-default select-text' : 'cursor-pointer'}`}>
+      className={`${panelClass} ${panelSnapClass} ${isFirst(index) ? panelInsetClass : panelGapClass} ${isLast(index) ? panelEndInsetClass : ''} outline-none focus-visible:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-accent)] ${isExpanded ? 'cursor-default select-text' : 'cursor-pointer'}`}>
       <motion.div layoutRoot className='relative h-full w-full overflow-hidden'>
         {item.image ? (
           <div className='pointer-events-none absolute inset-0 origin-center' style={mediaStyle} aria-hidden='true'>

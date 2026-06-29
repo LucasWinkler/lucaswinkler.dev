@@ -1,18 +1,11 @@
 ---
-import { MotionExperienceList } from '@/components/widgets/MotionExperienceList';
-import { MotionSectionIntro } from '@/components/widgets/MotionSectionIntro';
+import { MotionExperienceSection } from '@/components/widgets/MotionExperienceSection';
 import { education } from '@/data/education';
 import { experience } from '@/data/experience';
 ---
 
 <section id='experience' class='py-(--space-section-y) px-(--section-padding-x)' aria-labelledby='experience-heading'>
   <div class='mx-auto w-full max-w-(--section-max)'>
-    <MotionSectionIntro client:visible>
-      <header class='mb-(--space-section-header)'>
-        <h2 id='experience-heading' class='scroll-anchor type-section-title m-0 text-balance'>Experience</h2>
-      </header>
-    </MotionSectionIntro>
-
-    <MotionExperienceList client:visible experience={experience} education={education} />
+    <MotionExperienceSection client:visible title='Experience' experience={experience} education={education} />
   </div>
 </section>

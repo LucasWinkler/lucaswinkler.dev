@@ -1,0 +1,15 @@
+---
+import ErrorHero from '@/components/sections/error-hero/ErrorHero.astro';
+import Footer from '@/components/sections/Footer.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title='Page Not Found — Lucas Winkler'
+  description='That page does not exist. Head back to the homepage to explore work and experience.'
+  canonicalPath='/404'>
+  <main id='content'>
+    <ErrorHero />
+  </main>
+  <Footer />
+</BaseLayout>

@@ -204,6 +204,18 @@
     scroll-margin-top: calc(var(--header-inner-min-h) + 2rem + env(safe-area-inset-top, 0px));
   }
 
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   .type-display {
     font-family: var(--font-inter-display);
     font-feature-settings:
