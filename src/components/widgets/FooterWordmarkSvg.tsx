@@ -2,9 +2,9 @@ export function FooterWordmarkSvg() {
   return (
     <svg
       width={359}
-      height={96}
+      height={93.65}
       className='block h-auto w-full'
-      viewBox='0 0 359 96'
+      viewBox='0 0 359 93.65'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       preserveAspectRatio='xMidYMax meet'

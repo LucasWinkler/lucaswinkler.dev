@@ -69,7 +69,7 @@ export function MotionFooterWordmark() {
     }
 
     const applyVisuals = (stretch: number) => {
-      const baseHeight = wordmarkRef.current?.offsetHeight ?? 96;
+      const baseHeight = wordmarkRef.current?.offsetHeight ?? 93.65;
       scaleY.set(1 + stretch / baseHeight);
       stretchPx.set(stretch);
     };
@@ -221,17 +221,15 @@ export function MotionFooterWordmark() {
 
   return (
     <div className='pointer-events-none overflow-visible' aria-hidden='true'>
-      <div className='translate-y-[13px] lg:translate-y-10'>
-        <motion.div
-          ref={wordmarkRef}
-          className='relative w-full text-text'
-          style={{
-            scaleY,
-            transformOrigin: 'top center',
-          }}>
-          <FooterWordmarkSvg />
-        </motion.div>
-      </div>
+      <motion.div
+        ref={wordmarkRef}
+        className='relative w-full text-text'
+        style={{
+          scaleY,
+          transformOrigin: 'top center',
+        }}>
+        <FooterWordmarkSvg />
+      </motion.div>
       <motion.div className='w-full' style={{ height: stretchPx }} />
     </div>
   );
