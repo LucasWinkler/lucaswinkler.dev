@@ -8,16 +8,16 @@ export const approach: ApproachItem[] = [
   {
     id: 'ui',
     label: 'UI',
-    line: 'Layouts, type, spacing — the details that make something feel finished.',
+    line: 'Built to match the design, not just get close. Fewer rounds of visual cleanup after handoff.',
   },
   {
     id: 'motion',
     label: 'Motion',
-    line: 'Transitions that feel smooth and natural, not added for show.',
+    line: "Transitions that ship in code, not just in Figma. Smooth when they help, restrained when they don't.",
   },
   {
     id: 'access',
     label: 'Accessibility',
-    line: 'Keyboard nav, focus states, reduced motion — part of the build, not an afterthought.',
+    line: 'Keyboard support, focus states, and semantic markup built in from the start. Not a checklist before launch.',
   },
 ];

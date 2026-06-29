@@ -241,22 +241,18 @@ export const WorkPanel = memo(function WorkPanel({
               )}
             </div>
 
-            <div
-              className='my-2 h-px w-full max-w-[min(24ch,calc(100%-3.5rem))] bg-white/14 max-[640px]:max-w-full'
-              aria-hidden='true'
-              style={getContentStyle(isExpanded, 0.08, revealMotion)}
-            />
-
-            <div
-              className='w-[min(38ch,100%)] min-[901px]:w-[min(38ch,calc(50cqw-3rem))]'
-              style={getContentStyle(isExpanded, 0.12, revealMotion)}>
-              <p className='type-caption m-0 text-white/78 text-pretty'>{item.description}</p>
-            </div>
+            {item.description ? (
+              <div
+                className='w-[min(38ch,100%)] min-[901px]:w-[min(38ch,calc(50cqw-3rem))]'
+                style={getContentStyle(isExpanded, 0.12, revealMotion)}>
+                <p className='type-caption m-0 text-white/78 text-pretty'>{item.description}</p>
+              </div>
+            ) : null}
 
             <ul
               className='relative z-1 m-0 mt-3 flex list-none flex-wrap gap-x-2 gap-y-1 p-0'
               aria-label={`${item.brand} tech stack`}
-              style={getContentStyle(isExpanded, 0.2, revealMotion)}>
+              style={getContentStyle(isExpanded, item.description ? 0.2 : 0.08, revealMotion)}>
               {item.tech.map(stack => (
                 <li
                   key={stack}

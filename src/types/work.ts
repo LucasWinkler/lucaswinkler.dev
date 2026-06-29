@@ -3,7 +3,7 @@ export type SelectedWorkItem = {
   brand: string;
   domain: string;
   url: string;
-  description: string;
+  description?: string;
   tech: string[];
   image?: string;
   imageWidth?: number;
