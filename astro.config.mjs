@@ -2,6 +2,7 @@
 import { defineConfig, fontProviders } from 'astro/config';
 
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -10,7 +11,19 @@ export default defineConfig({
   output: 'static',
   site: 'https://www.lucaswinkler.dev',
   trailingSlash: 'never',
-  integrations: [react()],
+  integrations: [
+    react(),
+    sitemap({
+      lastmod: new Date(),
+      serialize(item) {
+        if (item.url.includes('/404')) {
+          return undefined;
+        }
+
+        return item;
+      },
+    }),
+  ],
 
   fonts: [
     {

@@ -8,7 +8,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
   title='Page Not Found — Lucas Winkler'
   description='That page does not exist. Head back to the homepage to explore work and experience.'
   canonicalPath='/404'
-  skipTarget='#error-heading'>
+  skipTarget='#error-heading'
+  noindex
+  includeSchema={false}>
   <ErrorHero />
   <Footer slot='after-content' />
 </BaseLayout>
