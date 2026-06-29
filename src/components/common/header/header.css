@@ -87,7 +87,7 @@
 
 .site-header--hero .site-header__link:hover,
 .site-header--hero .site-header__link:focus-visible,
-.site-header--hero .site-header__link[aria-current='page'] {
+.site-header--hero .site-header__link[aria-current='location'] {
   color: var(--color-hero-text);
 }
 
@@ -152,7 +152,7 @@
 
 .site-header--sticky .site-header__link:hover,
 .site-header--sticky .site-header__link:focus-visible,
-.site-header--sticky .site-header__link[aria-current='page'] {
+.site-header--sticky .site-header__link[aria-current='location'] {
   color: var(--color-header-sticky-text);
   background-color: var(--color-header-sticky-hover);
 }
