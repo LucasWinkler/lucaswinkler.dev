@@ -1,6 +1,8 @@
 import { LayoutGroup, motion, type Transition } from 'motion/react';
 import { type CSSProperties, type KeyboardEvent, memo, type SyntheticEvent } from 'react';
 
+import { fadeEase as fadeEaseBezier } from '@/lib/motion';
+
 import { contentDuration, contentEase, fadeEase, hoverMediaDuration, mediaDuration } from './constants';
 import { panelClass, panelEndInsetClass, panelGapClass, panelInsetClass, panelSnapClass } from './styles';
 import { useWorkList } from './WorkListContext';
@@ -13,8 +15,9 @@ export type WorkPanelProps = {
   index: number;
 };
 
-const logoEase = [0.33, 1, 0.68, 1] as const;
-const logoLayoutTransition = { duration: 0.52, ease: logoEase };
+const logoEnterEase = [0.33, 1, 0.68, 1] as const;
+const logoEnterLayoutTransition = { duration: 0.52, ease: logoEnterEase };
+const logoExitLayoutTransition = { duration: 0.36, ease: fadeEaseBezier };
 
 const logoShellClass =
   'flex items-center justify-center overflow-hidden bg-white rounded-(--radius-work-logo) max-[640px]:rounded-(--radius-work-logo-sm)';
@@ -27,10 +30,16 @@ type WorkPanelLogoProps = {
   variant: 'centered' | 'corner';
   src: string;
   scale?: number;
-  transition: Transition;
+  isExpanded: boolean;
+  shouldReduceMotion: boolean;
 };
 
-function WorkPanelLogo({ variant, src, scale, transition }: WorkPanelLogoProps) {
+function WorkPanelLogo({ variant, src, scale, isExpanded, shouldReduceMotion }: WorkPanelLogoProps) {
+  const layoutTransition: Transition = shouldReduceMotion
+    ? { duration: 0 }
+    : isExpanded
+      ? logoEnterLayoutTransition
+      : logoExitLayoutTransition;
   const wrapperClass =
     variant === 'corner'
       ? 'pointer-events-none absolute top-(--space-work-panel-inset) right-(--space-work-panel-inset) z-3 max-[640px]:top-(--space-work-panel-inset-sm) max-[640px]:right-(--space-work-panel-inset-sm)'
@@ -40,7 +49,10 @@ function WorkPanelLogo({ variant, src, scale, transition }: WorkPanelLogoProps) 
 
   return (
     <div className={wrapperClass}>
-      <motion.div layoutId='logo' className={`${shellSizeClass} ${logoShellClass}`} transition={{ layout: transition }}>
+      <motion.div
+        layoutId='logo'
+        className={`${shellSizeClass} ${logoShellClass}`}
+        transition={{ layout: layoutTransition }}>
         <img
           className='h-full w-full object-contain'
           style={scale !== undefined ? { transform: `scale(${scale})` } : undefined}
@@ -124,7 +136,6 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
   const isExpanded = isMobileLayout || panelActive;
   const revealMotion = shouldReduceMotion || isMobileLayout;
   const mediaScale = isMobileLayout ? 1 : getMediaScale(panelActive, panelHovered);
-  const logoTransition = shouldReduceMotion ? { duration: 0 } : logoLayoutTransition;
   const panelStyle = {
     backgroundColor: item.brandColor,
     '--panel-grow': flexGrow,
@@ -225,7 +236,8 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
               variant={isExpanded ? 'corner' : 'centered'}
               src={item.logo}
               scale={item.logoScale}
-              transition={logoTransition}
+              isExpanded={isExpanded}
+              shouldReduceMotion={shouldReduceMotion}
             />
           </LayoutGroup>
         ) : null}
