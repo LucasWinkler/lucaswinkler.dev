@@ -87,7 +87,7 @@ export function MotionFooterWordmark() {
 
     const clearReleaseTimer = () => {
       if (releaseTimerRef.current !== undefined) {
-        window.clearTimeout(releaseTimerRef.current);
+        clearTimeout(releaseTimerRef.current);
         releaseTimerRef.current = undefined;
       }
     };
@@ -120,7 +120,7 @@ export function MotionFooterWordmark() {
       clearReleaseTimer();
       const delay = isAtCap(stretch) ? CAP_IDLE_MS : WHEEL_RELEASE_MS;
       const release = isAtCap(stretch) ? releaseFromCap : springToRest;
-      releaseTimerRef.current = window.setTimeout(release, delay);
+      releaseTimerRef.current = setTimeout(release, delay);
     };
 
     const applyPull = (delta: number) => {
