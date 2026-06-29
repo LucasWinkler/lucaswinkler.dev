@@ -94,6 +94,7 @@
   --radius-hero: clamp(1.125rem, 2.4vw, 1.75rem);
   --hero-inset-x: clamp(0.75rem, 2.5vw, 1.25rem);
   --hero-inset-y: clamp(0.75rem, 2.5vw, 1.25rem);
+  --hero-panel-min-h: calc(100vh - (var(--hero-inset-y) * 2));
   --hero-panel-min-h: calc(100svh - (var(--hero-inset-y) * 2));
 
   --noise-tile: url('/textures/noise.png');
@@ -141,12 +142,6 @@
     opacity: 0.045;
     background-image: var(--noise-tile);
     background-size: 180px 180px;
-  }
-
-  @supports (height: 100dvh) {
-    :root {
-      --hero-panel-min-h: calc(100dvh - (var(--hero-inset-y) * 2));
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {

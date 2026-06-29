@@ -1,17 +1,13 @@
 .hero-shell {
+  min-height: 100vh;
   min-height: 100svh;
   padding-inline: var(--hero-inset-x);
   padding-block: var(--hero-inset-y);
 }
 
-@supports (height: 100dvh) {
-  .hero-shell {
-    min-height: 100dvh;
-  }
-}
-
 .hero-panel {
   contain: layout paint;
+  overflow: hidden;
   min-height: var(--hero-panel-min-h);
   border-radius: var(--radius-hero);
   box-shadow: var(--shadow-panel);

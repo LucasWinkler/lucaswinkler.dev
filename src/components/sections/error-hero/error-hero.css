@@ -1,26 +1,17 @@
 .error-hero-shell {
+  min-height: 100vh;
   min-height: 100svh;
   padding-inline: var(--hero-inset-x);
   padding-block: var(--hero-inset-y);
 }
 
-@supports (height: 100dvh) {
-  .error-hero-shell {
-    min-height: 100dvh;
-  }
-}
-
 .error-hero-panel {
   contain: layout paint;
+  overflow: hidden;
+  min-height: calc(100vh - (var(--hero-inset-y) * 2));
   min-height: calc(100svh - (var(--hero-inset-y) * 2));
   border-radius: var(--radius-hero);
   box-shadow: var(--shadow-panel);
-}
-
-@supports (height: 100dvh) {
-  .error-hero-panel {
-    min-height: calc(100dvh - (var(--hero-inset-y) * 2));
-  }
 }
 
 .error-hero-panel__media {
@@ -50,15 +41,10 @@
 }
 
 .error-hero-panel__content {
+  min-height: calc(100vh - (var(--hero-inset-y) * 2));
   min-height: calc(100svh - (var(--hero-inset-y) * 2));
   padding-top: calc(5.5rem + env(safe-area-inset-top));
   padding-bottom: clamp(2.5rem, 8vw, 4rem);
-}
-
-@supports (height: 100dvh) {
-  .error-hero-panel__content {
-    min-height: calc(100dvh - (var(--hero-inset-y) * 2));
-  }
 }
 
 .error-hero__display {
