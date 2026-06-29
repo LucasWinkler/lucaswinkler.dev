@@ -1,7 +1,7 @@
 ---
 import { MotionSectionIntro } from '@/components/widgets/MotionSectionIntro';
 import { MotionWorkList } from '@/components/widgets/MotionWorkList/MotionWorkList';
-import { selectedWork } from '@/data/selected-work';
+import { selectedWork, selectedWorkIntro } from '@/data/selected-work';
 ---
 
 <section
@@ -10,10 +10,11 @@ import { selectedWork } from '@/data/selected-work';
   aria-labelledby='selected-work-heading'>
   <div class='mx-auto w-full max-w-(--section-max)'>
     <MotionSectionIntro client:visible>
-      <header class='mb-(--space-section-header)'>
+      <header class='mb-(--space-section-header) flex flex-col gap-4'>
         <h2 id='selected-work-heading' class='scroll-anchor type-section-title m-0 max-w-[12ch] text-balance'>
           Recent Work
         </h2>
+        <p class='type-section-lead m-0 max-w-[44ch] text-balance text-text-muted'>{selectedWorkIntro}</p>
       </header>
     </MotionSectionIntro>
 

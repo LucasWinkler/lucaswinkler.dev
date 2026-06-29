@@ -14,6 +14,7 @@
 
 .site-header--hero .site-header__inner {
   width: 100%;
+  justify-content: space-between;
 }
 
 .site-header--hero .site-header__bar {
@@ -23,7 +24,6 @@
 
 @media (min-width: 640px) {
   .site-header--hero .site-header__inner {
-    justify-content: space-between;
     gap: clamp(1.5rem, 4vw, 3rem);
   }
 }

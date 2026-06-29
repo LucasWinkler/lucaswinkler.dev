@@ -1,0 +1,12 @@
+@media (max-width: 479px) {
+  .footer-meta nav {
+    width: 100%;
+  }
+
+  .footer-meta nav ul {
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 0;
+  }
+}

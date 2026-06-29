@@ -37,7 +37,7 @@
   --text-base: 1.0625rem;
   --text-md: clamp(1rem, 2.1vw, 1.125rem);
   --text-lg: clamp(1.125rem, 2.5vw, 1.625rem);
-  --text-hero: clamp(2.75rem, 7vw, 4.5rem);
+  --text-hero: clamp(2.5rem, 7vw, 4.5rem);
   --text-section-title: clamp(2.75rem, 7vw, 5rem);
 
   --leading-tight: 1.02;

@@ -37,16 +37,16 @@ function ExperienceRow({
   const leftContent = leftDatetime ? (
     <time
       dateTime={leftDatetime}
-      className='type-caption m-0 w-[min(100%,10.5rem)] shrink-0 whitespace-nowrap text-text-muted tabular-nums'>
+      className='type-caption m-0 max-w-42 shrink-0 whitespace-nowrap text-text-muted tabular-nums'>
       {left}
     </time>
   ) : (
-    <span className='type-caption m-0 w-[min(100%,10.5rem)] shrink-0 text-text-muted'>{left}</span>
+    <span className='type-caption m-0 max-w-42 shrink-0 text-text-muted'>{left}</span>
   );
 
   return (
     <motion.li
-      className={`flex items-baseline justify-between gap-8 py-(--space-row-y) ${hasTopBorder ? 'border-t border-border' : ''}`}
+      className={`flex items-baseline justify-between gap-10 py-(--space-row-y) ${hasTopBorder ? 'border-t border-border' : ''}`}
       initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.55 }}
@@ -54,7 +54,7 @@ function ExperienceRow({
       style={{ backfaceVisibility: 'hidden' }}>
       {leftContent}
       <div className='min-w-0 flex-1 text-right'>
-        <p className='type-list-title m-0 text-text'>{title}</p>
+        <p className='type-list-title m-0 text-pretty text-text'>{title}</p>
         <p className='type-caption m-0 mt-1 text-text-muted'>{subtitle}</p>
         {detail ? <p className='type-caption m-0 mt-0.5 text-text-muted opacity-80'>{detail}</p> : null}
       </div>
