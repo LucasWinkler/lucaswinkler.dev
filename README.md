@@ -1,15 +1,15 @@
 <p align="center">
-  <img alt="lucaswinkler.dev" src="https://shieldcn.dev/header/surface.svg?logo=false&amp;size=wide&amp;mode=dark&amp;image=https%3A%2F%2Fraw.githubusercontent.com%2FLucasWinkler%2Flucaswinkler.dev%2Frewrite%2Fastro%2Fsrc%2Fassets%2Fimages%2Fhero-blue-abstract.png&amp;overlay=0" />
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/header/surface.svg?logo=false&amp;size=wide&amp;mode=dark&amp;image=https%3A%2F%2Fraw.githubusercontent.com%2FLucasWinkler%2Flucaswinkler.dev%2Frewrite%2Fastro%2Fsrc%2Fassets%2Fimages%2Fhero-blue-abstract.png&amp;overlay=0" /><img alt="lucaswinkler.dev" src="https://shieldcn.dev/header/surface.svg?logo=false&amp;size=wide&amp;mode=light&amp;image=https%3A%2F%2Fraw.githubusercontent.com%2FLucasWinkler%2Flucaswinkler.dev%2Frewrite%2Fastro%2Fsrc%2Fassets%2Fimages%2Fhero-blue-abstract.png&amp;overlay=0" /></picture>
 </p>
 
 Personal portfolio for [lucaswinkler.dev](https://www.lucaswinkler.dev).
 
-[![Live site](https://shieldcn.dev/badge/lucaswinkler.dev-view-438052.svg?variant=outline&logo=lu%3AExternalLink)](https://www.lucaswinkler.dev)
-[![Astro](https://shieldcn.dev/badge/Astro-7-171717.svg?variant=secondary&logo=astro)](https://astro.build)
-[![React](https://shieldcn.dev/badge/React-19-171717.svg?variant=secondary&logo=react)](https://react.dev)
-[![TypeScript](https://shieldcn.dev/badge/TypeScript-6-171717.svg?variant=secondary&logo=typescript)](https://www.typescriptlang.org)
-[![Tailwind CSS](https://shieldcn.dev/badge/Tailwind-v4-171717.svg?variant=secondary&logo=tailwindcss)](https://tailwindcss.com)
-[![Motion](https://shieldcn.dev/badge/Motion-171717.svg?variant=secondary&logo=framer)](https://motion.dev)
+<a href="https://www.lucaswinkler.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/badge/lucaswinkler.dev-view-438052.svg?variant=outline&amp;logo=lu%3AExternalLink" /><img alt="Live site" src="https://shieldcn.dev/badge/lucaswinkler.dev-view-438052.svg?variant=outline&amp;mode=light&amp;logo=lu%3AExternalLink" /></picture></a>
+<a href="https://astro.build"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/badge/Astro-7-171717.svg?variant=secondary&amp;logo=astro" /><img alt="Astro" src="https://shieldcn.dev/badge/Astro-7-171717.svg?variant=secondary&amp;mode=light&amp;logo=astro" /></picture></a>
+<a href="https://react.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/badge/React-19-171717.svg?variant=secondary&amp;logo=react" /><img alt="React" src="https://shieldcn.dev/badge/React-19-171717.svg?variant=secondary&amp;mode=light&amp;logo=react" /></picture></a>
+<a href="https://www.typescriptlang.org"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/badge/TypeScript-6-171717.svg?variant=secondary&amp;logo=typescript" /><img alt="TypeScript" src="https://shieldcn.dev/badge/TypeScript-6-171717.svg?variant=secondary&amp;mode=light&amp;logo=typescript" /></picture></a>
+<a href="https://tailwindcss.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/badge/Tailwind-v4-171717.svg?variant=secondary&amp;logo=tailwindcss" /><img alt="Tailwind CSS" src="https://shieldcn.dev/badge/Tailwind-v4-171717.svg?variant=secondary&amp;mode=light&amp;logo=tailwindcss" /></picture></a>
+<a href="https://motion.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/badge/Motion-171717.svg?variant=secondary&amp;logo=framer" /><img alt="Motion" src="https://shieldcn.dev/badge/Motion-171717.svg?variant=secondary&amp;mode=light&amp;logo=framer" /></picture></a>
 
 ## Setup
 
