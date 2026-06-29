@@ -62,6 +62,16 @@ const headlineWordsByLine = splitEnterWordsByLine(hero.headlineLines);
         class='hero-panel__scrim pointer-events-none absolute inset-0 z-[1] bg-linear-to-b from-black/55 via-black/35 to-black/65'
         aria-hidden='true'>
       </div>
+      <script is:inline>
+        (function () {
+          const img = document.querySelector('[data-hero-image]');
+          if (!(img instanceof HTMLImageElement)) return;
+          if (!img.complete || !img.naturalWidth) return;
+          const media = img.closest('.hero-panel__media');
+          img.classList.add('is-loaded');
+          media?.classList.add('is-loaded', 'is-instant');
+        })();
+      </script>
     </div>
 
     <div class='texture-noise-overlay pointer-events-none absolute inset-0 z-[2]' aria-hidden='true'></div>
