@@ -228,7 +228,7 @@ export function MotionFooterWordmark() {
 
   if (shouldReduceMotion) {
     return (
-      <div className='w-full text-text' aria-hidden='true'>
+      <div className='w-full select-none text-text' aria-hidden='true'>
         <FooterWordmarkSvg />
       </div>
     );
@@ -237,7 +237,7 @@ export function MotionFooterWordmark() {
   return (
     <motion.div
       ref={wordmarkRef}
-      className='pointer-events-none w-full text-text'
+      className='pointer-events-none w-full select-none text-text'
       style={{
         scaleY,
         transformOrigin: 'bottom center',

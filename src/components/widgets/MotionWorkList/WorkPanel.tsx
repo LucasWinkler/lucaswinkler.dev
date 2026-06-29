@@ -203,7 +203,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
       aria-expanded={isMobileLayout ? undefined : panelActive}
       aria-labelledby={isExpanded ? `work-${item.id}-title` : undefined}
       aria-label={isExpanded ? undefined : `Show ${item.brand} details`}
-      className={`${panelClass} ${panelSnapClass} ${isFirst(index) ? panelInsetClass : panelGapClass} ${isLast(index) ? panelEndInsetClass : ''} outline-none focus-ring ${isExpanded ? 'cursor-default select-text' : 'cursor-pointer'}`}>
+      className={`work-panel ${panelClass} ${panelSnapClass} ${isFirst(index) ? panelInsetClass : panelGapClass} ${isLast(index) ? panelEndInsetClass : ''} outline-none focus-ring ${isExpanded ? 'cursor-default' : 'cursor-pointer select-none'}`}>
       <motion.div layoutRoot className='relative h-full w-full overflow-hidden rounded-(--radius-panel)'>
         {item.image ? (
           <div className='pointer-events-none absolute inset-0 origin-center' style={mediaStyle} aria-hidden='true'>
@@ -248,7 +248,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
         ) : null}
 
         <div
-          className={`absolute inset-0 z-2 flex h-full flex-col justify-start p-(--space-work-panel-inset) max-[640px]:p-(--space-work-panel-inset-sm) ${isExpanded ? 'pointer-events-auto' : 'pointer-events-none'}`}
+          className={`absolute inset-0 z-2 flex h-full flex-col justify-start p-(--space-work-panel-inset) max-[640px]:p-(--space-work-panel-inset-sm) ${isExpanded ? 'pointer-events-auto select-text' : 'pointer-events-none'}`}
           aria-hidden={!isExpanded}
           inert={!isExpanded}>
           <div className='relative z-1 flex min-w-0 flex-col'>

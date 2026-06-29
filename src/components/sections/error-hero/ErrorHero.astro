@@ -21,7 +21,7 @@ const [heroAvif, heroWebp, heroSrc] = await Promise.all([
 const { width, height } = heroWebp.attributes;
 ---
 
-<section class='error-hero-shell theme-dark' aria-labelledby='error-heading'>
+<section class='error-hero-shell' aria-labelledby='error-heading'>
   <div class='error-hero-panel relative isolate overflow-hidden'>
     <HeaderHero brandHref='/' />
 
@@ -60,7 +60,9 @@ const { width, height } = heroWebp.attributes;
         </div>
 
         <div class='error-hero__actions'>
-          <a href='/' class='error-hero__cta type-nav touch-manipulation cursor-pointer'>Back to homepage</a>
+          <a href='/' class='error-hero__cta type-nav touch-manipulation select-none cursor-pointer'>
+            Back to homepage
+          </a>
         </div>
       </div>
     </div>

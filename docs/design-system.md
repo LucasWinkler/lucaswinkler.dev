@@ -86,16 +86,13 @@ Low-level font-family helpers (use when a preset doesn't fit):
 
 ### Primitives
 
-| Token                 | Role                         |
-| --------------------- | ---------------------------- |
-| `--color-neutral-950` | Near-black text (light mode) |
-| `--color-neutral-900` | Dark mode background         |
-| `--color-neutral-800` | Dark mode surface            |
-| `--color-neutral-500` | Muted text (light)           |
-| `--color-neutral-400` | Muted text (dark)            |
-| `--color-neutral-50`  | Warm off-white               |
-| `--color-neutral-0`   | Pure white surface           |
-| `--color-accent-600`  | Brand green accent           |
+| Token                  | Role                        |
+| ---------------------- | --------------------------- |
+| `--color-neutral-950`  | Near-black text             |
+| `--color-neutral-500`  | Muted text                  |
+| `--color-neutral-50`   | Warm off-white              |
+| `--color-neutral-0`    | Pure white surface          |
+| `--color-accent-glass` | Hero media placeholder tint |
 
 ### Semantic (use these)
 
@@ -105,19 +102,13 @@ Low-level font-family helpers (use when a preset doesn't fit):
 | `--color-surface`            | Cards, panels                     |
 | `--color-text`               | Primary text                      |
 | `--color-text-muted`         | Secondary text                    |
-| `--color-accent`             | Links, focus rings, active states |
 | `--color-border`             | Dividers, borders                 |
-| `--color-dim`                | De-emphasized elements            |
-| `--color-hover-subtle`       | Hover backgrounds                 |
-| `--color-hover-muted`        | Lighter hover                     |
-| `--color-chip-bg`            | Tag/chip backgrounds              |
-| `--color-active-soft`        | Active/selected tint              |
+| `--color-focus-ring`         | Focus outline (light surfaces)    |
+| `--color-focus-ring-inverse` | Focus outline (dark surfaces)     |
 | `--color-hero-text`          | Text on hero imagery              |
 | `--color-hero-text-muted`    | Lead text on hero                 |
 | `--color-hero-media`         | Hero image placeholder background |
 | `--color-hero-image-outline` | Hero image inset outline          |
-
-Dark mode: add `.theme-dark` on a parent — semantic tokens re-map automatically.
 
 ## Spacing
 
@@ -146,13 +137,12 @@ Usage: `py-(--space-section-y)`, `px-(--section-padding-x)`, `max-w-(--section-m
 
 ## Motion
 
-| Token                   | Value                           |
-| ----------------------- | ------------------------------- |
-| `--ease-out`            | cubic-bezier(0.23, 1, 0.32, 1)  |
-| `--ease-in-out`         | cubic-bezier(0.77, 0, 0.175, 1) |
-| `--hero-enter-ease`     | cubic-bezier(0.25, 1, 0.35, 1)  |
-| `--hero-enter-duration` | 1520ms                          |
-| `--hero-enter-stagger`  | 96ms                            |
+| Token                   | Value                          |
+| ----------------------- | ------------------------------ |
+| `--ease-out`            | cubic-bezier(0.23, 1, 0.32, 1) |
+| `--hero-enter-ease`     | cubic-bezier(0.25, 1, 0.35, 1) |
+| `--hero-enter-duration` | 1520ms                         |
+| `--hero-enter-stagger`  | 96ms                           |
 
 Respect `prefers-reduced-motion` — already handled globally in `global.css`.
 
