@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="lucaswinkler.dev" src="https://shieldcn.dev/header/surface.svg?logo=false&amp;mode=dark&amp;image=https%3A%2F%2Fraw.githubusercontent.com%2FLucasWinkler%2Flucaswinkler.dev%2Frewrite%2Fastro%2Fsrc%2Fassets%2Fimages%2Fhero-blue-abstract.png&amp;overlay=0" />
+  <img alt="lucaswinkler.dev" src="https://shieldcn.dev/header/surface.svg?logo=false&amp;size=wide&amp;mode=dark&amp;image=https%3A%2F%2Fraw.githubusercontent.com%2FLucasWinkler%2Flucaswinkler.dev%2Frewrite%2Fastro%2Fsrc%2Fassets%2Fimages%2Fhero-blue-abstract.png&amp;overlay=0" />
 </p>
 
 Personal portfolio for [lucaswinkler.dev](https://www.lucaswinkler.dev).
