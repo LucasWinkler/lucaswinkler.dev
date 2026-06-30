@@ -5,14 +5,7 @@ import { focusVisible } from '@/lib/focus';
 import { fadeEase as fadeEaseBezier } from '@/lib/motion';
 
 import { contentDuration, contentEase, fadeEase, hoverMediaDuration, mediaDuration } from './constants';
-import {
-  panelEndInsetClass,
-  panelGapClass,
-  panelInsetClass,
-  panelShellClass,
-  panelSnapClass,
-  panelSurfaceClass,
-} from './styles';
+import { panelEndInsetClass, panelGapClass, panelInsetClass, panelShellClass, panelSurfaceClass } from './styles';
 import { useWorkList } from './WorkListContext';
 
 import type { SelectedWorkItem } from '@/types/work';
@@ -28,7 +21,7 @@ const logoEnterLayoutTransition = { duration: 0.52, ease: logoEnterEase };
 const logoExitLayoutTransition = { duration: 0.36, ease: fadeEaseBezier };
 
 const logoShellClass =
-  'flex items-center justify-center overflow-hidden bg-white rounded-(--radius-work-logo) max-[640px]:rounded-(--radius-work-logo-sm)';
+  'flex items-center justify-center overflow-hidden bg-white rounded-(--radius-work-logo-sm) md:rounded-(--radius-work-logo)';
 
 function hideBrokenImage(event: SyntheticEvent<HTMLImageElement>) {
   event.currentTarget.style.display = 'none';
@@ -50,10 +43,13 @@ function WorkPanelLogo({ variant, src, scale, isExpanded, shouldReduceMotion }: 
       : logoExitLayoutTransition;
   const wrapperClass =
     variant === 'corner'
-      ? 'pointer-events-none absolute top-(--space-work-panel-inset) right-(--space-work-panel-inset) z-3 max-[640px]:top-(--space-work-panel-inset-sm) max-[640px]:right-(--space-work-panel-inset-sm)'
+      ? 'pointer-events-none absolute top-(--space-work-panel-inset) right-(--space-work-panel-inset) z-3'
       : 'pointer-events-none absolute inset-0 z-3 flex items-center justify-center';
 
-  const shellSizeClass = variant === 'corner' ? 'h-10 w-10' : 'h-[72px] w-[72px]';
+  const shellSizeClass =
+    variant === 'corner'
+      ? 'size-(--size-work-logo-corner)'
+      : 'size-(--size-work-logo-compact) lg:size-(--size-work-logo)';
 
   return (
     <div className={wrapperClass}>
@@ -228,7 +224,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
       aria-expanded={isMobileLayout ? undefined : panelActive}
       aria-labelledby={isExpanded ? `work-${item.id}-title` : undefined}
       aria-label={isExpanded ? undefined : `Show ${item.brand} details`}
-      className={`${panelShellClass} ${panelSnapClass} ${isFirst(index) ? panelInsetClass : panelGapClass} ${isLast(index) ? panelEndInsetClass : ''} focus-ring ${isExpanded ? 'cursor-default' : 'cursor-pointer select-none'}`}
+      className={`${panelShellClass} ${isFirst(index) ? panelInsetClass : panelGapClass} ${isLast(index) ? panelEndInsetClass : ''} focus-ring ${isExpanded ? 'cursor-default' : 'cursor-pointer select-none'}`}
       style={{ '--panel-grow': flexGrow } as CSSProperties}>
       <div className={panelSurfaceClass} style={panelStyle}>
         <motion.div layoutRoot className='relative h-full w-full overflow-hidden rounded-(--radius-panel)'>
@@ -275,12 +271,12 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
           ) : null}
 
           <div
-            className={`absolute inset-0 z-2 flex h-full flex-col justify-start p-(--space-work-panel-inset) max-[640px]:p-(--space-work-panel-inset-sm) ${isExpanded ? 'pointer-events-auto select-text' : 'pointer-events-none'}`}
+            className={`absolute inset-0 z-2 flex h-full flex-col justify-start p-(--space-work-panel-inset) ${isExpanded ? 'pointer-events-auto select-text' : 'pointer-events-none'}`}
             aria-hidden={isExpanded ? undefined : true}
             inert={!isExpanded}>
             <div className='relative z-1 flex min-w-0 flex-col'>
               <div
-                className='flex max-w-[min(24ch,calc(100%-3.5rem))] flex-col gap-1.5 max-[640px]:max-w-full'
+                className='flex max-w-full flex-col gap-1.5 md:max-w-[min(24ch,calc(100%-3.5rem))]'
                 style={getContentStyle(isExpanded, 0.05, revealMotion)}>
                 {isExpanded ? (
                   <h3
@@ -288,7 +284,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
                     className='type-card-title m-0 text-balance text-white'
                     translate='no'>
                     <a
-                      className='group flex w-fit max-w-full flex-col gap-1.5 rounded-sm text-white no-underline outline-none transition-[color] duration-150 ease-out focus-ring-inverse max-[640px]:overflow-visible max-[640px]:whitespace-normal'
+                      className='group flex w-fit max-w-full flex-col gap-1.5 overflow-visible whitespace-normal rounded-sm text-white no-underline outline-none transition-[color] duration-150 ease-out focus-ring-inverse md:overflow-hidden'
                       href={item.url}
                       target='_blank'
                       rel='noopener noreferrer'
@@ -316,7 +312,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
 
               {item.description ? (
                 <div
-                  className='w-[min(38ch,100%)] min-[901px]:w-[min(38ch,calc(50cqw-3rem))]'
+                  className='w-[min(38ch,100%)] work:w-[min(38ch,calc(50cqw-3rem))]'
                   style={getContentStyle(isExpanded, 0.12, revealMotion)}>
                   <p className='type-caption m-0 text-white/92 text-pretty'>{item.description}</p>
                 </div>

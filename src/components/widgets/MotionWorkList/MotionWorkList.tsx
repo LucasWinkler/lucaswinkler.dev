@@ -1,9 +1,12 @@
+import './work-list.css';
+
 import { useReducedMotion } from 'motion/react';
 import { type FocusEvent, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
+import { minWidth } from '@/lib/breakpoints';
 import { useMediaQuery } from '@/lib/useMediaQuery';
 
-import { activeShare, distanceDecay, hoverBoost, minWeight, mobileLayoutMediaQuery, selectedPeak } from './constants';
+import { activeShare, distanceDecay, hoverBoost, minWeight, selectedPeak } from './constants';
 import { listClass } from './styles';
 import { WorkListProvider } from './WorkListContext';
 import { WorkPanel } from './WorkPanel';
@@ -58,7 +61,7 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
   const [activeId, setActiveId] = useState<string | null>(() => items[0]?.id ?? null);
   const [liveMessage, setLiveMessage] = useState('');
   const shouldReduceMotion = useReducedMotion();
-  const isMobileLayout = useMediaQuery(mobileLayoutMediaQuery);
+  const isDesktopLayout = useMediaQuery(minWidth('md'));
   const listRef = useRef<HTMLDivElement>(null);
   const itemIds = useMemo(() => items.map(item => item.id), [items]);
   const reduceMotion = shouldReduceMotion ?? false;
@@ -78,15 +81,15 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
   }, [itemIds]);
 
   useLayoutEffect(() => {
-    if (!isMobileLayout || !listRef.current) {
+    if (isDesktopLayout || !listRef.current) {
       return;
     }
 
     listRef.current.scrollLeft = 0;
-  }, [isMobileLayout, items.length]);
+  }, [isDesktopLayout, items.length]);
 
   useEffect(() => {
-    if (isMobileLayout || !activeId) {
+    if (isDesktopLayout || !activeId) {
       return;
     }
 
@@ -95,7 +98,7 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
     if (item) {
       setLiveMessage(`${item.brand} details expanded`);
     }
-  }, [activeId, isMobileLayout, items]);
+  }, [activeId, isDesktopLayout, items]);
 
   const activeIndex = activeId === null ? -1 : items.findIndex(item => item.id === activeId);
   const hoveredIndex = hoveredId ? items.findIndex(item => item.id === hoveredId) : -1;
@@ -103,7 +106,7 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
   const flexWeights = getPanelFlexWeights(activeIndex, hoveredIndex, items.length);
 
   const handleListFocusIn = (event: FocusEvent<HTMLDivElement>) => {
-    if (!isMobileLayout) {
+    if (isDesktopLayout) {
       return;
     }
 
@@ -124,7 +127,7 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
     <WorkListProvider
       activeId={activeId}
       hoveredId={hoveredId}
-      isMobileLayout={isMobileLayout}
+      isMobileLayout={!isDesktopLayout}
       shouldReduceMotion={reduceMotion}
       isHovering={hoveredIndex >= 0}
       itemCount={items.length}

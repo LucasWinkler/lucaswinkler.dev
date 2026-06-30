@@ -109,7 +109,7 @@
   opacity: 1;
 }
 
-@media (min-width: 40rem) {
+@media (width >= 40rem) {
   .hero-shell {
     min-height: 100vh;
     min-height: 100svh;

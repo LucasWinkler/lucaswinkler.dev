@@ -1,0 +1,13 @@
+.work-list {
+  --space-work-panel-inset: var(--space-work-panel-inset-sm);
+  --radius-panel: calc(var(--space-work-panel-inset) + var(--radius-work-logo-target));
+  --radius-work-logo: max(0px, calc(var(--radius-panel) - var(--space-work-panel-inset)));
+}
+
+@media (width >= 56.25rem) {
+  .work-list {
+    --space-work-panel-inset: unset;
+    --radius-panel: unset;
+    --radius-work-logo: unset;
+  }
+}

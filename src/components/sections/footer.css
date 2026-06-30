@@ -1,12 +1,23 @@
-@media (max-width: 479px) {
+.footer-meta nav {
+  width: 100%;
+}
+
+.footer-meta nav ul {
+  width: 100%;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 0;
+}
+
+@media (width >= 30rem) {
   .footer-meta nav {
-    width: 100%;
+    width: auto;
   }
 
   .footer-meta nav ul {
-    width: 100%;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    gap: 0;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.75rem 1.5rem;
   }
 }

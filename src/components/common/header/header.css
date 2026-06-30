@@ -22,7 +22,7 @@
   max-width: var(--header-bar-max);
 }
 
-@media (min-width: 640px) {
+@media (width >= 40rem) {
   .site-header--hero .site-header__inner {
     gap: clamp(1.5rem, 4vw, 3rem);
   }
@@ -41,7 +41,7 @@
   padding-inline: 0.625rem;
 }
 
-@media (min-width: 640px) {
+@media (width >= 40rem) {
   .site-header__brand {
     padding-inline: 0.75rem;
   }
@@ -133,7 +133,7 @@
     transform var(--header-sticky-enter-duration) var(--hero-enter-ease);
 }
 
-@media (min-width: 640px) {
+@media (width >= 40rem) {
   .site-header--sticky .site-header__bar {
     transition:
       opacity var(--header-sticky-exit-duration) var(--ease-out),

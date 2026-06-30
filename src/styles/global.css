@@ -98,6 +98,16 @@
   --shadow-panel: 0 0 0 1px oklch(0 0 0 / 0.06), 0 1px 2px -1px oklch(0 0 0 / 0.06), 0 2px 4px 0 oklch(0 0 0 / 0.04);
   --z-index-header: 50;
   --z-index-overlay: 100;
+
+  --breakpoint-xs: 30rem;
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-work: 56.25rem;
+  --breakpoint-lg: 64rem;
+
+  --size-work-logo-compact: 3rem;
+  --size-work-logo: 3.5rem;
+  --size-work-logo-corner: 2.5rem;
 }
 
 @layer base {
