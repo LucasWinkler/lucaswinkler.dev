@@ -72,8 +72,16 @@ export function WorkListProvider({
   const activate = useCallback(
     (id: string) => {
       setActiveId(id);
+
+      if (!isMobileLayout) {
+        const index = itemIds.indexOf(id);
+
+        if (index >= 0) {
+          panelRefs.current[index]?.focus();
+        }
+      }
     },
-    [setActiveId],
+    [isMobileLayout, itemIds, setActiveId],
   );
 
   const deactivate = useCallback(() => {

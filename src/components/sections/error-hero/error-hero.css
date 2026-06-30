@@ -108,6 +108,13 @@
   box-shadow: 0 0 0 2px var(--color-focus-ring-inverse);
 }
 
+@media (forced-colors: active) {
+  .error-hero__cta:focus-visible {
+    outline: 2px solid Highlight;
+    box-shadow: none;
+  }
+}
+
 .error-hero__cta:active {
   transform: scale(0.96);
 }

@@ -70,18 +70,15 @@ function WorkPanelLogo({ variant, src, scale, isExpanded, shouldReduceMotion }: 
 }
 
 function getImageRevealStyle(isActive: boolean, shouldReduceMotion: boolean): CSSProperties {
-  if (shouldReduceMotion) {
-    return {
-      opacity: isActive ? 1 : 0,
-    };
-  }
-
   return {
     opacity: isActive ? 1 : 0,
-    filter: isActive ? 'blur(0px)' : 'blur(4px)',
-    transitionProperty: 'opacity, filter',
-    transitionDuration: mediaDuration,
-    transitionTimingFunction: fadeEase,
+    ...(shouldReduceMotion
+      ? {}
+      : {
+          transitionProperty: 'opacity',
+          transitionDuration: mediaDuration,
+          transitionTimingFunction: fadeEase,
+        }),
   };
 }
 
@@ -263,7 +260,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
               className='flex max-w-[min(24ch,calc(100%-3.5rem))] flex-col gap-1.5 max-[640px]:max-w-full'
               style={getContentStyle(isExpanded, 0.05, revealMotion)}>
               {isExpanded ? (
-                <h3 id={`work-${item.id}-title`} className='type-card-title m-0 text-balance text-white'>
+                <h3 id={`work-${item.id}-title`} className='type-card-title m-0 text-balance text-white' translate='no'>
                   <a
                     className='group flex w-fit max-w-full flex-col gap-1.5 rounded-sm text-white no-underline outline-none transition-[color] duration-150 ease-out focus-ring-inverse max-[640px]:overflow-visible max-[640px]:whitespace-normal'
                     href={item.url}
@@ -271,14 +268,17 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
                     rel='noopener noreferrer'
                     aria-label={`${item.brand} (opens in new tab)`}>
                     <span>{item.brand}</span>
-                    <span className='type-caption text-white/88 underline-offset-2 no-underline transition-[color,text-decoration-color] duration-150 ease-out group-hover:text-white group-hover:underline group-focus-visible:text-white group-focus-visible:underline'>
+                    <span className='type-caption text-white/92 underline-offset-2 no-underline transition-[color,text-decoration-color] duration-150 ease-out group-hover:text-white group-hover:underline group-focus-visible:text-white group-focus-visible:underline'>
                       {item.domain}
                     </span>
                   </a>
                 </h3>
               ) : (
                 <>
-                  <h3 id={`work-${item.id}-title`} className='type-card-title m-0 text-balance text-white'>
+                  <h3
+                    id={`work-${item.id}-title`}
+                    className='type-card-title m-0 text-balance text-white'
+                    translate='no'>
                     {item.brand}
                   </h3>
                   <span className='type-caption truncate text-white/88' aria-hidden='true'>
@@ -292,7 +292,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
               <div
                 className='w-[min(38ch,100%)] min-[901px]:w-[min(38ch,calc(50cqw-3rem))]'
                 style={getContentStyle(isExpanded, 0.12, revealMotion)}>
-                <p className='type-caption m-0 text-white/78 text-pretty'>{item.description}</p>
+                <p className='type-caption m-0 text-white/92 text-pretty'>{item.description}</p>
               </div>
             ) : null}
 
@@ -303,7 +303,8 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
               {item.tech.map(stack => (
                 <li
                   key={stack}
-                  className="type-caption font-medium tracking-(--tracking-chip) text-white/72 uppercase not-last:after:ms-2 not-last:after:font-normal not-last:after:text-white/40 not-last:after:content-['·']">
+                  translate='no'
+                  className="type-caption font-medium tracking-(--tracking-chip) text-white/88 uppercase not-last:after:ms-2 not-last:after:font-normal not-last:after:text-white/50 not-last:after:content-['·']">
                   {stack}
                 </li>
               ))}

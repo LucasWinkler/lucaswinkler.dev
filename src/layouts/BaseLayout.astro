@@ -41,7 +41,6 @@ const {
     <Seo title={title} description={description} canonicalPath={canonicalPath} includeSchema={includeSchema} />
     <Font cssVariable='--font-inter' preload={[{ style: 'normal' }]} />
     <title>{title}</title>
-    <Analytics />
   </head>
   <body>
     <a href={skipTarget} class='skip-link'>Skip to content</a>
@@ -50,5 +49,6 @@ const {
       <slot />
     </main>
     <slot name='after-content' />
+    <Analytics />
   </body>
 </html>
