@@ -123,6 +123,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
     itemCount,
     activate,
     activateByIndex,
+    deactivate,
     onPanelPointerEnter,
     registerPanelRef,
     isFirst,
@@ -167,6 +168,12 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
       return;
     }
 
+    if (event.key === 'Escape' && panelActive) {
+      event.preventDefault();
+      deactivate();
+      return;
+    }
+
     if (event.key === 'ArrowRight') {
       event.preventDefault();
       activateByIndex(Math.min(index + 1, itemCount - 1));
@@ -203,7 +210,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
       aria-expanded={isMobileLayout ? undefined : panelActive}
       aria-labelledby={isExpanded ? `work-${item.id}-title` : undefined}
       aria-label={isExpanded ? undefined : `Show ${item.brand} details`}
-      className={`work-panel ${panelClass} ${panelSnapClass} ${isFirst(index) ? panelInsetClass : panelGapClass} ${isLast(index) ? panelEndInsetClass : ''} outline-none focus-ring ${isExpanded ? 'cursor-default' : 'cursor-pointer select-none'}`}>
+      className={`work-panel ${panelClass} ${panelSnapClass} ${isFirst(index) ? panelInsetClass : panelGapClass} ${isLast(index) ? panelEndInsetClass : ''} outline-none focus-ring-inverse ${isExpanded ? 'cursor-default' : 'cursor-pointer select-none'}`}>
       <motion.div layoutRoot className='relative h-full w-full overflow-hidden rounded-(--radius-panel)'>
         {item.image ? (
           <div className='pointer-events-none absolute inset-0 origin-center' style={mediaStyle} aria-hidden='true'>
@@ -261,7 +268,8 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
                     className='group flex w-fit max-w-full flex-col gap-1.5 rounded-sm text-white no-underline outline-none transition-[color] duration-150 ease-out focus-ring-inverse max-[640px]:overflow-visible max-[640px]:whitespace-normal'
                     href={item.url}
                     target='_blank'
-                    rel='noopener noreferrer'>
+                    rel='noopener noreferrer'
+                    aria-label={`${item.brand} (opens in new tab)`}>
                     <span>{item.brand}</span>
                     <span className='type-caption text-white/88 underline-offset-2 no-underline transition-[color,text-decoration-color] duration-150 ease-out group-hover:text-white group-hover:underline group-focus-visible:text-white group-focus-visible:underline'>
                       {item.domain}

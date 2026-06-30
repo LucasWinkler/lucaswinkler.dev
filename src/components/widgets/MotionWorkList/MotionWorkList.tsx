@@ -15,6 +15,10 @@ type MotionWorkListProps = {
 };
 
 function getPanelFlexWeights(activeIndex: number, hoveredIndex: number, itemCount: number): number[] {
+  if (activeIndex < 0) {
+    return Array.from({ length: itemCount }, () => 1);
+  }
+
   let inactiveSum = 0;
   const rawInactive = Array.from({ length: itemCount }, () => 0);
 
@@ -71,10 +75,7 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
     });
   }, [itemIds]);
 
-  const activeIndex = Math.max(
-    0,
-    items.findIndex(item => item.id === activeId),
-  );
+  const activeIndex = activeId === null ? -1 : items.findIndex(item => item.id === activeId);
   const hoveredIndex = hoveredId ? items.findIndex(item => item.id === hoveredId) : -1;
 
   const flexWeights = getPanelFlexWeights(activeIndex, hoveredIndex, items.length);

@@ -9,6 +9,7 @@ type WorkListContextValue = {
   itemCount: number;
   activate: (id: string) => void;
   activateByIndex: (index: number) => void;
+  deactivate: () => void;
   onPanelPointerEnter: (id: string, event: PointerEvent<HTMLElement>) => void;
   clearHover: () => void;
   isFirst: (index: number) => boolean;
@@ -28,7 +29,7 @@ type WorkListProviderProps = {
   isHovering: boolean;
   itemCount: number;
   itemIds: string[];
-  setActiveId: (id: string) => void;
+  setActiveId: (id: string | null) => void;
   setHoveredId: (id: string | null) => void;
   children: ReactNode;
 };
@@ -75,6 +76,10 @@ export function WorkListProvider({
     [setActiveId],
   );
 
+  const deactivate = useCallback(() => {
+    setActiveId(null);
+  }, [setActiveId]);
+
   const onPanelPointerEnter = useCallback(
     (id: string, event: PointerEvent<HTMLElement>) => {
       if (event.pointerType === 'mouse') {
@@ -98,6 +103,7 @@ export function WorkListProvider({
       itemCount,
       activate,
       activateByIndex,
+      deactivate,
       onPanelPointerEnter,
       clearHover,
       isFirst: index => index === 0,
@@ -115,6 +121,7 @@ export function WorkListProvider({
       itemCount,
       activate,
       activateByIndex,
+      deactivate,
       onPanelPointerEnter,
       clearHover,
       registerPanelRef,

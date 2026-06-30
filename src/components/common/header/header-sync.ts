@@ -1,5 +1,6 @@
 const heroSection = document.getElementById('hero');
 const stickyHeader = document.getElementById('site-header-sticky');
+const heroHeader = document.getElementById('site-header-hero');
 
 if (heroSection && stickyHeader) {
   let ticking = false;
@@ -63,10 +64,12 @@ if (heroSection && stickyHeader) {
       clearHideAccessibility();
       stickyHeader.dataset.visible = 'true';
       stickyHeader.removeAttribute('inert');
+      heroHeader?.setAttribute('inert', '');
       return;
     }
 
     stickyHeader.dataset.visible = 'false';
+    heroHeader?.removeAttribute('inert');
     scheduleHideAccessibility();
   };
 
