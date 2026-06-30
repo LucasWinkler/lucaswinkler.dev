@@ -29,6 +29,8 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 
 ## Documentation
 
+Design tokens, typography, and page layout: `docs/design-system.md`.
+
 Full documentation: https://docs.astro.build
 
 Consult these guides before working on related tasks:

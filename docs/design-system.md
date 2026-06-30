@@ -122,7 +122,79 @@ Low-level font-family helpers (use when a preset doesn't fit):
 | `--section-padding-x`    | clamp(1.25rem, 4vw, 3rem)    | Horizontal page gutter         |
 | `--section-max`          | 72rem                        | Content max-width              |
 
-Usage: `py-(--space-section-y)`, `px-(--section-padding-x)`, `max-w-(--section-max)`.
+Section vertical spacing: `py-(--space-section-y)`, `pt-(--space-section-header)`, etc.
+
+## Page layout
+
+Content width uses a **two-layer** pattern. Do not use Tailwind's built-in `container` — it uses breakpoint widths, not our tokens, and collapses padding + max-width into one box.
+
+### Standard section
+
+```astro
+<section class='py-(--space-section-y) px-(--section-padding-x)' aria-labelledby='…'>
+  <div class='section-inner'>
+    <!-- constrained content -->
+  </div>
+</section>
+```
+
+| Layer | Class / token                                               | Role                                                      |
+| ----- | ----------------------------------------------------------- | --------------------------------------------------------- |
+| Outer | `px-(--section-padding-x)` on `<section>`, `<footer>`, etc. | Full-width shell + horizontal gutters                     |
+| Inner | `.section-inner`                                            | Centers content and caps width at `--section-max` (72rem) |
+
+`.section-inner` is defined in `src/styles/global.css`:
+
+```css
+@utility section-inner {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--section-max);
+}
+```
+
+Compose extra layout on the inner wrapper when needed, e.g. `class='section-inner flex flex-col gap-6'`.
+
+### Hero / full-bleed panels
+
+Hero and error hero use a full-bleed panel (background/media edge-to-edge) with padding on the content layer instead of the section:
+
+- Outer panel: no horizontal padding — media fills the viewport
+- Content layer: `padding-inline: var(--hero-content-inset)` (aliases `--section-padding-x`) in co-located `*.css`
+- Inner column: `.section-inner` for the max-width cap
+
+See `src/components/sections/hero/hero.css` and `error-hero.css`.
+
+### Header
+
+Header shells use `padding-inline: var(--section-padding-x)` in `header.css`. The sticky/hero bar caps at `--header-bar-max` (same as `--section-max`).
+
+### Full-bleed inside a section
+
+When one block needs to break out of the content column while the section keeps normal gutters:
+
+1. Keep `px-(--section-padding-x)` on the outer `<section>`.
+2. Put standard content in `.section-inner`.
+3. For the breakout element, escape the column with viewport math and restore gutter alignment with the token:
+
+```html
+<!-- example: horizontal scroll track -->
+<div
+  class="max-[640px]:w-screen max-[640px]:[margin-inline:calc(50%-50vw)] max-[640px]:[scroll-padding-inline:var(--section-padding-x)]">
+  <div class="max-[640px]:ms-(--section-padding-x)">…first item…</div>
+  …
+  <div class="max-[640px]:me-(--section-padding-x)">…last item…</div>
+</div>
+```
+
+Reference implementation: `src/components/widgets/MotionWorkList/styles.ts` (mobile work carousel).
+
+Rules of thumb:
+
+- **Gutters** → `--section-padding-x` on the outer semantic element (or `--hero-content-inset` in hero panels)
+- **Max width** → `.section-inner` on the inner wrapper
+- **Full bleed** → break out with `w-screen` + `margin-inline: calc(50% - 50vw)`, then re-align scroll padding / first/last child insets with `--section-padding-x`
+- **Never** duplicate `mx-auto w-full max-w-(--section-max)` — use `.section-inner`
 
 ## Layout & Shape
 
@@ -153,6 +225,7 @@ Respect `prefers-reduced-motion` — already handled globally in `global.css`.
 - Use `.type-*` presets for all text
 - Use semantic color tokens (`text-text-muted`, `bg-surface`, `border-border`)
 - Use spacing tokens for section layout
+- Use `.section-inner` for constrained content width (see `docs/design-system.md` → Page layout)
 - Add new tokens to `@theme inline` before using in components
 
 ### Don't
@@ -161,7 +234,9 @@ Respect `prefers-reduced-motion` — already handled globally in `global.css`.
 - Raw hex/rgb/oklch in components
 - New font sizes outside the 5-size scale — extend an existing token instead
 - Duplicate tracking/leading inline when a preset or token exists
+- Duplicate `mx-auto w-full max-w-(--section-max)` — use `.section-inner`
 - Mix Tailwind default `text-sm` (14px) with `--text-sm` (13px) — always use tokens
+- Use Tailwind `container` for page layout — use the two-layer pattern in Page layout above
 
 ## Adding New UI
 
