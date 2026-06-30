@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react';
 
-import { fadeEase, noMotion } from '@/lib/motion';
+import { fadeEase, noMotion, revealGridDuration, revealGridStagger } from '@/lib/motion';
 
 import type { ApproachItem } from '@/data/approach';
 
@@ -20,7 +20,11 @@ export function MotionApproachBridge({ items }: MotionApproachBridgeProps) {
           initial={shouldReduceMotion ? false : { opacity: 0, y: '0.625rem' }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.65 }}
-          transition={shouldReduceMotion ? noMotion : { duration: 0.75, ease: fadeEase, delay: index * 0.1 }}
+          transition={
+            shouldReduceMotion
+              ? noMotion
+              : { duration: revealGridDuration, ease: fadeEase, delay: index * revealGridStagger }
+          }
           style={{ backfaceVisibility: 'hidden' }}>
           <p className='type-eyebrow-label m-0 text-text-muted'>{item.label}</p>
           <p className='type-ui m-0 text-pretty text-text'>{item.line}</p>

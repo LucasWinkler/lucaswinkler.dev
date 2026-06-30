@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'motion/react';
 
 import { MotionWorkList } from '@/components/widgets/MotionWorkList/MotionWorkList';
-import { fadeEase, noMotion } from '@/lib/motion';
+import { fadeEase, noMotion, revealSectionDuration } from '@/lib/motion';
 
 import type { SelectedWorkItem } from '@/types/work';
 
@@ -21,7 +21,7 @@ export function MotionSelectedWorkSection({ title, intro, items }: MotionSelecte
         initial={shouldReduceMotion ? false : { opacity: 0, y: '0.75rem' }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.6 }}
-        transition={shouldReduceMotion ? noMotion : { duration: 0.65, ease: fadeEase }}
+        transition={shouldReduceMotion ? noMotion : { duration: revealSectionDuration, ease: fadeEase }}
         style={{ backfaceVisibility: 'hidden' }}>
         <header className='flex flex-col gap-6'>
           <h2 id='selected-work-heading' className='scroll-anchor type-section-title m-0 max-w-[12ch] text-balance'>

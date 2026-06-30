@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'motion/react';
 
 import { formatDateRangeParts, sortReverseChronological, toIsoDate } from '@/lib/experience';
-import { fadeEase, noMotion } from '@/lib/motion';
+import { fadeEase, noMotion, revealItemDuration, revealItemStagger } from '@/lib/motion';
 
 import type { EducationItem, ExperienceItem } from '@/types/experience';
 import type { ReactNode } from 'react';
@@ -59,7 +59,11 @@ function ExperienceRow({
       initial={shouldReduceMotion ? false : { opacity: 0, y: '1rem' }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.55 }}
-      transition={shouldReduceMotion ? noMotion : { duration: 0.55, ease: fadeEase, delay: index * 0.08 }}
+      transition={
+        shouldReduceMotion
+          ? noMotion
+          : { duration: revealItemDuration, ease: fadeEase, delay: index * revealItemStagger }
+      }
       style={{ backfaceVisibility: 'hidden' }}>
       {leftContent}
       <div className='min-w-0 flex-1 text-right'>
