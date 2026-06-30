@@ -166,6 +166,12 @@
   opacity: 1;
 }
 
+.hero-panel__media.is-shader-active .hero-panel__image,
+.hero-panel__media.is-shader-active .hero-panel__lqip {
+  opacity: 0;
+  transition: opacity var(--hero-media-duration) var(--hero-enter-ease);
+}
+
 @media (width < 40rem) and (min-height: 36rem) {
   .hero-panel {
     min-height: clamp(22rem, 70svh, calc(100svh - (var(--hero-inset-y) * 2)));
