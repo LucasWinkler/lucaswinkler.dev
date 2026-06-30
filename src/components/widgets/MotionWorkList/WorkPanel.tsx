@@ -249,7 +249,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
 
         <div
           className={`absolute inset-0 z-2 flex h-full flex-col justify-start p-(--space-work-panel-inset) max-[640px]:p-(--space-work-panel-inset-sm) ${isExpanded ? 'pointer-events-auto select-text' : 'pointer-events-none'}`}
-          aria-hidden={!isExpanded}
+          aria-hidden={isExpanded ? undefined : true}
           inert={!isExpanded}>
           <div className='relative z-1 flex min-w-0 flex-col'>
             <div

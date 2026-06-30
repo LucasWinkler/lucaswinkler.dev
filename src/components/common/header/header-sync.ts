@@ -22,7 +22,6 @@ if (heroSection && stickyHeader) {
   };
 
   const applyHideAccessibility = () => {
-    stickyHeader.setAttribute('aria-hidden', 'true');
     stickyHeader.setAttribute('inert', '');
   };
 
@@ -63,7 +62,6 @@ if (heroSection && stickyHeader) {
     if (visible) {
       clearHideAccessibility();
       stickyHeader.dataset.visible = 'true';
-      stickyHeader.removeAttribute('aria-hidden');
       stickyHeader.removeAttribute('inert');
       return;
     }
