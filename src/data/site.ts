@@ -14,6 +14,8 @@ export const ogImageWidth = 1200;
 
 export const ogImageHeight = 630;
 
+export const ogImageAlt = 'Lucas Winkler — software developer portfolio';
+
 export const appleTouchIconPath = '/apple-touch-icon.png';
 
 export const locale = 'en_US';

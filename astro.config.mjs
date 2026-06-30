@@ -38,12 +38,6 @@ export default defineConfig({
             src: ['./src/assets/fonts/InterVariable.woff2'],
             display: 'swap',
           },
-          {
-            weight: '100 900',
-            style: 'italic',
-            src: ['./src/assets/fonts/InterVariable-Italic.woff2'],
-            display: 'swap',
-          },
         ],
       },
     },
