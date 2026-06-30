@@ -31,6 +31,7 @@ uniform vec2 u_velocity;
 uniform float u_wake;
 uniform float u_strength;
 uniform float u_engage;
+uniform float u_ambientEngage;
 uniform float u_radiusX;
 uniform float u_radiusY;
 
@@ -66,6 +67,31 @@ float edgeGuard(vec2 uv) {
   float x = smoothstep(0.0, margin, uv.x) * smoothstep(0.0, margin, 1.0 - uv.x);
   float y = smoothstep(0.0, margin, uv.y) * smoothstep(0.0, margin, 1.0 - uv.y);
   return x * y;
+}
+
+float ambientWeight(vec2 uv) {
+  float edge = edgeGuard(uv);
+  float dist = length(uv - 0.5) * 1.414213562;
+  float radial = 1.0 - smoothstep(0.18, 0.82, dist);
+  float center = mix(0.48, 1.22, radial);
+  return edge * center;
+}
+
+vec2 ambientIdle(vec2 p) {
+  float t = u_time;
+  float e = u_ambientEngage;
+
+  float waveX = sin(t * 0.19 + p.y * 3.2) * 0.024
+              + sin(t * 0.11 + p.y * 5.8 + 1.2) * 0.014;
+  float waveY = sin(t * 0.23 + p.x * 2.6 + 0.8) * 0.018
+              + cos(t * 0.14 + p.x * 4.4) * 0.012;
+
+  float sway = sin(t * 0.27) * 0.019;
+  vec2 offset = vec2(waveX + sway, waveY + sway * 0.7);
+
+  offset *= ambientWeight(p) * e;
+
+  return p + offset;
 }
 
 vec2 rippleWarp(vec2 p) {
@@ -104,7 +130,7 @@ vec2 rippleWarp(vec2 p) {
 }
 
 vec2 warpUV(vec2 uv) {
-  return rippleWarp(uv);
+  return rippleWarp(ambientIdle(uv));
 }
 
 void main() {
@@ -194,6 +220,8 @@ function smoothstep(edge0: number, edge1: number, x: number): number {
 const INIT_RIPPLE_CAP = 0.08;
 const INITIAL_RAMP_MS = 800;
 const INITIAL_MOVE_DIST = 0.1;
+const AMBIENT_RAMP_MS = 2800;
+const INIT_AMBIENT_CAP = 0;
 
 export function createHeroCursorShader({ canvas, image, maxPixelCount = 1_500_000 }: HeroCursorShaderOptions) {
   const gl = canvas.getContext('webgl2', { alpha: true, antialias: false, depth: false, stencil: false });
@@ -228,6 +256,7 @@ export function createHeroCursorShader({ canvas, image, maxPixelCount = 1_500_00
     wake: gl.getUniformLocation(program, 'u_wake'),
     strength: gl.getUniformLocation(program, 'u_strength'),
     engage: gl.getUniformLocation(program, 'u_engage'),
+    ambientEngage: gl.getUniformLocation(program, 'u_ambientEngage'),
     radiusX: gl.getUniformLocation(program, 'u_radiusX'),
     radiusY: gl.getUniformLocation(program, 'u_radiusY'),
   };
@@ -236,6 +265,7 @@ export function createHeroCursorShader({ canvas, image, maxPixelCount = 1_500_00
   gl.uniform1f(uniforms.radiusX, 0.12);
   gl.uniform1f(uniforms.radiusY, 0.19);
   gl.uniform1f(uniforms.engage, 1);
+  gl.uniform1f(uniforms.ambientEngage, 0);
   gl.uniform1f(uniforms.imageAspect, image.naturalWidth / image.naturalHeight);
 
   let rafId = 0;
@@ -255,6 +285,9 @@ export function createHeroCursorShader({ canvas, image, maxPixelCount = 1_500_00
   let engageBlend = 0;
   let initialApproachStart = 0;
   let initialMoveDist = 0;
+  let isAmbientRamp = false;
+  let hasAmbientRamped = false;
+  let ambientApproachStart = 0;
 
   const target = {
     mouseX: 0.5,
@@ -339,6 +372,18 @@ export function createHeroCursorShader({ canvas, image, maxPixelCount = 1_500_00
       shaderEngage = 1;
     }
 
+    let ambientEngage = hasAmbientRamped ? 1 : 0;
+    if (isAmbientRamp) {
+      const ambientProgress = clamp((now - ambientApproachStart) / AMBIENT_RAMP_MS, 0, 1);
+      const ambientBlend = smoothstep(0, 1, smoothstep(0, 1, ambientProgress));
+      ambientEngage = lerp(INIT_AMBIENT_CAP, 1, ambientBlend);
+
+      if (ambientBlend >= 1) {
+        isAmbientRamp = false;
+        hasAmbientRamped = true;
+      }
+    }
+
     const velMag = Math.hypot(smooth.velocityX, smooth.velocityY);
     target.wake = clamp(velMag * 0.055, 0, 1) * strengthTarget * engageBlend;
 
@@ -365,6 +410,7 @@ export function createHeroCursorShader({ canvas, image, maxPixelCount = 1_500_00
     gl.uniform1f(uniforms.wake, smooth.wake);
     gl.uniform1f(uniforms.strength, smooth.strength);
     gl.uniform1f(uniforms.engage, shaderEngage);
+    gl.uniform1f(uniforms.ambientEngage, ambientEngage);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 
     frameCount += 1;
@@ -449,6 +495,14 @@ export function createHeroCursorShader({ canvas, image, maxPixelCount = 1_500_00
     },
     setPaused(isPaused: boolean) {
       paused = isPaused;
+    },
+    beginAmbientRamp() {
+      if (hasAmbientRamped || isAmbientRamp) {
+        return;
+      }
+
+      isAmbientRamp = true;
+      ambientApproachStart = performance.now();
     },
     whenReady(callback: () => void) {
       if (frameCount > 0) {

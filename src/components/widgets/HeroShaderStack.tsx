@@ -152,6 +152,7 @@ export function HeroShaderStack({ imageSelector = '[data-hero-image]' }: HeroSha
         shader.whenReady(() => {
           const showShader = () => {
             media.classList.add('is-shader-active');
+            shader.beginAmbientRamp();
             setIsActive(true);
           };
 
