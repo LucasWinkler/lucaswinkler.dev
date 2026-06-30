@@ -32,11 +32,15 @@ function shouldEnableShaders(): boolean {
     return false;
   }
 
-  if (!window.matchMedia('(pointer: fine)').matches) {
+  return supportsWebGL2();
+}
+
+function isPointerShaderMode(): boolean {
+  if (typeof window === 'undefined') {
     return false;
   }
 
-  return supportsWebGL2();
+  return window.matchMedia('(pointer: fine)').matches;
 }
 
 function panelInfluence(clientX: number, clientY: number, rect: DOMRect): number {
@@ -147,7 +151,10 @@ export function HeroShaderStack({ imageSelector = '[data-hero-image]' }: HeroSha
       try {
         const shader = createHeroCursorShader({ canvas, image: el });
         shaderRef.current = shader;
-        pointerControlRef.current = bindPointerTracking(panel, shader);
+
+        if (isPointerShaderMode()) {
+          pointerControlRef.current = bindPointerTracking(panel, shader);
+        }
 
         shader.whenReady(() => {
           const showShader = () => {
@@ -223,7 +230,7 @@ export function HeroShaderStack({ imageSelector = '[data-hero-image]' }: HeroSha
     const shader = shaderRef.current;
     const pointerControl = pointerControlRef.current;
 
-    if (!panel || !shader || !pointerControl) {
+    if (!panel || !shader) {
       return;
     }
 
@@ -239,7 +246,7 @@ export function HeroShaderStack({ imageSelector = '[data-hero-image]' }: HeroSha
         shader.setViewport(isIntersecting);
 
         if (isIntersecting) {
-          pointerControl.resyncPointer();
+          pointerControl?.resyncPointer();
         }
 
         syncPaused();
@@ -254,7 +261,7 @@ export function HeroShaderStack({ imageSelector = '[data-hero-image]' }: HeroSha
     intersectionObserver.observe(panel);
     document.addEventListener('visibilitychange', onVisibilityChange);
     shader.setViewport(true);
-    pointerControl.resyncPointer();
+    pointerControl?.resyncPointer();
     syncPaused();
 
     return () => {
