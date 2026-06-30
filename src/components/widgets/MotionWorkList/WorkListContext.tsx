@@ -1,5 +1,7 @@
 import { createContext, type PointerEvent, type ReactNode, useCallback, useContext, useMemo, useRef } from 'react';
 
+import { focusVisible } from '@/lib/focus';
+
 type WorkListContextValue = {
   activeId: string | null;
   hoveredId: string | null;
@@ -63,7 +65,7 @@ export function WorkListProvider({
       setActiveId(id);
 
       if (!isMobileLayout) {
-        panelRefs.current[index]?.focus();
+        focusVisible(panelRefs.current[index]);
       }
     },
     [isMobileLayout, itemIds, setActiveId],
@@ -77,7 +79,7 @@ export function WorkListProvider({
         const index = itemIds.indexOf(id);
 
         if (index >= 0) {
-          panelRefs.current[index]?.focus();
+          focusVisible(panelRefs.current[index]);
         }
       }
     },

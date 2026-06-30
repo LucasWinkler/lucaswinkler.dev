@@ -1,5 +1,5 @@
 import { useReducedMotion } from 'motion/react';
-import { type FocusEvent, type KeyboardEvent, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { type FocusEvent, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import { useMediaQuery } from '@/lib/useMediaQuery';
 
@@ -53,27 +53,6 @@ function getPanelFlexWeights(activeIndex: number, hoveredIndex: number, itemCoun
   });
 }
 
-function getNearestPanelIndex(list: HTMLDivElement, panels: HTMLElement[]): number {
-  const scrollLeft = list.scrollLeft;
-  let nearest = 0;
-  let minDistance = Infinity;
-
-  panels.forEach((panel, index) => {
-    const distance = Math.abs(panel.offsetLeft - scrollLeft);
-
-    if (distance < minDistance) {
-      minDistance = distance;
-      nearest = index;
-    }
-  });
-
-  return nearest;
-}
-
-function scrollPanelIntoView(panels: HTMLElement[], index: number, behavior: ScrollBehavior) {
-  panels[index]?.scrollIntoView({ inline: 'start', block: 'nearest', behavior });
-}
-
 export function MotionWorkList({ items }: MotionWorkListProps) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [activeId, setActiveId] = useState<string | null>(() => items[0]?.id ?? null);
@@ -83,7 +62,6 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
   const listRef = useRef<HTMLDivElement>(null);
   const itemIds = useMemo(() => items.map(item => item.id), [items]);
   const reduceMotion = shouldReduceMotion ?? false;
-  const scrollBehavior: ScrollBehavior = reduceMotion ? 'auto' : 'smooth';
 
   useLayoutEffect(() => {
     const validIds = new Set(itemIds);
@@ -124,43 +102,6 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
 
   const flexWeights = getPanelFlexWeights(activeIndex, hoveredIndex, items.length);
 
-  const handleListKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (!isMobileLayout || !listRef.current) {
-      return;
-    }
-
-    const panels = Array.from(listRef.current.querySelectorAll('.work-panel')) as HTMLElement[];
-
-    if (panels.length === 0) {
-      return;
-    }
-
-    const currentIndex = getNearestPanelIndex(listRef.current, panels);
-
-    if (event.key === 'ArrowRight') {
-      event.preventDefault();
-      scrollPanelIntoView(panels, Math.min(currentIndex + 1, panels.length - 1), scrollBehavior);
-      return;
-    }
-
-    if (event.key === 'ArrowLeft') {
-      event.preventDefault();
-      scrollPanelIntoView(panels, Math.max(currentIndex - 1, 0), scrollBehavior);
-      return;
-    }
-
-    if (event.key === 'Home') {
-      event.preventDefault();
-      scrollPanelIntoView(panels, 0, scrollBehavior);
-      return;
-    }
-
-    if (event.key === 'End') {
-      event.preventDefault();
-      scrollPanelIntoView(panels, panels.length - 1, scrollBehavior);
-    }
-  };
-
   const handleListFocusIn = (event: FocusEvent<HTMLDivElement>) => {
     if (!isMobileLayout) {
       return;
@@ -172,7 +113,7 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
       return;
     }
 
-    const panel = target.closest('.work-panel');
+    const panel = target.closest('.work-panel-shell');
 
     if (panel) {
       panel.scrollIntoView({ inline: 'nearest', block: 'nearest' });
@@ -195,12 +136,8 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
       </span>
       <div
         ref={listRef}
-        className={`${listClass}${isMobileLayout ? ' outline-none focus-ring' : ''}`}
-        role={isMobileLayout ? 'region' : undefined}
-        aria-label={isMobileLayout ? 'Selected work projects' : undefined}
-        tabIndex={isMobileLayout ? 0 : undefined}
+        className={listClass}
         onMouseLeave={() => setHoveredId(null)}
-        onKeyDown={handleListKeyDown}
         onFocusCapture={handleListFocusIn}>
         {items.map((item, index) => (
           <WorkPanel key={item.id} item={item} flexGrow={flexWeights[index]} index={index} />

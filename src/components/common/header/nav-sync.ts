@@ -1,39 +1,51 @@
 const navSections = ['selected-work', 'experience'];
 
-const navLinks = document.querySelectorAll<HTMLAnchorElement>('.site-header__link[href*="#"]');
+let cleanup: (() => void) | undefined;
 
-function linkHash(href: string | null): string | null {
-  if (!href) {
-    return null;
-  }
+export function initNavSync(): void {
+  cleanup?.();
 
-  const hashIndex = href.indexOf('#');
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.site-header__link[href*="#"]');
 
-  if (hashIndex < 0) {
-    return null;
-  }
-
-  return href.slice(hashIndex);
-}
-
-function setActiveSection(sectionId: string | null) {
-  navLinks.forEach(link => {
-    const href = link.getAttribute('href');
-
-    if (sectionId && linkHash(href) === `#${sectionId}`) {
-      link.setAttribute('aria-current', 'location');
-      return;
+  function linkHash(href: string | null): string | null {
+    if (!href) {
+      return null;
     }
 
-    link.removeAttribute('aria-current');
-  });
-}
+    const hashIndex = href.indexOf('#');
 
-const sectionElements = navSections
-  .map(id => document.getElementById(id))
-  .filter((section): section is HTMLElement => section instanceof HTMLElement);
+    if (hashIndex < 0) {
+      return null;
+    }
 
-if (sectionElements.length > 0) {
+    return href.slice(hashIndex);
+  }
+
+  function setActiveSection(sectionId: string | null) {
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+
+      if (sectionId && linkHash(href) === `#${sectionId}`) {
+        link.setAttribute('aria-current', 'location');
+        return;
+      }
+
+      link.removeAttribute('aria-current');
+    });
+  }
+
+  const sectionElements = navSections
+    .map(id => document.getElementById(id))
+    .filter((section): section is HTMLElement => section instanceof HTMLElement);
+
+  if (sectionElements.length === 0) {
+    cleanup = undefined;
+    return;
+  }
+
+  const controller = new AbortController();
+  const { signal } = controller;
+
   const syncActiveSection = () => {
     const marker = window.innerHeight * 0.35;
     let activeId: string | null = null;
@@ -64,6 +76,10 @@ if (sectionElements.length > 0) {
   };
 
   syncActiveSection();
-  window.addEventListener('scroll', syncActiveSection, { passive: true });
-  window.addEventListener('resize', syncActiveSection, { passive: true });
+  window.addEventListener('scroll', syncActiveSection, { passive: true, signal });
+  window.addEventListener('resize', syncActiveSection, { passive: true, signal });
+
+  cleanup = () => {
+    controller.abort();
+  };
 }

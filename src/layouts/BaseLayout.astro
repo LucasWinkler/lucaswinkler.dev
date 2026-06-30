@@ -3,6 +3,7 @@ import '@/styles/global.css';
 
 import Analytics from '@vercel/analytics/astro';
 import { Font } from 'astro:assets';
+import { ClientRouter } from 'astro:transitions';
 
 import Seo from '@/components/common/Seo.astro';
 import { appleTouchIconPath, themeColor } from '@/data/site';
@@ -27,7 +28,7 @@ const {
 ---
 
 <!doctype html>
-<html lang='en'>
+<html lang='en' transition:animate='none'>
   <head>
     <meta charset='utf-8' />
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
@@ -40,15 +41,22 @@ const {
     {description ? <meta name='description' content={description} /> : null}
     <Seo title={title} description={description} canonicalPath={canonicalPath} includeSchema={includeSchema} />
     <Font cssVariable='--font-inter' preload={[{ style: 'normal' }]} />
-    <title>{title}</title>
+    <title transition:animate='fade'>{title}</title>
+    <ClientRouter />
   </head>
   <body>
     <a href={skipTarget} class='skip-link'>Skip to content</a>
     <slot name='before-content' />
-    <main id='content'>
+    <main id='content' transition:animate='fade'>
       <slot />
     </main>
     <slot name='after-content' />
     <Analytics />
+    <script>
+      import { initPageScripts } from '@/lib/view-transition-init';
+
+      initPageScripts();
+      document.addEventListener('astro:page-load', initPageScripts);
+    </script>
   </body>
 </html>

@@ -103,7 +103,7 @@
 @layer base {
   html {
     overscroll-behavior: none;
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     scroll-padding-top: calc(var(--header-inner-min-h) + 2rem + env(safe-area-inset-top, 0px));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -229,16 +229,24 @@
     box-shadow: 0 0 0 2px var(--color-focus-ring);
   }
 
+  .focus-ring {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+
   .focus-ring:focus-visible {
-    outline: 2px solid var(--color-focus-ring);
+    outline-color: var(--color-focus-ring);
+  }
+
+  .focus-ring-inverse {
+    outline: 2px solid transparent;
     outline-offset: 2px;
     box-shadow: none;
   }
 
   .focus-ring-inverse:focus-visible {
-    outline: 2px solid var(--color-focus-ring-inverse);
-    outline-offset: 2px;
-    box-shadow: none;
+    outline-color: var(--color-focus-ring-inverse);
   }
 
   .scroll-anchor {

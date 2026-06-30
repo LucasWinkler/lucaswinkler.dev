@@ -1,14 +1,25 @@
-const heroSection = document.getElementById('hero');
-const stickyHeader = document.getElementById('site-header-sticky');
-const heroHeader = document.getElementById('site-header-hero');
+let cleanup: (() => void) | undefined;
 
-if (heroSection && stickyHeader) {
+export function initHeaderSync(): void {
+  cleanup?.();
+
+  const heroSection = document.getElementById('hero');
+  const stickyHeader = document.getElementById('site-header-sticky');
+  const heroHeader = document.getElementById('site-header-hero');
+
+  if (!heroSection || !stickyHeader) {
+    cleanup = undefined;
+    return;
+  }
+
   let ticking = false;
   let stickyVisible = false;
   let insetOffset = parseFloat(getComputedStyle(heroSection).paddingBottom) || 0;
   let hideAccessibilityTimer: ReturnType<typeof setTimeout> | undefined;
   let onBarTransitionEnd: ((event: TransitionEvent) => void) | undefined;
   const headerBar = stickyHeader.querySelector<HTMLElement>('.site-header__bar');
+  const controller = new AbortController();
+  const { signal } = controller;
 
   const clearHideAccessibility = () => {
     if (hideAccessibilityTimer !== undefined) {
@@ -105,13 +116,18 @@ if (heroSection && stickyHeader) {
   setStickyVisible(false);
   syncHeader();
 
-  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('scroll', onScroll, { passive: true, signal });
   window.addEventListener(
     'resize',
     () => {
       insetOffset = parseFloat(getComputedStyle(heroSection).paddingBottom) || 0;
       syncHeader();
     },
-    { passive: true },
+    { passive: true, signal },
   );
+
+  cleanup = () => {
+    clearHideAccessibility();
+    controller.abort();
+  };
 }

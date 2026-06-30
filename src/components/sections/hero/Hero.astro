@@ -36,7 +36,7 @@ const headlineWordsByLine = splitEnterWordsByLine(hero.headlineLines);
     fetchpriority='high'
   />
 
-  <div class='hero-panel relative isolate overflow-hidden'>
+  <div class='hero-panel relative isolate overflow-hidden' transition:name='hero-panel'>
     <HeaderHero />
 
     <div class='hero-panel__media absolute inset-0'>
@@ -58,7 +58,6 @@ const headlineWordsByLine = splitEnterWordsByLine(hero.headlineLines);
           data-hero-image
         />
       </picture>
-      <script src='./hero-image.ts'></script>
       <div
         class='hero-panel__scrim pointer-events-none absolute inset-0 z-[1] bg-linear-to-b from-black/55 via-black/35 to-black/65'
         aria-hidden='true'>
