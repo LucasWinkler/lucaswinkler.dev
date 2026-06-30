@@ -6,21 +6,26 @@ import { FooterWordmarkSvg } from '@/components/widgets/FooterWordmarkSvg';
 const MAX_STRETCH_PX = 112;
 const RESISTANCE = 240;
 const CAP_RATIO = 0.96;
-const WHEEL_RELEASE_MS = 160;
-const CAP_IDLE_MS = 44;
+const TENSION_POWER = 2.5;
+const WHEEL_RELEASE_MS = 120;
+const CAP_IDLE_MS = 28;
 const CAP_INERTIA_DELTA = 4;
 const TOUCH_GAIN = 1.4;
-const STRAIN_GAIN = 0.12;
-const MAX_STRAIN_BUMP_PX = 10;
+const STRAIN_GAIN = 0.14;
+const MAX_STRAIN_BUMP_PX = 14;
 const VELOCITY_ALPHA = 0.38;
 const VELOCITY_STRAIN_SCALE = 0.004;
-const KINETIC_OVERSHOOT_GAIN = 0.09;
-const MAX_KINETIC_OVERSHOOT_PX = 16;
-const SPRING = { type: 'spring' as const, stiffness: 420, damping: 32, mass: 0.8, bounce: 0 };
-const CAP_RELEASE_SPRING = { type: 'spring' as const, stiffness: 360, damping: 28, mass: 0.85, bounce: 0 };
+const KINETIC_OVERSHOOT_GAIN = 0.1;
+const MAX_KINETIC_OVERSHOOT_PX = 20;
+const SPRING = { type: 'spring' as const, stiffness: 480, damping: 34, mass: 0.7, bounce: 0 };
 
 function stretchFromRawPull(rawPull: number): number {
   return MAX_STRETCH_PX * (1 - Math.exp(-rawPull / RESISTANCE));
+}
+
+function pullResistanceFactor(stretch: number): number {
+  const t = Math.min(Math.max(stretch / MAX_STRETCH_PX, 0), 1);
+  return (1 - t) ** TENSION_POWER;
 }
 
 function isAtCap(stretch: number): boolean {
@@ -28,11 +33,15 @@ function isAtCap(stretch: number): boolean {
 }
 
 function updateVelocity(current: number, delta: number): number {
-  return current * (1 - VELOCITY_ALPHA) + Math.abs(delta) * VELOCITY_ALPHA;
+  return current * (1 - VELOCITY_ALPHA * 1.4) + Math.abs(delta) * VELOCITY_ALPHA;
 }
 
 function stretchWithStrain(baseStretch: number, delta: number, velocity: number): number {
   if (!isAtCap(baseStretch)) {
+    return baseStretch;
+  }
+
+  if (delta <= 0) {
     return baseStretch;
   }
 
@@ -98,23 +107,27 @@ export function MotionFooterWordmark() {
       velocityRef.current = 0;
     };
 
-    const startRelease = (spring: typeof SPRING) => {
+    const startRelease = () => {
       if (isReleasingRef.current) {
         return;
       }
 
       clearReleaseTimer();
       stopAnimations();
+
+      const baseStretch = stretchFromRawPull(rawPullRef.current);
+      stretchPx.set(Math.min(stretchPx.get(), baseStretch));
+
       resetPullState();
       isReleasingRef.current = true;
 
-      void animate(stretchPx, 0, spring).then(() => {
+      void animate(stretchPx, 0, SPRING).then(() => {
         isReleasingRef.current = false;
       });
     };
 
-    const springToRest = () => startRelease(SPRING);
-    const releaseFromCap = () => startRelease(CAP_RELEASE_SPRING);
+    const springToRest = () => startRelease();
+    const releaseFromCap = () => startRelease();
 
     const scheduleRelease = (stretch: number) => {
       clearReleaseTimer();
@@ -136,8 +149,10 @@ export function MotionFooterWordmark() {
 
       if (delta > 0) {
         isPullingRef.current = true;
-        rawPullRef.current += delta;
+        const currentStretch = stretchFromRawPull(rawPullRef.current);
+        rawPullRef.current += delta * pullResistanceFactor(currentStretch);
       } else if (isPullingRef.current) {
+        velocityRef.current *= 0.5;
         rawPullRef.current = Math.max(0, rawPullRef.current + delta);
         if (rawPullRef.current === 0) {
           springToRest();
@@ -153,7 +168,13 @@ export function MotionFooterWordmark() {
 
     const onWheel = (event: WheelEvent) => {
       if (isReleasingRef.current) {
-        return;
+        if (event.deltaY < 0 && stretchPx.get() > 0) {
+          isReleasingRef.current = false;
+          stopAnimations();
+          clearReleaseTimer();
+        } else {
+          return;
+        }
       }
 
       const atBottom = isAtPageBottom();
