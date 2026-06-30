@@ -4,7 +4,7 @@ export const experience: ExperienceItem[] = [
   {
     id: 'tee-on',
     role: 'Software Developer',
-    company: 'Tee-On Golf Systems',
+    company: 'Tee On Golf Systems',
     location: 'Kitchener, ON (Hybrid)',
     start: '2026-01',
     end: null,

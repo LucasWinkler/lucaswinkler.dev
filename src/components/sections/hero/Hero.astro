@@ -24,15 +24,7 @@ const [heroAvif, heroWebp, heroLqip, heroSrc] = await Promise.all([
 const { width, height } = heroWebp.attributes;
 
 const headlineWordsByLine = splitEnterWordsByLine(hero.headlineLines);
-const headlineWordCount = headlineWordsByLine.flat().length;
-const introEnterIndex = headlineWordCount;
-const introParts = hero.intro.split(heroEmployer.name);
-
-if (introParts.length !== 2) {
-  throw new Error('Hero intro must contain the employer name exactly once.');
-}
-
-const [introBeforeEmployer, introAfterEmployer] = introParts;
+const introEnterIndex = headlineWordsByLine.flat().length;
 ---
 
 <section id='hero' class='hero-shell' aria-labelledby='hero-heading'>
@@ -97,7 +89,7 @@ const [introBeforeEmployer, introAfterEmployer] = introParts;
           <p
             class='hero-intro type-ui hero-enter hero-enter--intro m-0 max-w-[52ch] text-pretty sm:max-w-[56ch]'
             style={`--hero-enter-i: ${introEnterIndex}`}>
-            {introBeforeEmployer}
+            {hero.intro.before}
             <a
               href={heroEmployer.url}
               class='hero-intro__employer focus-ring-inverse'
@@ -107,7 +99,7 @@ const [introBeforeEmployer, introAfterEmployer] = introParts;
               style={`--hero-employer-logo: url(${heroEmployer.logo})`}>
               <span class='hero-intro__logo' aria-hidden='true'></span>
             </a>
-            {introAfterEmployer}
+            {hero.intro.after}
           </p>
         </div>
       </div>

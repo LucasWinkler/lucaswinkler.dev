@@ -5,7 +5,7 @@ export const siteDescription = 'Lucas Winkler — software developer focused on 
 const teeOnWork = selectedWork.find(item => item.id === 'tee-on');
 
 if (!teeOnWork) {
-  throw new Error('Tee-On work item is required for the hero employer link.');
+  throw new Error('Tee On work item is required for the hero employer link.');
 }
 
 export const heroEmployer = {
@@ -17,5 +17,9 @@ export const heroEmployer = {
 export const hero = {
   headlineLines: ['I build clean interfaces', 'that feel right.'],
   imageAlt: 'Blue abstract dithered texture',
-  intro: `I'm a software developer at ${teeOnWork.brand}, building golf software and marketing sites for GolfNorth. I care deeply about craft and how interfaces feel.`,
+  intro: {
+    before: "I'm a software developer at ",
+    after:
+      ', building golf software and marketing sites for GolfNorth. I care deeply about craft and how interfaces feel.',
+  },
 } as const;
