@@ -18,6 +18,6 @@ export const approach: ApproachItem[] = [
   {
     id: 'access',
     label: 'Accessibility',
-    line: 'Keyboard support, focus states, and semantic markup built in from the start. Not a checklist before launch.',
+    line: 'Keyboard support, focus states, and screen reader–friendly ARIA labels built in from the start. Not a checklist before launch.',
   },
 ];
