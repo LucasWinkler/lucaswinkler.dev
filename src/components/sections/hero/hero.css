@@ -9,7 +9,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: clamp(22rem, 58svh, calc(100svh - (var(--hero-inset-y) * 2)));
+  min-height: clamp(20rem, 65svh, calc(100svh - (var(--hero-inset-y) * 2)));
   border-radius: var(--radius-hero);
   box-shadow: var(--shadow-panel);
   transform: translateZ(0);
@@ -21,6 +21,7 @@
   flex: 1 1 auto;
   min-height: 0;
   padding-inline: var(--hero-content-inset);
+  --space-hero-bottom: clamp(1.5rem, 5vw, 1.75rem);
   padding-bottom: var(--space-hero-bottom);
   padding-top: calc(var(--hero-content-inset) + env(safe-area-inset-top, 0px));
 }
@@ -45,9 +46,65 @@
 }
 
 .hero-enter--word,
-.hero-enter--line {
+.hero-enter--line,
+.hero-enter--intro {
   transform-origin: left bottom;
   animation-delay: calc(var(--hero-enter-i) * var(--hero-enter-stagger));
+}
+
+.hero-enter--intro {
+  animation-duration: var(--hero-enter-intro-duration);
+}
+
+.hero-intro {
+  color: var(--color-hero-text-muted);
+  font-size: 1rem;
+  line-height: var(--leading-relaxed);
+}
+
+@media (width >= 48rem) {
+  .hero-intro {
+    font-size: var(--text-base);
+    line-height: var(--leading-body);
+  }
+}
+
+.hero-intro__employer {
+  display: inline-block;
+  line-height: 0;
+  padding-inline: 0.0625rem;
+  border-radius: 0.125rem;
+  color: var(--color-hero-text);
+  text-decoration: underline;
+  text-decoration-color: oklch(1 0 0 / 0.32);
+  text-underline-offset: 0.22em;
+  vertical-align: middle;
+  transition:
+    color 200ms var(--ease-out),
+    text-decoration-color 200ms var(--ease-out);
+}
+
+.hero-intro__employer:hover,
+.hero-intro__employer:focus-visible {
+  color: var(--color-hero-text);
+  text-decoration-color: currentcolor;
+}
+
+.hero-intro__logo {
+  display: block;
+  height: 0.88em;
+  aspect-ratio: 349 / 125;
+  width: auto;
+  background-color: var(--color-hero-text);
+  transform: translateY(-0.04em);
+  mask: var(--hero-employer-logo) no-repeat center / contain;
+  -webkit-mask: var(--hero-employer-logo) no-repeat center / contain;
+  transition: opacity 200ms var(--ease-out);
+}
+
+.hero-intro__employer:hover .hero-intro__logo,
+.hero-intro__employer:focus-visible .hero-intro__logo {
+  opacity: 0.85;
 }
 
 .hero-panel__media {
@@ -107,6 +164,18 @@
 
 .hero-panel__image.is-loaded {
   opacity: 1;
+}
+
+@media (width < 40rem) and (min-height: 36rem) {
+  .hero-panel {
+    min-height: clamp(22rem, 70svh, calc(100svh - (var(--hero-inset-y) * 2)));
+  }
+}
+
+@media (width < 40rem) and (min-height: 43.75rem) {
+  .hero-panel {
+    min-height: clamp(22rem, 75svh, calc(100svh - (var(--hero-inset-y) * 2)));
+  }
 }
 
 @media (width >= 40rem) {

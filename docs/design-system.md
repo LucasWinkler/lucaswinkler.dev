@@ -32,6 +32,44 @@ No `@apply`. State-driven `calc()` in component CSS is allowed when those values
 
 Complex components use co-located subfolders: markup in the main file, styles in `*.css`, client logic in `*.ts`.
 
+## Responsive design
+
+**Mobile-first.** Base styles target the smallest viewport. Layer enhancements upward with `min-width` queries — not desktop defaults with max-width overrides.
+
+### Breakpoints
+
+Shared values live in `src/lib/breakpoints.ts`. Use these — don't introduce one-off pixel breakpoints.
+
+| Key    | Value    | Typical use             |
+| ------ | -------- | ----------------------- |
+| `xs`   | 30rem    | Footer layout shifts    |
+| `sm`   | 40rem    | Header, hero layout     |
+| `md`   | 48rem    | Hero two-column         |
+| `work` | 56.25rem | Work list grid/carousel |
+| `lg`   | 64rem    | Reserved for future use |
+
+### Prefer min over max
+
+Default to **min-width** (`width >= …`) in CSS, Tailwind, and JS:
+
+| Layer         | Preferred                                 | Avoid when possible             |
+| ------------- | ----------------------------------------- | ------------------------------- |
+| Component CSS | `@media (width >= 40rem) { … }`           | `@media (width < 40rem)`        |
+| Tailwind      | `sm:*`, `md:*` (min-width variants)       | `max-sm:*`, `max-[640px]:*`     |
+| TS / JS       | `minWidth('sm')` from `@/lib/breakpoints` | ad-hoc `(max-width: …)` strings |
+
+Min-width matches mobile-first cascade: base rules apply everywhere; larger viewports add or override.
+
+### When max-width is fine
+
+Use max-width only when min-width would fight the default or duplicate large-screen rules:
+
+- **Mobile-only exception** — behavior that exists only on small screens (e.g. full-bleed carousel breakout in Page layout → Full-bleed inside a section)
+- **Compound queries** — narrow viewport bands, e.g. `@media (width < 40rem) and (min-height: 36rem)` in hero layout
+- **Feature toggles in JS** — `matchMedia('(width < …)')` to disable desktop-only behavior on small screens
+
+When both approaches work, choose min-width.
+
 ## Typography
 
 Five sizes only. Do not add arbitrary `text-[…]` or one-off `clamp()` values.
@@ -227,6 +265,8 @@ Respect `prefers-reduced-motion` — already handled globally in `global.css`.
 - Use spacing tokens for section layout
 - Use `.section-inner` for constrained content width (see `docs/design-system.md` → Page layout)
 - Add new tokens to `@theme inline` before using in components
+- Write mobile-first styles and enhance with `min-width` / Tailwind `sm:`+ variants
+- Use breakpoint values from `src/lib/breakpoints.ts`
 
 ### Don't
 
@@ -237,6 +277,8 @@ Respect `prefers-reduced-motion` — already handled globally in `global.css`.
 - Duplicate `mx-auto w-full max-w-(--section-max)` — use `.section-inner`
 - Mix Tailwind default `text-sm` (14px) with `--text-sm` (13px) — always use tokens
 - Use Tailwind `container` for page layout — use the two-layer pattern in Page layout above
+- Default to desktop styles with `max-width` overrides — use mobile-first + min-width instead
+- Introduce arbitrary breakpoint pixels outside `src/lib/breakpoints.ts`
 
 ## Adding New UI
 
@@ -250,6 +292,7 @@ Respect `prefers-reduced-motion` — already handled globally in `global.css`.
 | File                                     | Purpose                                             |
 | ---------------------------------------- | --------------------------------------------------- |
 | `src/styles/global.css`                  | All tokens + typography presets                     |
+| `src/lib/breakpoints.ts`                 | Shared breakpoint values + `minWidth()` helper      |
 | `src/components/common/header/`          | Header markup, `header.css`, `header-sync.ts`       |
 | `src/components/sections/hero/`          | Hero markup, `hero.css`, `hero-image.ts`            |
 | `src/components/widgets/MotionWorkList/` | Work list, panel, constants, Tailwind class strings |

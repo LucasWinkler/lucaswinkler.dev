@@ -10,14 +10,15 @@ export const selectedWorkIntro = 'Marketing sites across the GolfNorth portfolio
 export const selectedWork: SelectedWorkItem[] = [
   {
     id: 'tee-on',
-    brand: 'Tee-On',
+    brand: 'Tee On',
     domain: 'teeon.com',
     url: 'https://www.teeon.com',
     tech: ['React', 'TS', 'SCSS'],
     image: teeonCoverImage.src,
     imageWidth: teeonCoverImage.width,
     imageHeight: teeonCoverImage.height,
-    logo: '/images/tee-on.ico',
+    logo: '/images/tee-on.svg',
+    logoScale: 0.75,
     brandColor: '#4168B1',
   },
   {

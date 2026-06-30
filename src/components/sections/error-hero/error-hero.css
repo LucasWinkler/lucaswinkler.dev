@@ -48,12 +48,6 @@
 }
 
 .error-hero__display {
-  font-family: var(--font-inter-display);
-  font-feature-settings:
-    'liga' 1,
-    'calt' 1,
-    'ss03' 1;
-  font-variation-settings: 'opsz' 32;
   font-size: clamp(5rem, 18vw, 11rem);
   line-height: 0.9;
   font-weight: 600;
@@ -68,7 +62,7 @@
 
 .error-hero__lead {
   max-width: 42ch;
-  color: oklch(0.973 0.004 91.446 / 0.86);
+  color: var(--color-hero-text-muted);
 }
 
 .error-hero__actions {
@@ -87,10 +81,7 @@
   border-radius: 9999px;
   background-color: var(--color-hero-text);
   color: var(--color-neutral-950);
-  font-family: var(--font-inter-text);
-  font-size: var(--text-sm);
   font-weight: 600;
-  letter-spacing: var(--tracking-nav);
   text-decoration: none;
   outline: none;
   transition:
