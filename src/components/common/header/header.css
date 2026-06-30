@@ -73,7 +73,7 @@
   inset-inline: 0;
   top: 0;
   z-index: 4;
-  padding-top: max(1.5rem, calc(env(safe-area-inset-top) + 0.75rem));
+  padding-top: max(var(--hero-content-inset), calc(env(safe-area-inset-top) + 0.75rem));
   padding-bottom: 0.5rem;
 }
 

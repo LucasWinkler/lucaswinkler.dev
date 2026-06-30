@@ -20,6 +20,9 @@
 .hero-panel__content {
   flex: 1 1 auto;
   min-height: 0;
+  padding-inline: var(--hero-content-inset);
+  padding-bottom: var(--space-hero-bottom);
+  padding-top: calc(var(--hero-content-inset) + env(safe-area-inset-top, 0px));
 }
 
 @keyframes hero-enter-content {
@@ -120,6 +123,8 @@
   .hero-panel__content {
     flex: unset;
     min-height: var(--hero-panel-min-h);
+    --space-hero-bottom: clamp(var(--hero-content-inset), calc(var(--hero-content-inset) * 1.35), 5rem);
+    padding-top: calc(3rem + env(safe-area-inset-top, 0px));
   }
 }
 

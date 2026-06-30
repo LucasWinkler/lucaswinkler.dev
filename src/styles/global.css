@@ -50,7 +50,8 @@
   --space-section-header: clamp(2.5rem, 6vw, 4rem);
   --space-section-gap: clamp(2rem, 5vw, 3rem);
   --space-row-y: clamp(1.25rem, 3vw, 1.75rem);
-  --space-hero-bottom: clamp(2.5rem, 8vw, 5rem);
+  --hero-content-inset: var(--section-padding-x);
+  --space-hero-bottom: var(--hero-content-inset);
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --hero-enter-ease: cubic-bezier(0.25, 1, 0.35, 1);
