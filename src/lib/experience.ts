@@ -16,11 +16,6 @@ export function formatDateRangeParts(start: string, end: string | null): { start
   return { start: startLabel, end: endLabel };
 }
 
-export function formatDateRange(start: string, end: string | null): string {
-  const { start: startLabel, end: endLabel } = formatDateRangeParts(start, end);
-  return `${startLabel} – ${endLabel}`;
-}
-
 export function sortReverseChronological(items: ExperienceItem[]): ExperienceItem[] {
   return [...items].sort((a, b) => b.start.localeCompare(a.start));
 }
