@@ -2,12 +2,13 @@ import { animate, motion, useMotionValue, useMotionValueEvent, useReducedMotion,
 import { useEffect, useRef } from 'react';
 
 import { FooterWordmarkSvg } from '@/components/widgets/FooterWordmarkSvg';
+import { createFooterOverpull } from '@/lib/footerOverpull';
 
 const MAX_STRETCH_PX = 112;
 const RESISTANCE = 240;
 const CAP_RATIO = 0.96;
 const TENSION_POWER = 2.5;
-const WHEEL_RELEASE_MS = 120;
+const WHEEL_RELEASE_MS = 80;
 const CAP_IDLE_MS = 28;
 const CAP_INERTIA_DELTA = 4;
 const TOUCH_GAIN = 1.4;
@@ -96,7 +97,7 @@ function getWheelPullDelta(event: WheelEvent): { delta: number; discrete: boolea
   const discrete =
     event.deltaMode === WheelEvent.DOM_DELTA_LINE ||
     event.deltaMode === WheelEvent.DOM_DELTA_PAGE ||
-    Math.abs(deltaPx) > 40;
+    (event.deltaMode === WheelEvent.DOM_DELTA_PIXEL && Math.abs(deltaPx) > 80);
   const normalized = clamp(deltaPx, -MAX_WHEEL_DELTA, MAX_WHEEL_DELTA);
 
   return {
@@ -137,6 +138,7 @@ export function MotionFooterWordmark() {
 
     const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
     let atBottomLatched = false;
+    let overpullRafId = 0;
 
     const isAtPageBottom = (): boolean => {
       if (!isCoarsePointer) {
@@ -163,6 +165,10 @@ export function MotionFooterWordmark() {
       }
     };
 
+    const scheduleReleaseTimer = (fn: () => void, delayMs: number) => {
+      releaseTimerRef.current = setTimeout(fn, delayMs);
+    };
+
     const resetPullState = () => {
       isPullingRef.current = false;
       rawPullRef.current = 0;
@@ -176,12 +182,14 @@ export function MotionFooterWordmark() {
 
       clearReleaseTimer();
       stopAnimations();
+      overpull.clearLatch();
 
       const baseStretch = stretchFromRawPull(rawPullRef.current);
       stretchPx.set(Math.min(stretchPx.get(), baseStretch));
 
       resetPullState();
       isReleasingRef.current = true;
+      overpull.clearPull();
 
       void animate(stretchPx, 0, SPRING).then(() => {
         isReleasingRef.current = false;
@@ -191,11 +199,45 @@ export function MotionFooterWordmark() {
     const springToRest = () => startRelease();
     const releaseFromCap = () => startRelease();
 
+    const wakeOverpullChargeLoop = () => {
+      if (overpullRafId !== 0) {
+        return;
+      }
+      overpullRafId = requestAnimationFrame(runOverpullChargeLoop);
+    };
+
+    const runOverpullChargeLoop = (now: number) => {
+      overpullRafId = 0;
+      overpull.tick(now);
+      if (overpull.shouldRunChargeLoop()) {
+        overpullRafId = requestAnimationFrame(runOverpullChargeLoop);
+      }
+    };
+
+    const overpull = createFooterOverpull({
+      stretchPx,
+      maxStretchPx: MAX_STRETCH_PX,
+      stretchFromRawPull,
+      pull: {
+        rawPull: rawPullRef,
+        velocity: velocityRef,
+        isPulling: isPullingRef,
+        isReleasing: isReleasingRef,
+      },
+      callbacks: {
+        clearReleaseTimer,
+        scheduleReleaseTimer,
+        stopAnimations,
+        resetPullState,
+        springToRest,
+      },
+      wakeChargeLoop: wakeOverpullChargeLoop,
+    });
+
     const scheduleRelease = (stretch: number, discrete = false) => {
-      clearReleaseTimer();
       const delay = isAtCap(stretch) ? CAP_IDLE_MS : discrete ? WHEEL_RELEASE_DISCRETE_MS : WHEEL_RELEASE_MS;
       const release = isAtCap(stretch) ? releaseFromCap : springToRest;
-      releaseTimerRef.current = setTimeout(release, delay);
+      overpull.scheduleRelease(release, delay);
     };
 
     const syncStretchToRawPull = (smooth: boolean) => {
@@ -215,6 +257,7 @@ export function MotionFooterWordmark() {
 
       if (direction > 0) {
         isPullingRef.current = true;
+        overpull.markPull(DISCRETE_WHEEL_PULL_PX);
         const factor = pullResistanceFactor(stretchFromRawPull(rawPullRef.current));
         rawPullRef.current += DISCRETE_WHEEL_PULL_PX * WHEEL_PULL_GAIN * factor;
       } else if (isPullingRef.current) {
@@ -228,6 +271,9 @@ export function MotionFooterWordmark() {
       }
 
       syncStretchToRawPull(true);
+      if (direction > 0) {
+        overpull.addImpulse(stretchFromRawPull(rawPullRef.current));
+      }
     };
 
     const applyPull = (delta: number, capDelta = false) => {
@@ -245,6 +291,7 @@ export function MotionFooterWordmark() {
 
       if (effectiveDelta > 0) {
         isPullingRef.current = true;
+        overpull.markPull(Math.abs(effectiveDelta));
         const currentStretch = stretchFromRawPull(rawPullRef.current);
         rawPullRef.current += effectiveDelta * pullResistanceFactor(currentStretch);
       } else if (isPullingRef.current) {
@@ -259,11 +306,16 @@ export function MotionFooterWordmark() {
       }
 
       const baseStretch = stretchFromRawPull(rawPullRef.current);
-      stretchPx.set(stretchWithStrain(baseStretch, effectiveDelta, velocityRef.current));
+      const nextStretch = stretchWithStrain(baseStretch, effectiveDelta, velocityRef.current);
+      stretchPx.set(nextStretch);
     };
 
     const onWheel = (event: WheelEvent) => {
       const { delta, discrete, inertiaDelta } = getWheelPullDelta(event);
+
+      if (overpull.handleWheelDuringLaunch(delta)) {
+        return;
+      }
 
       if (isReleasingRef.current) {
         if (delta < 0 && stretchPx.get() > 0) {
@@ -282,14 +334,18 @@ export function MotionFooterWordmark() {
         return;
       }
 
+      overpull.noteWheelDelta(delta);
+
+      if (overpull.isWheelMomentumCoast(delta, inertiaDelta, discrete)) {
+        velocityRef.current *= 0.4;
+        return;
+      }
+
       const baseStretch = stretchFromRawPull(rawPullRef.current);
       const atCap = isAtCap(baseStretch);
 
-      if (isCapInertiaDelta(inertiaDelta, atCap)) {
-        if (releaseTimerRef.current !== undefined) {
-          clearReleaseTimer();
-          releaseFromCap();
-        }
+      if (isCapInertiaDelta(inertiaDelta, atCap) && !isPullingRef.current && !overpull.isCharging()) {
+        scheduleRelease(stretchFromRawPull(rawPullRef.current));
         return;
       }
 
@@ -313,6 +369,11 @@ export function MotionFooterWordmark() {
         return;
       }
 
+      if (overpullRafId !== 0) {
+        cancelAnimationFrame(overpullRafId);
+        overpullRafId = 0;
+      }
+      overpull.stopLaunch();
       clearReleaseTimer();
       stopAnimations();
       isReleasingRef.current = false;
@@ -326,6 +387,10 @@ export function MotionFooterWordmark() {
     };
 
     const onTouchMove = (event: TouchEvent) => {
+      if (overpull.isLaunching()) {
+        return;
+      }
+
       if (isReleasingRef.current || (isCoarsePointer && performance.now() < ignorePullUntil)) {
         return;
       }
@@ -341,12 +406,19 @@ export function MotionFooterWordmark() {
       touchStartY = touchY;
 
       if (delta !== 0) {
+        overpull.noteTouchMove();
         applyPull(delta, isCoarsePointer);
       }
     };
 
     const onTouchEnd = () => {
-      if (isAtCap(stretchFromRawPull(rawPullRef.current))) {
+      const stretch = stretchFromRawPull(rawPullRef.current);
+
+      if (overpull.handleTouchEnd(stretch) === 'latched') {
+        return;
+      }
+
+      if (isAtCap(stretch)) {
         releaseFromCap();
         return;
       }
@@ -382,7 +454,11 @@ export function MotionFooterWordmark() {
     }
 
     return () => {
+      if (overpullRafId !== 0) {
+        cancelAnimationFrame(overpullRafId);
+      }
       clearReleaseTimer();
+      overpull.dispose();
       if (viewportSettleTimer !== undefined) {
         clearTimeout(viewportSettleTimer);
       }
