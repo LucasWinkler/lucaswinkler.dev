@@ -17,7 +17,9 @@ const VELOCITY_ALPHA = 0.38;
 const VELOCITY_STRAIN_SCALE = 0.004;
 const KINETIC_OVERSHOOT_GAIN = 0.1;
 const MAX_KINETIC_OVERSHOOT_PX = 20;
-const MAX_DELTA_PER_FRAME = 12;
+const MAX_TOUCH_DELTA = 12;
+const MAX_WHEEL_DELTA = 20;
+const WHEEL_LINE_HEIGHT = 16;
 const BOTTOM_HYSTERESIS_PX = 24;
 const SPRING = { type: 'spring' as const, stiffness: 480, damping: 34, mass: 0.7, bounce: 0 };
 
@@ -73,6 +75,22 @@ function stretchWithStrain(baseStretch: number, delta: number, velocity: number)
 
 function isCapInertiaDelta(delta: number, atCap: boolean): boolean {
   return atCap && delta > 0 && delta < CAP_INERTIA_DELTA;
+}
+
+function getWheelPullDelta(event: WheelEvent): { delta: number; discrete: boolean } {
+  let deltaPx = event.deltaY;
+  const discrete = event.deltaMode === WheelEvent.DOM_DELTA_LINE || event.deltaMode === WheelEvent.DOM_DELTA_PAGE;
+
+  if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) {
+    deltaPx *= WHEEL_LINE_HEIGHT;
+  } else if (event.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
+    deltaPx *= window.innerHeight;
+  }
+
+  return {
+    delta: clamp(deltaPx, -MAX_WHEEL_DELTA, MAX_WHEEL_DELTA),
+    discrete: discrete || Math.abs(deltaPx) > 40,
+  };
 }
 
 function setFooterStretch(stretch: number) {
@@ -167,7 +185,7 @@ export function MotionFooterWordmark() {
         return;
       }
 
-      const effectiveDelta = capDelta ? clamp(delta, -MAX_DELTA_PER_FRAME, MAX_DELTA_PER_FRAME) : delta;
+      const effectiveDelta = capDelta ? clamp(delta, -MAX_TOUCH_DELTA, MAX_TOUCH_DELTA) : delta;
 
       if (Math.abs(stretchPx.getVelocity()) > 0.5) {
         stopAnimations();
@@ -195,8 +213,10 @@ export function MotionFooterWordmark() {
     };
 
     const onWheel = (event: WheelEvent) => {
+      const { delta, discrete } = getWheelPullDelta(event);
+
       if (isReleasingRef.current) {
-        if (event.deltaY < 0 && stretchPx.get() > 0) {
+        if (delta < 0 && stretchPx.get() > 0) {
           isReleasingRef.current = false;
           stopAnimations();
           clearReleaseTimer();
@@ -208,14 +228,14 @@ export function MotionFooterWordmark() {
       const atBottom = isAtPageBottom();
       const canPull = atBottom || isPullingRef.current;
 
-      if (!canPull || (!atBottom && event.deltaY > 0) || event.deltaY === 0) {
+      if (!canPull || (!atBottom && delta > 0) || delta === 0) {
         return;
       }
 
       const baseStretch = stretchFromRawPull(rawPullRef.current);
       const atCap = isAtCap(baseStretch);
 
-      if (isCapInertiaDelta(event.deltaY, atCap)) {
+      if (isCapInertiaDelta(delta, atCap)) {
         if (releaseTimerRef.current !== undefined) {
           clearReleaseTimer();
           releaseFromCap();
@@ -223,7 +243,13 @@ export function MotionFooterWordmark() {
         return;
       }
 
-      applyPull(event.deltaY);
+      if (atCap && delta > 0 && discrete) {
+        clearReleaseTimer();
+        releaseFromCap();
+        return;
+      }
+
+      applyPull(delta);
       scheduleRelease(stretchFromRawPull(rawPullRef.current) || baseStretch);
     };
 
