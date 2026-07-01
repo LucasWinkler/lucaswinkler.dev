@@ -17,8 +17,9 @@ const VELOCITY_ALPHA = 0.38;
 const VELOCITY_STRAIN_SCALE = 0.004;
 const KINETIC_OVERSHOOT_GAIN = 0.1;
 const MAX_KINETIC_OVERSHOOT_PX = 20;
-const MAX_WHEEL_DELTA = 20;
-const DISCRETE_WHEEL_PULL_PX = 34;
+const MAX_WHEEL_DELTA = 26;
+const DISCRETE_WHEEL_PULL_PX = 40;
+const WHEEL_PULL_GAIN = 1.35;
 const WHEEL_LINE_HEIGHT = 16;
 const WHEEL_RELEASE_DISCRETE_MS = 240;
 const SPRING = { type: 'spring' as const, stiffness: 480, damping: 34, mass: 0.7, bounce: 0 };
@@ -70,9 +71,8 @@ function isCapInertiaDelta(delta: number, atCap: boolean): boolean {
   return atCap && delta > 0 && delta < CAP_INERTIA_DELTA;
 }
 
-function getWheelPullDelta(event: WheelEvent): { delta: number; discrete: boolean } {
+function getWheelPullDelta(event: WheelEvent): { delta: number; discrete: boolean; inertiaDelta: number } {
   let deltaPx = event.deltaY;
-  const discrete = event.deltaMode === WheelEvent.DOM_DELTA_LINE || event.deltaMode === WheelEvent.DOM_DELTA_PAGE;
 
   if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) {
     deltaPx *= WHEEL_LINE_HEIGHT;
@@ -80,9 +80,16 @@ function getWheelPullDelta(event: WheelEvent): { delta: number; discrete: boolea
     deltaPx *= window.innerHeight;
   }
 
+  const discrete =
+    event.deltaMode === WheelEvent.DOM_DELTA_LINE ||
+    event.deltaMode === WheelEvent.DOM_DELTA_PAGE ||
+    Math.abs(deltaPx) > 40;
+  const normalized = clamp(deltaPx, -MAX_WHEEL_DELTA, MAX_WHEEL_DELTA);
+
   return {
-    delta: clamp(deltaPx, -MAX_WHEEL_DELTA, MAX_WHEEL_DELTA),
-    discrete: discrete || Math.abs(deltaPx) > 40,
+    delta: discrete ? normalized : normalized * WHEEL_PULL_GAIN,
+    discrete,
+    inertiaDelta: normalized,
   };
 }
 
@@ -179,9 +186,9 @@ export function MotionFooterWordmark() {
       if (direction > 0) {
         isPullingRef.current = true;
         const factor = pullResistanceFactor(stretchFromRawPull(rawPullRef.current));
-        rawPullRef.current += DISCRETE_WHEEL_PULL_PX * factor;
+        rawPullRef.current += DISCRETE_WHEEL_PULL_PX * WHEEL_PULL_GAIN * factor;
       } else if (isPullingRef.current) {
-        rawPullRef.current = Math.max(0, rawPullRef.current - DISCRETE_WHEEL_PULL_PX * 0.75);
+        rawPullRef.current = Math.max(0, rawPullRef.current - DISCRETE_WHEEL_PULL_PX * WHEEL_PULL_GAIN * 0.75);
         if (rawPullRef.current === 0) {
           springToRest();
           return;
@@ -224,7 +231,7 @@ export function MotionFooterWordmark() {
     };
 
     const onWheel = (event: WheelEvent) => {
-      const { delta, discrete } = getWheelPullDelta(event);
+      const { delta, discrete, inertiaDelta } = getWheelPullDelta(event);
 
       if (isReleasingRef.current) {
         if (delta < 0 && stretchPx.get() > 0) {
@@ -246,7 +253,7 @@ export function MotionFooterWordmark() {
       const baseStretch = stretchFromRawPull(rawPullRef.current);
       const atCap = isAtCap(baseStretch);
 
-      if (isCapInertiaDelta(delta, atCap)) {
+      if (isCapInertiaDelta(inertiaDelta, atCap)) {
         if (releaseTimerRef.current !== undefined) {
           clearReleaseTimer();
           releaseFromCap();
