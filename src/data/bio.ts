@@ -14,13 +14,18 @@ export const heroEmployer = {
   logo: '/images/tee-on-white.svg',
 } as const;
 
+export const heroClient = {
+  name: 'GolfNorth',
+  url: 'https://golfnorth.ca',
+} as const;
+
 export const hero = {
   headlineLines: ['I build clean interfaces', 'that feel right.'],
   headlineAccentWords: ['feel'],
   imageAlt: 'Blue abstract dithered texture',
   intro: {
     before: "I'm a software developer at ",
-    after:
-      ', building golf software and marketing sites for GolfNorth. I care deeply about craft and how interfaces feel.',
+    middle: ', building golf software and marketing sites across the ',
+    after: ' portfolio. I care deeply about craft and how interfaces feel.',
   },
 } as const;

@@ -35,7 +35,7 @@ export const selectedWork: SelectedWorkItem[] = [
   },
   {
     id: '9fore',
-    brand: '9Fore',
+    brand: '9Fore Distributing',
     domain: '9fore.ca',
     url: 'https://9fore.ca',
     tech: ['Astro', 'TS', 'SCSS'],

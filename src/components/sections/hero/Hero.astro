@@ -6,7 +6,7 @@ import { getImage } from 'astro:assets';
 import HeaderHero from '@/components/common/header/HeaderHero.astro';
 import { HeroHeadlineAccent } from '@/components/widgets/HeroHeadlineAccent';
 import { HeroShaderStack } from '@/components/widgets/HeroShaderStack';
-import { hero, heroEmployer } from '@/data/bio';
+import { hero, heroClient, heroEmployer } from '@/data/bio';
 import { splitEnterWordsByLine } from '@/lib/split-enter';
 import heroImage from '@/assets/images/hero-blue-abstract.png';
 
@@ -113,6 +113,15 @@ const introEnterIndex = headlineWordsByLine.flat().length;
               aria-label={`${heroEmployer.name} (opens in new tab)`}
               style={`--hero-employer-logo: url(${heroEmployer.logo})`}>
               <span class='hero-intro__logo' aria-hidden='true'></span>
+            </a>
+            {hero.intro.middle}
+            <a
+              href={heroClient.url}
+              class='hero-intro__link focus-ring-inverse'
+              target='_blank'
+              rel='noopener noreferrer'
+              aria-label={`${heroClient.name} (opens in new tab)`}>
+              {heroClient.name}
             </a>
             {hero.intro.after}
           </p>

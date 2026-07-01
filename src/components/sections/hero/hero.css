@@ -96,6 +96,27 @@
   }
 }
 
+.hero-intro__link {
+  display: inline;
+  color: var(--color-hero-text);
+  text-decoration: underline;
+  text-decoration-color: oklch(1 0 0 / 0.32);
+  text-underline-offset: 0.18em;
+  transition:
+    color 200ms var(--ease-out),
+    text-decoration-color 200ms var(--ease-out);
+}
+
+.hero-intro__link:focus-visible {
+  text-decoration-color: currentcolor;
+}
+
+@media (hover: hover) {
+  .hero-intro__link:hover {
+    text-decoration-color: currentcolor;
+  }
+}
+
 .hero-intro__employer {
   display: inline-block;
   line-height: 0;
