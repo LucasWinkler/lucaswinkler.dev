@@ -19,11 +19,14 @@ const KINETIC_OVERSHOOT_GAIN = 0.1;
 const MAX_KINETIC_OVERSHOOT_PX = 20;
 const MAX_TOUCH_DELTA = 12;
 const MAX_WHEEL_DELTA = 20;
+const DISCRETE_WHEEL_PULL_PX = 34;
 const WHEEL_LINE_HEIGHT = 16;
+const WHEEL_RELEASE_DISCRETE_MS = 240;
 const BOTTOM_HYSTERESIS_PX = 24;
 const BOTTOM_LATCH_ENTER_COARSE_PX = 80;
 const VIEWPORT_SETTLE_MS = 120;
 const SPRING = { type: 'spring' as const, stiffness: 480, damping: 34, mass: 0.7, bounce: 0 };
+const WHEEL_SMOOTH_SPRING = { type: 'spring' as const, stiffness: 500, damping: 36, mass: 0.55, bounce: 0 };
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
@@ -177,11 +180,43 @@ export function MotionFooterWordmark() {
     const springToRest = () => startRelease();
     const releaseFromCap = () => startRelease();
 
-    const scheduleRelease = (stretch: number) => {
+    const scheduleRelease = (stretch: number, discrete = false) => {
       clearReleaseTimer();
-      const delay = isAtCap(stretch) ? CAP_IDLE_MS : WHEEL_RELEASE_MS;
+      const delay = isAtCap(stretch) ? CAP_IDLE_MS : discrete ? WHEEL_RELEASE_DISCRETE_MS : WHEEL_RELEASE_MS;
       const release = isAtCap(stretch) ? releaseFromCap : springToRest;
       releaseTimerRef.current = setTimeout(release, delay);
+    };
+
+    const syncStretchToRawPull = (smooth: boolean) => {
+      const target = stretchFromRawPull(rawPullRef.current);
+      if (smooth) {
+        stopAnimations();
+        void animate(stretchPx, target, WHEEL_SMOOTH_SPRING);
+        return;
+      }
+      stretchPx.set(target);
+    };
+
+    const applyDiscreteWheelPull = (direction: 1 | -1) => {
+      if (isReleasingRef.current) {
+        return;
+      }
+
+      if (direction > 0) {
+        isPullingRef.current = true;
+        const factor = pullResistanceFactor(stretchFromRawPull(rawPullRef.current));
+        rawPullRef.current += DISCRETE_WHEEL_PULL_PX * factor;
+      } else if (isPullingRef.current) {
+        rawPullRef.current = Math.max(0, rawPullRef.current - DISCRETE_WHEEL_PULL_PX * 0.75);
+        if (rawPullRef.current === 0) {
+          springToRest();
+          return;
+        }
+      } else {
+        return;
+      }
+
+      syncStretchToRawPull(true);
     };
 
     const applyPull = (delta: number, capDelta = false) => {
@@ -247,9 +282,9 @@ export function MotionFooterWordmark() {
         return;
       }
 
-      if (atCap && delta > 0 && discrete) {
-        clearReleaseTimer();
-        releaseFromCap();
+      if (discrete) {
+        applyDiscreteWheelPull(delta > 0 ? 1 : -1);
+        scheduleRelease(stretchFromRawPull(rawPullRef.current), true);
         return;
       }
 
