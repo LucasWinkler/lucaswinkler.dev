@@ -56,6 +56,33 @@
   animation-duration: var(--hero-enter-intro-duration);
 }
 
+.hero-headline-accent {
+  display: inline-grid;
+  vertical-align: baseline;
+  padding-block-end: 0.08em;
+  padding-inline: 0.02em;
+  margin-inline-start: 0.14em;
+  margin-inline-end: -0.03em;
+}
+
+.hero-headline-accent__sizer {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  font-variation-settings: 'wght' 700;
+}
+
+.hero-headline-accent__letters {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+}
+
+.hero-headline-accent__letter {
+  display: inline-block;
+}
+
 .hero-intro {
   color: var(--color-hero-text-muted);
   font-size: 1rem;

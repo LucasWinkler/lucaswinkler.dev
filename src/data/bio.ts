@@ -16,6 +16,7 @@ export const heroEmployer = {
 
 export const hero = {
   headlineLines: ['I build clean interfaces', 'that feel right.'],
+  headlineAccentWords: ['feel'],
   imageAlt: 'Blue abstract dithered texture',
   intro: {
     before: "I'm a software developer at ",

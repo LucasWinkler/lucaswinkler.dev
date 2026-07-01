@@ -4,6 +4,7 @@ import './hero.css';
 import { getImage } from 'astro:assets';
 
 import HeaderHero from '@/components/common/header/HeaderHero.astro';
+import { HeroHeadlineAccent } from '@/components/widgets/HeroHeadlineAccent';
 import { HeroShaderStack } from '@/components/widgets/HeroShaderStack';
 import { hero, heroEmployer } from '@/data/bio';
 import { splitEnterWordsByLine } from '@/lib/split-enter';
@@ -25,6 +26,7 @@ const [heroAvif, heroWebp, heroLqip, heroSrc] = await Promise.all([
 const { width, height } = heroWebp.attributes;
 
 const headlineWordsByLine = splitEnterWordsByLine(hero.headlineLines);
+const headlineAccentWords = new Set(hero.headlineAccentWords.map(word => word.toLowerCase()));
 const introEnterIndex = headlineWordsByLine.flat().length;
 ---
 
@@ -76,14 +78,25 @@ const introEnterIndex = headlineWordsByLine.flat().length;
             {
               headlineWordsByLine.map(words => (
                 <span class='block'>
-                  {words.map(({ text, enterIndex }, wordIndex) => (
-                    <>
-                      {wordIndex > 0 ? ' ' : ''}
-                      <span class='hero-enter hero-enter--word inline-block' style={`--hero-enter-i: ${enterIndex}`}>
-                        {text}
-                      </span>
-                    </>
-                  ))}
+                  {words.map(({ text, enterIndex }, wordIndex) => {
+                    const accentWord = text.replace(/[^\w]/g, '');
+                    const isAccent = headlineAccentWords.has(accentWord.toLowerCase());
+
+                    return (
+                      <>
+                        {wordIndex > 0 ? ' ' : ''}
+                        <span class='hero-enter hero-enter--word inline-block' style={`--hero-enter-i: ${enterIndex}`}>
+                          {isAccent ? (
+                            <HeroHeadlineAccent client:visible word={accentWord}>
+                              <span class='type-hero-accent'>{accentWord}</span>
+                            </HeroHeadlineAccent>
+                          ) : (
+                            text
+                          )}
+                        </span>
+                      </>
+                    );
+                  })}
                 </span>
               ))
             }

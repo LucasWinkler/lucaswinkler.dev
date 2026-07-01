@@ -25,6 +25,7 @@
 
   --font-inter-text: var(--font-inter);
   --font-inter-display: var(--font-inter);
+  --font-hero-accent: var(--font-libre-baskerville);
 
   --text-sm: 0.8125rem;
   --text-base: 1.0625rem;
@@ -360,6 +361,18 @@
     line-height: var(--leading-tight);
     font-weight: 600;
     letter-spacing: var(--tracking-tighter);
+  }
+
+  .type-hero-accent {
+    font-family: var(--font-hero-accent), serif;
+    font-style: italic;
+    font-size: 0.9em;
+    letter-spacing: var(--tracking-tighter);
+    position: relative;
+    top: 0.05em;
+    font-weight: 400;
+    font-feature-settings: normal;
+    font-variation-settings: 'wght' 400;
   }
 
   .type-section-title {

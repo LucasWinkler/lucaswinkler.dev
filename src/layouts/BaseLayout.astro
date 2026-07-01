@@ -41,6 +41,7 @@ const {
     {description ? <meta name='description' content={description} /> : null}
     <Seo title={title} description={description} canonicalPath={canonicalPath} includeSchema={includeSchema} />
     <Font cssVariable='--font-inter' preload={[{ style: 'normal' }]} />
+    <Font cssVariable='--font-libre-baskerville' preload={[{ style: 'italic', weight: 400 }]} />
     <title transition:animate='fade'>{title}</title>
     <ClientRouter />
   </head>

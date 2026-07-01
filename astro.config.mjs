@@ -41,6 +41,22 @@ export default defineConfig({
         ],
       },
     },
+    {
+      provider: fontProviders.local(),
+      name: 'Libre Baskerville',
+      cssVariable: '--font-libre-baskerville',
+      fallbacks: ['serif'],
+      options: {
+        variants: [
+          {
+            weight: '400 700',
+            style: 'italic',
+            src: ['./src/assets/fonts/LibreBaskerville-Italic-VariableFont_wght.ttf'],
+            display: 'swap',
+          },
+        ],
+      },
+    },
   ],
 
   vite: {
