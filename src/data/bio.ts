@@ -1,6 +1,7 @@
 import { selectedWork } from '@/data/selected-work';
 
-export const siteDescription = 'Lucas Winkler — software developer focused on polished, accessible web interfaces.';
+export const siteDescription =
+  'Lucas Winkler is a software developer building interfaces with care for detail, motion, feel, and accessibility.';
 
 const teeOnWork = selectedWork.find(item => item.id === 'tee-on');
 
