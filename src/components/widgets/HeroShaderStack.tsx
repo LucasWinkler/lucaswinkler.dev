@@ -4,10 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { createHeroCursorShader } from '@/lib/hero-cursor-shader';
 
-type HeroShaderStackProps = {
-  imageSelector?: string;
-};
-
+const HERO_IMAGE_SELECTOR = '[data-hero-image]';
 const INFLUENCE_MARGIN = 160;
 
 function supportsWebGL2(): boolean {
@@ -111,7 +108,7 @@ function bindPointerTracking(
   };
 }
 
-export function HeroShaderStack({ imageSelector = '[data-hero-image]' }: HeroShaderStackProps) {
+export function HeroShaderStack() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const panelRef = useRef<HTMLElement | null>(null);
   const shaderRef = useRef<ReturnType<typeof createHeroCursorShader> | null>(null);
@@ -124,7 +121,7 @@ export function HeroShaderStack({ imageSelector = '[data-hero-image]' }: HeroSha
       return;
     }
 
-    const img = document.querySelector(imageSelector);
+    const img = document.querySelector(HERO_IMAGE_SELECTOR);
 
     if (!(img instanceof HTMLImageElement)) {
       return;
@@ -219,7 +216,7 @@ export function HeroShaderStack({ imageSelector = '[data-hero-image]' }: HeroSha
       activatedRef.current = false;
       setIsActive(false);
     };
-  }, [imageSelector]);
+  }, []);
 
   useEffect(() => {
     if (!isActive) {

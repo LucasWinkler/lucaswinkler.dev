@@ -3,8 +3,6 @@ import { createContext, type PointerEvent, type ReactNode, useCallback, useConte
 import { focusVisible } from '@/lib/focus';
 
 type WorkListContextValue = {
-  activeId: string | null;
-  hoveredId: string | null;
   isMobileLayout: boolean;
   shouldReduceMotion: boolean;
   isHovering: boolean;
@@ -13,7 +11,6 @@ type WorkListContextValue = {
   activateByIndex: (index: number) => void;
   deactivate: () => void;
   onPanelPointerEnter: (id: string, event: PointerEvent<HTMLElement>) => void;
-  clearHover: () => void;
   isFirst: (index: number) => boolean;
   isLast: (index: number) => boolean;
   isActive: (id: string) => boolean;
@@ -99,14 +96,8 @@ export function WorkListProvider({
     [setHoveredId],
   );
 
-  const clearHover = useCallback(() => {
-    setHoveredId(null);
-  }, [setHoveredId]);
-
   const value = useMemo(
     (): WorkListContextValue => ({
-      activeId,
-      hoveredId,
       isMobileLayout,
       shouldReduceMotion,
       isHovering,
@@ -115,7 +106,6 @@ export function WorkListProvider({
       activateByIndex,
       deactivate,
       onPanelPointerEnter,
-      clearHover,
       isFirst: index => index === 0,
       isLast: index => index === itemCount - 1,
       isActive: id => activeId === id,
@@ -133,7 +123,6 @@ export function WorkListProvider({
       activateByIndex,
       deactivate,
       onPanelPointerEnter,
-      clearHover,
       registerPanelRef,
     ],
   );
