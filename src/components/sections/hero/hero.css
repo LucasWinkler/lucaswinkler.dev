@@ -9,7 +9,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: clamp(20rem, 65svh, calc(100svh - (var(--hero-inset-y) * 2)));
+  min-height: clamp(var(--hero-panel-mobile-min-h), 58svh, calc(100svh - (var(--hero-inset-y) * 2)));
   border-radius: var(--radius-hero);
   box-shadow: var(--shadow-panel);
   transform: translateZ(0);
@@ -232,13 +232,13 @@
 
 @media (width < 40rem) and (min-height: 36rem) {
   .hero-panel {
-    min-height: clamp(22rem, 70svh, calc(100svh - (var(--hero-inset-y) * 2)));
+    min-height: clamp(var(--hero-panel-mobile-min-h), 62svh, calc(100svh - (var(--hero-inset-y) * 2)));
   }
 }
 
 @media (width < 40rem) and (min-height: 43.75rem) {
   .hero-panel {
-    min-height: clamp(22rem, 75svh, calc(100svh - (var(--hero-inset-y) * 2)));
+    min-height: clamp(var(--hero-panel-mobile-min-h), 66svh, calc(100svh - (var(--hero-inset-y) * 2)));
   }
 }
 
