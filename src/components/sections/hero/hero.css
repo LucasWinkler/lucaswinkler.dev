@@ -29,7 +29,7 @@
 @keyframes hero-enter-content {
   from {
     opacity: 0;
-    transform: translateY(0.5rem);
+    transform: translateY(var(--distance-base));
     filter: blur(5px);
   }
 

@@ -24,7 +24,7 @@ const year = new Date().getFullYear();
               return (
                 <li>
                   <a
-                    class='type-nav -mx-1 touch-manipulation select-none rounded-sm px-1 py-2 text-text-muted outline-none transition-[color,box-shadow,transform] duration-200 hover:text-text focus-visible:text-text focus-ring active:scale-[0.96]'
+                    class='type-nav -mx-1 touch-manipulation select-none rounded-sm px-1 py-2 text-text-muted outline-none transition-[color,box-shadow,transform] duration-(--duration-quick) ease-(--ease-out) hover:text-text focus-visible:text-text focus-ring active:scale-(--scale-large)'
                     href={link.href}
                     target={isExternal ? '_blank' : undefined}
                     rel={isExternal ? 'noopener noreferrer' : undefined}

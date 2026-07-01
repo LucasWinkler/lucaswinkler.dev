@@ -1,5 +1,5 @@
 export const panelShellClass =
-  'work-panel-shell relative isolate min-w-0 shrink-0 rounded-(--radius-panel) snap-start flex-[0_0_calc(100vw-var(--section-padding-x)-1.5rem)] md:snap-none md:[flex:var(--panel-grow)_1_0] md:[transition:flex-grow_0.44s_cubic-bezier(0.23,1,0.32,1)]';
+  'work-panel-shell relative isolate min-w-0 shrink-0 rounded-(--radius-panel) snap-start flex-[0_0_calc(100vw-var(--section-padding-x)-1.5rem)] md:snap-none md:[flex:var(--panel-grow)_1_0]';
 
 export const panelSurfaceClass =
   'work-panel relative h-full w-full overflow-hidden rounded-(--radius-panel) shadow-(--shadow-panel) [contain:layout_style]';

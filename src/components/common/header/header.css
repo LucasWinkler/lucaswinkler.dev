@@ -117,7 +117,7 @@
   padding-inline: var(--header-bar-padding-x);
   padding-block: var(--header-bar-padding-y);
   opacity: 0;
-  transform: translate3d(0, -0.625rem, 0) scale(0.98);
+  transform: translate3d(0, -0.625rem, 0) scale(var(--scale-small));
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transition:
@@ -129,8 +129,8 @@
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
   transition:
-    opacity var(--header-sticky-enter-duration) var(--hero-enter-ease),
-    transform var(--header-sticky-enter-duration) var(--hero-enter-ease);
+    opacity var(--header-sticky-enter-duration) var(--ease-out),
+    transform var(--header-sticky-enter-duration) var(--ease-out);
 }
 
 @media (width >= 40rem) {

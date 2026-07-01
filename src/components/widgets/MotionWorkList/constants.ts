@@ -1,10 +1,8 @@
 export { fadeEaseCss as fadeEase } from '@/lib/motion';
 export const contentEase = 'cubic-bezier(0.33, 1, 0.68, 1)';
-export const panelDuration = '0.44s';
-export const hoverPanelDuration = '0.68s';
-export const mediaDuration = '0.38s';
+export const mediaDuration = 'var(--duration-work-media)';
 export const hoverMediaDuration = '0.58s';
-export const contentDuration = '0.33s';
+export const contentDuration = 'var(--duration-work-content)';
 export const selectedPeak = 3;
 export const activeShare = 0.5;
 export const hoverBoost = 1.14;

@@ -102,13 +102,13 @@ function getContentStyle(isActive: boolean, delay: number, shouldReduceMotion: b
   if (shouldReduceMotion) {
     return {
       opacity: isActive ? 1 : 0,
-      transform: isActive ? 'translate3d(0, 0, 0)' : 'translate3d(0, 0.25rem, 0)',
+      transform: isActive ? 'translate3d(0, 0, 0)' : 'translate3d(0, var(--distance-micro), 0)',
     };
   }
 
   return {
     opacity: isActive ? 1 : 0,
-    transform: isActive ? 'translate3d(0, 0, 0)' : 'translate3d(0, 0.25rem, 0)',
+    transform: isActive ? 'translate3d(0, 0, 0)' : 'translate3d(0, var(--distance-micro), 0)',
     transitionProperty: 'opacity, transform',
     transitionDuration: contentDuration,
     transitionTimingFunction: contentEase,
@@ -284,13 +284,13 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
                     className='type-card-title m-0 text-balance text-white'
                     translate='no'>
                     <a
-                      className='group flex w-fit max-w-full flex-col gap-1.5 overflow-visible whitespace-normal rounded-sm text-white no-underline outline-none transition-[color] duration-150 ease-out focus-ring-inverse md:overflow-hidden'
+                      className='group flex w-fit max-w-full flex-col gap-1.5 overflow-visible whitespace-normal rounded-sm text-white no-underline outline-none transition-[color] duration-(--duration-quick) ease-(--ease-out) focus-ring-inverse md:overflow-hidden'
                       href={item.url}
                       target='_blank'
                       rel='noopener noreferrer'
                       aria-label={`${item.brand} (opens in new tab)`}>
                       <span>{item.brand}</span>
-                      <span className='type-caption text-white/92 underline-offset-2 no-underline transition-[color,text-decoration-color] duration-150 ease-out group-hover:text-white group-hover:underline group-focus-visible:text-white group-focus-visible:underline'>
+                      <span className='type-caption text-white/92 underline-offset-2 no-underline transition-[color,text-decoration-color] duration-(--duration-quick) ease-(--ease-out) group-hover:text-white group-hover:underline group-focus-visible:text-white group-focus-visible:underline'>
                         {item.domain}
                       </span>
                     </a>
