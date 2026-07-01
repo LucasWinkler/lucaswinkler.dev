@@ -1,3 +1,5 @@
+import { closeAllHeaderMenus } from '@/components/common/header/header-menu';
+
 let cleanup: (() => void) | undefined;
 
 export function initHeaderSync(): void {
@@ -70,6 +72,8 @@ export function initHeaderSync(): void {
     }
 
     stickyVisible = visible;
+
+    closeAllHeaderMenus();
 
     if (visible) {
       clearHideAccessibility();

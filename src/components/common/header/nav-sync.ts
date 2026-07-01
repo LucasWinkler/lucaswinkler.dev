@@ -5,7 +5,9 @@ let cleanup: (() => void) | undefined;
 export function initNavSync(): void {
   cleanup?.();
 
-  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.site-header__link[href*="#"]');
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>(
+    '.site-header__link[href*="#"], .site-header__menu-link[href*="#"]',
+  );
 
   function linkHash(href: string | null): string | null {
     if (!href) {

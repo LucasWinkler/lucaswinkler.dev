@@ -84,10 +84,16 @@
     text-decoration-color 200ms var(--ease-out);
 }
 
-.hero-intro__employer:hover,
 .hero-intro__employer:focus-visible {
   color: var(--color-hero-text);
   text-decoration-color: currentcolor;
+}
+
+@media (hover: hover) {
+  .hero-intro__employer:hover {
+    color: var(--color-hero-text);
+    text-decoration-color: currentcolor;
+  }
 }
 
 .hero-intro__logo {
@@ -102,9 +108,14 @@
   transition: opacity 200ms var(--ease-out);
 }
 
-.hero-intro__employer:hover .hero-intro__logo,
 .hero-intro__employer:focus-visible .hero-intro__logo {
   opacity: 0.85;
+}
+
+@media (hover: hover) {
+  .hero-intro__employer:hover .hero-intro__logo {
+    opacity: 0.85;
+  }
 }
 
 .hero-panel__media {

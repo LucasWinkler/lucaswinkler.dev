@@ -89,7 +89,7 @@
     opacity var(--duration-quick) var(--ease-out);
 }
 
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) {
   .error-hero__cta:hover {
     opacity: 0.92;
   }
