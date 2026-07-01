@@ -11,7 +11,7 @@ export const experience: ExperienceItem[] = [
   },
   {
     id: 'cashin',
-    role: 'Full Stack Engineer',
+    role: 'Full Stack Developer',
     company: 'Cashin',
     location: 'Remote',
     start: '2025-07',
