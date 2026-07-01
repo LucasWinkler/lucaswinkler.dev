@@ -17,7 +17,25 @@ const VELOCITY_ALPHA = 0.38;
 const VELOCITY_STRAIN_SCALE = 0.004;
 const KINETIC_OVERSHOOT_GAIN = 0.1;
 const MAX_KINETIC_OVERSHOOT_PX = 20;
+const MAX_DELTA_PER_FRAME = 12;
+const BOTTOM_HYSTERESIS_PX = 24;
 const SPRING = { type: 'spring' as const, stiffness: 480, damping: 34, mass: 0.7, bounce: 0 };
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
+}
+
+function getScrollBottom(): number {
+  const vv = window.visualViewport;
+  if (vv) {
+    return window.scrollY + vv.height + vv.offsetTop;
+  }
+  return window.scrollY + window.innerHeight;
+}
+
+function getRemainingScroll(): number {
+  return document.documentElement.scrollHeight - getScrollBottom();
+}
 
 function stretchFromRawPull(rawPull: number): number {
   return MAX_STRETCH_PX * (1 - Math.exp(-rawPull / RESISTANCE));
@@ -53,10 +71,6 @@ function stretchWithStrain(baseStretch: number, delta: number, velocity: number)
   return baseStretch + impulseStrain + kineticOvershoot;
 }
 
-function isAtPageBottom(): boolean {
-  return window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
-}
-
 function isCapInertiaDelta(delta: number, atCap: boolean): boolean {
   return atCap && delta > 0 && delta < CAP_INERTIA_DELTA;
 }
@@ -89,6 +103,18 @@ export function MotionFooterWordmark() {
     if (wordmarkRef.current) {
       baseHeightRef.current = wordmarkRef.current.offsetHeight;
     }
+
+    let atBottomLatched = false;
+
+    const isAtPageBottom = (): boolean => {
+      const remaining = getRemainingScroll();
+      if (remaining <= 2) {
+        atBottomLatched = true;
+      } else if (remaining > BOTTOM_HYSTERESIS_PX) {
+        atBottomLatched = false;
+      }
+      return atBottomLatched;
+    };
 
     const stopAnimations = () => {
       stretchPx.stop();
@@ -136,24 +162,26 @@ export function MotionFooterWordmark() {
       releaseTimerRef.current = setTimeout(release, delay);
     };
 
-    const applyPull = (delta: number) => {
+    const applyPull = (delta: number, capDelta = false) => {
       if (isReleasingRef.current) {
         return;
       }
+
+      const effectiveDelta = capDelta ? clamp(delta, -MAX_DELTA_PER_FRAME, MAX_DELTA_PER_FRAME) : delta;
 
       if (Math.abs(stretchPx.getVelocity()) > 0.5) {
         stopAnimations();
       }
 
-      velocityRef.current = updateVelocity(velocityRef.current, delta);
+      velocityRef.current = updateVelocity(velocityRef.current, effectiveDelta);
 
-      if (delta > 0) {
+      if (effectiveDelta > 0) {
         isPullingRef.current = true;
         const currentStretch = stretchFromRawPull(rawPullRef.current);
-        rawPullRef.current += delta * pullResistanceFactor(currentStretch);
+        rawPullRef.current += effectiveDelta * pullResistanceFactor(currentStretch);
       } else if (isPullingRef.current) {
         velocityRef.current *= 0.5;
-        rawPullRef.current = Math.max(0, rawPullRef.current + delta);
+        rawPullRef.current = Math.max(0, rawPullRef.current + effectiveDelta);
         if (rawPullRef.current === 0) {
           springToRest();
           return;
@@ -163,7 +191,7 @@ export function MotionFooterWordmark() {
       }
 
       const baseStretch = stretchFromRawPull(rawPullRef.current);
-      stretchPx.set(stretchWithStrain(baseStretch, delta, velocityRef.current));
+      stretchPx.set(stretchWithStrain(baseStretch, effectiveDelta, velocityRef.current));
     };
 
     const onWheel = (event: WheelEvent) => {
@@ -200,13 +228,16 @@ export function MotionFooterWordmark() {
     };
 
     let touchStartY = 0;
+    let lastTouchY = 0;
+    let ignorePullFrame = 0;
 
     const onTouchStart = (event: TouchEvent) => {
       touchStartY = event.touches[0]?.clientY ?? 0;
+      lastTouchY = touchStartY;
     };
 
     const onTouchMove = (event: TouchEvent) => {
-      if (isReleasingRef.current) {
+      if (isReleasingRef.current || ignorePullFrame !== 0) {
         return;
       }
 
@@ -215,11 +246,12 @@ export function MotionFooterWordmark() {
       }
 
       const touchY = event.touches[0]?.clientY ?? touchStartY;
+      lastTouchY = touchY;
       const delta = (touchStartY - touchY) * TOUCH_GAIN;
       touchStartY = touchY;
 
       if (delta !== 0) {
-        applyPull(delta);
+        applyPull(delta, true);
       }
     };
 
@@ -232,18 +264,35 @@ export function MotionFooterWordmark() {
       springToRest();
     };
 
+    const onViewportChange = () => {
+      touchStartY = lastTouchY;
+      if (ignorePullFrame !== 0) {
+        cancelAnimationFrame(ignorePullFrame);
+      }
+      ignorePullFrame = requestAnimationFrame(() => {
+        ignorePullFrame = 0;
+      });
+    };
+
     window.addEventListener('wheel', onWheel, { passive: true });
     window.addEventListener('touchstart', onTouchStart, { passive: true });
     window.addEventListener('touchmove', onTouchMove, { passive: true });
     window.addEventListener('touchend', onTouchEnd, { passive: true });
+    window.visualViewport?.addEventListener('resize', onViewportChange);
+    window.visualViewport?.addEventListener('scroll', onViewportChange);
 
     return () => {
       clearReleaseTimer();
+      if (ignorePullFrame !== 0) {
+        cancelAnimationFrame(ignorePullFrame);
+      }
       setFooterStretch(0);
       window.removeEventListener('wheel', onWheel);
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('touchend', onTouchEnd);
+      window.visualViewport?.removeEventListener('resize', onViewportChange);
+      window.visualViewport?.removeEventListener('scroll', onViewportChange);
     };
   }, [stretchPx, shouldReduceMotion]);
 
