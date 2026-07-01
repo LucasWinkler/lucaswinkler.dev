@@ -203,13 +203,6 @@
     transform: translateY(calc(-1 * var(--footer-stretch, 0px)));
   }
 
-  @media (pointer: coarse) {
-    #content,
-    .footer-meta {
-      transform: none;
-    }
-  }
-
   body::before {
     content: '';
     position: fixed;
