@@ -268,7 +268,7 @@ export function MotionFooterWordmark() {
 
       if (direction > 0) {
         isPullingRef.current = true;
-        overpull.markPull(DISCRETE_WHEEL_PULL_PX, true);
+        overpull.markPull(DISCRETE_WHEEL_PULL_PX);
         const factor = pullResistanceFactor(stretchFromRawPull(rawPullRef.current));
         rawPullRef.current += DISCRETE_WHEEL_PULL_PX * WHEEL_PULL_GAIN * factor;
       } else if (isPullingRef.current) {
@@ -282,9 +282,6 @@ export function MotionFooterWordmark() {
       }
 
       syncStretchToRawPull(true);
-      if (direction > 0) {
-        overpull.addImpulse(stretchFromRawPull(rawPullRef.current));
-      }
     };
 
     const applyPull = (delta: number, capDelta = false) => {
