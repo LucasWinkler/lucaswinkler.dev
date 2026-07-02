@@ -1,22 +1,28 @@
 import { animate, type AnimationPlaybackControls, type MotionValue } from 'motion/react';
 
-const OVERPULL_CHARGE_MS = 1200;
-const OVERPULL_IMPULSE_BUMP_MS = 100;
+const OVERPULL_CHARGE_MS = 800;
+const OVERPULL_IMPULSE_BUMP_MS = 160;
 const OVERPULL_DECAY_RATE = 0.4;
 const OVERPULL_STRETCH_RATIO = 0.45;
 const OVERPULL_HOLD_RATIO = 0.85;
-const OVERPULL_CAP_HOLD_MS = 180;
-const OVERPULL_MIN_RELEASE_HOLD_MS = 72;
-const OVERPULL_PULL_IDLE_MS = 120;
-const OVERPULL_COAST_IDLE_MS = 90;
+const OVERPULL_LATCH_STRETCH_RATIO = 0.62;
+const OVERPULL_CREEP_MAX_PX = 4;
+const OVERPULL_CREEP_SPEED = 0.0045;
+const OVERPULL_CREEP_DECAY_SPEED = 0.012;
+const OVERPULL_CAP_HOLD_MS = 48;
+const OVERPULL_MIN_RELEASE_HOLD_MS = 48;
+const OVERPULL_PULL_IDLE_MS = 72;
+const OVERPULL_COAST_IDLE_MS = 55;
 const OVERPULL_COAST_DELTA_MAX = 6;
 const OVERPULL_LATCH_SILENCE_MS = 100;
 const OVERPULL_LATCH_MAX_MS = 3500;
-const OVERPULL_LAUNCH_COMPRESS_START = 0.62;
+const OVERPULL_LAUNCH_SCROLL_START_RATIO = 0.72;
 const OVERPULL_LAUNCH_SCROLL_EASE = [0.22, 1, 0.36, 1] as const;
-const OVERPULL_LAUNCH_SCROLL_MIN_MS = 1400;
-const OVERPULL_LAUNCH_SCROLL_MAX_MS = 2200;
+const OVERPULL_LAUNCH_SCROLL_MIN_MS = 1200;
+const OVERPULL_LAUNCH_SCROLL_MAX_MS = 1850;
 
+const OVERPULL_LATCH_ENTER_CHARGE_MS = OVERPULL_CHARGE_MS * 0.2;
+const OVERPULL_LATCH_RELEASE_CHARGE_MS = OVERPULL_CHARGE_MS * 0.55;
 const OVERPULL_PULL_DELTA_MIN = 3;
 const OVERPULL_LAUNCH_INTERRUPT_DELTA = 8;
 
@@ -24,14 +30,15 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
 }
 
-function launchCompressSpring(intensity: number) {
+function launchCompressSpring(intensity: number, launchStretch: number) {
   const t = clamp(intensity, 0.35, 1);
   return {
     type: 'spring' as const,
-    stiffness: 140 + t * 60,
-    damping: 22,
-    mass: 1.05,
-    bounce: 0,
+    stiffness: 195 + t * 75,
+    damping: 16,
+    mass: 0.9,
+    bounce: 0.18,
+    velocity: -Math.min(launchStretch * 10, 880),
   };
 }
 
@@ -73,10 +80,12 @@ export type FooterOverpull = {
   addImpulse: (stretch: number) => void;
   noteWheelDelta: (delta: number) => void;
   noteTouchMove: () => void;
+  noteTouchStart: () => void;
+  noteTouchEnd: () => void;
   isWheelMomentumCoast: (delta: number, inertiaDelta: number, discrete: boolean) => boolean;
   handleWheelDuringLaunch: (delta: number) => boolean;
   handleTouchEnd: (stretch: number) => 'latched' | 'continue';
-  scheduleRelease: (release: () => void, delayMs: number) => void;
+  scheduleRelease: (release: () => void, delayMs: number, atCap?: boolean, touch?: boolean) => void;
   tick: (now: number) => void;
   shouldRunChargeLoop: () => boolean;
   stopLaunch: () => void;
@@ -87,16 +96,19 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
   const { stretchPx, maxStretchPx, stretchFromRawPull, pull, callbacks, wakeChargeLoop } = options;
   const stretchThreshold = maxStretchPx * OVERPULL_STRETCH_RATIO;
   const holdThreshold = maxStretchPx * OVERPULL_HOLD_RATIO;
+  const latchStretchThreshold = maxStretchPx * OVERPULL_LATCH_STRETCH_RATIO;
 
   let charge = 0;
   let lastTick = performance.now();
   let launching = false;
   let pulling = false;
+  let fingerDown = false;
   let lastPullAt = 0;
   let latched = false;
   let latchedAt = 0;
   let lastWheelAt = 0;
   let lastTouchMoveAt = 0;
+  let creepOffset = 0;
   let compressControl: AnimationPlaybackControls | null = null;
   let scrollControl: AnimationPlaybackControls | null = null;
 
@@ -118,6 +130,7 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
     launching = false;
     pull.isReleasing.current = false;
     charge = 0;
+    creepOffset = 0;
     clearLatch();
     clearPull();
   };
@@ -133,9 +146,11 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
       return;
     }
 
-    const launchStretch = stretchPx.get();
+    const launchStretch = Math.max(0, stretchPx.get());
     const baseStretch = stretchFromRawPull(pull.rawPull.current);
-    if (window.scrollY <= 0 || launchStretch <= 0) {
+    const scrollY = window.scrollY;
+
+    if (scrollY <= 0 || launchStretch <= 0) {
       charge = 0;
       return;
     }
@@ -163,6 +178,17 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
       launching = false;
       scrollControl = null;
       compressControl = null;
+    };
+
+    const tryStartScrollPhase = (stretch: number) => {
+      if (scrollPhaseStarted) {
+        return;
+      }
+      const compressProgress = 1 - stretch / launchStretch;
+      if (compressProgress < OVERPULL_LAUNCH_SCROLL_START_RATIO) {
+        return;
+      }
+      startScrollPhase();
     };
 
     const startScrollPhase = () => {
@@ -194,26 +220,20 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
     };
 
     compressControl = animate(stretchPx, 0, {
-      ...launchCompressSpring(launchIntensity),
+      ...launchCompressSpring(launchIntensity, launchStretch),
       onUpdate: latest => {
-        const clamped = Math.max(0, latest);
-        if (clamped !== latest) {
-          stretchPx.set(clamped);
-        }
-        const compression = 1 - clamped / launchStretch;
-        if (!scrollPhaseStarted && compression >= OVERPULL_LAUNCH_COMPRESS_START) {
-          startScrollPhase();
-        }
+        stretchPx.set(latest);
+        tryStartScrollPhase(latest);
       },
       onComplete: () => {
         stretchPx.set(0);
-        startScrollPhase();
+        tryStartScrollPhase(0);
       },
     });
   };
 
   const tryEnterLatch = (now: number, stretch: number) => {
-    if (latched || stretch < stretchThreshold || !pull.isPulling.current) {
+    if (latched || stretch < latchStretchThreshold || !pull.isPulling.current) {
       return;
     }
 
@@ -242,17 +262,21 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
     return pull.isPulling.current && stretchPx.get() >= stretchThreshold;
   };
 
-  const scheduleRelease = (release: () => void, delayMs: number) => {
-    if (latched) {
+  const scheduleRelease = (release: () => void, delayMs: number, atCap = false, touch = false) => {
+    if (latched && !atCap) {
       return;
+    }
+
+    if (atCap && latched && charge < OVERPULL_LATCH_RELEASE_CHARGE_MS) {
+      clearLatch();
     }
 
     callbacks.clearReleaseTimer();
 
-    if (isCharging()) {
+    if (isCharging() && !atCap) {
       callbacks.scheduleReleaseTimer(() => {
         if (isCharging()) {
-          scheduleRelease(release, delayMs);
+          scheduleRelease(release, delayMs, atCap, touch);
           return;
         }
         clearPull();
@@ -261,12 +285,21 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
       return;
     }
 
-    const holdDelay = Math.max(delayMs, OVERPULL_MIN_RELEASE_HOLD_MS);
+    const holdDelay = atCap ? delayMs : Math.max(delayMs, OVERPULL_MIN_RELEASE_HOLD_MS);
 
     const tryRelease = () => {
-      const msSinceWheel = lastWheelAt > 0 ? performance.now() - lastWheelAt : OVERPULL_MIN_RELEASE_HOLD_MS;
-      if (msSinceWheel < OVERPULL_MIN_RELEASE_HOLD_MS) {
-        callbacks.scheduleReleaseTimer(tryRelease, OVERPULL_MIN_RELEASE_HOLD_MS - msSinceWheel);
+      const now = performance.now();
+      let msSinceInput: number;
+      if (touch) {
+        msSinceInput = lastTouchMoveAt > 0 ? now - lastTouchMoveAt : delayMs;
+      } else if (lastWheelAt > 0) {
+        msSinceInput = now - lastWheelAt;
+      } else {
+        msSinceInput = OVERPULL_MIN_RELEASE_HOLD_MS;
+      }
+      const inputIdleMs = touch || atCap ? delayMs : OVERPULL_MIN_RELEASE_HOLD_MS;
+      if (msSinceInput < inputIdleMs) {
+        callbacks.scheduleReleaseTimer(tryRelease, inputIdleMs - msSinceInput);
         return;
       }
       clearPull();
@@ -314,8 +347,15 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
       }
     },
     noteTouchMove: () => {
+      fingerDown = true;
       lastTouchMoveAt = performance.now();
       wakeChargeLoop();
+    },
+    noteTouchStart: () => {
+      fingerDown = true;
+    },
+    noteTouchEnd: () => {
+      fingerDown = false;
     },
     isWheelMomentumCoast: (delta: number, inertiaDelta: number, discrete: boolean) => {
       if (discrete || delta <= 0) {
@@ -335,7 +375,9 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
       return true;
     },
     handleTouchEnd: (stretch: number) => {
-      if (stretch >= stretchThreshold && charge > 0) {
+      const willLatch = stretch >= stretchThreshold && charge >= OVERPULL_LATCH_ENTER_CHARGE_MS;
+
+      if (willLatch) {
         latched = true;
         latchedAt = performance.now();
         callbacks.clearReleaseTimer();
@@ -358,6 +400,7 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
       const isNearMax = stretch >= holdThreshold;
       const pullRecently = pulling && now - lastPullAt < OVERPULL_PULL_IDLE_MS;
       const touchHolding =
+        fingerDown &&
         pull.isPulling.current &&
         lastTouchMoveAt > 0 &&
         now - lastTouchMoveAt >= OVERPULL_LATCH_SILENCE_MS &&
@@ -371,10 +414,28 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
         return;
       }
 
-      if (latched || touchHolding || ((isNearMax || isAboveStretchThreshold) && pullRecently)) {
+      const isChargingStretch = latched || touchHolding || ((isNearMax || isAboveStretchThreshold) && pullRecently);
+
+      if (isChargingStretch) {
         charge += dt;
+        if (stretch >= stretchThreshold) {
+          const chargeT = clamp(charge / OVERPULL_CHARGE_MS, 0, 1);
+          const easedT = chargeT * chargeT * chargeT;
+          const targetCreep = easedT * OVERPULL_CREEP_MAX_PX;
+          if (targetCreep > creepOffset) {
+            creepOffset = Math.min(targetCreep, creepOffset + OVERPULL_CREEP_SPEED * dt);
+          } else {
+            creepOffset = Math.max(targetCreep, creepOffset - OVERPULL_CREEP_DECAY_SPEED * dt);
+          }
+          const base = stretchFromRawPull(pull.rawPull.current);
+          const withCreep = base + creepOffset;
+          if (withCreep > stretch) {
+            stretchPx.set(withCreep);
+          }
+        }
         tryTriggerLaunch();
       } else {
+        creepOffset = Math.max(0, creepOffset - OVERPULL_CREEP_DECAY_SPEED * dt);
         charge = Math.max(0, charge - dt * OVERPULL_DECAY_RATE);
       }
 

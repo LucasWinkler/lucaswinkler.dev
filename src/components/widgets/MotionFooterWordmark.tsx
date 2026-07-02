@@ -8,23 +8,25 @@ const MAX_STRETCH_PX = 112;
 const RESISTANCE = 240;
 const CAP_RATIO = 0.96;
 const TENSION_POWER = 2.5;
-const WHEEL_RELEASE_MS = 80;
-const CAP_IDLE_MS = 28;
-const CAP_INERTIA_DELTA = 4;
+const WHEEL_RELEASE_MS = 56;
+const CAP_IDLE_MS = 14;
+const CAP_INERTIA_DELTA = 6;
 const TOUCH_GAIN = 1.4;
 const TOUCH_GAIN_COARSE = 2;
 const MAX_TOUCH_DELTA = 12;
-const STRAIN_GAIN = 0.14;
-const MAX_STRAIN_BUMP_PX = 14;
+const STRAIN_GAIN = 0.09;
+const MAX_STRAIN_BUMP_PX = 8;
 const VELOCITY_ALPHA = 0.38;
 const VELOCITY_STRAIN_SCALE = 0.004;
-const KINETIC_OVERSHOOT_GAIN = 0.1;
-const MAX_KINETIC_OVERSHOOT_PX = 20;
+const KINETIC_OVERSHOOT_GAIN = 0.06;
+const MAX_KINETIC_OVERSHOOT_PX = 10;
 const MAX_WHEEL_DELTA = 26;
 const DISCRETE_WHEEL_PULL_PX = 40;
 const WHEEL_PULL_GAIN = 1.35;
 const WHEEL_LINE_HEIGHT = 16;
-const WHEEL_RELEASE_DISCRETE_MS = 240;
+const WHEEL_RELEASE_DISCRETE_MS = 120;
+const TOUCH_RELEASE_MS = 36;
+const TOUCH_CAP_IDLE_MS = 24;
 const BOTTOM_HYSTERESIS_PX = 24;
 const BOTTOM_LATCH_ENTER_COARSE_PX = 80;
 const VIEWPORT_SETTLE_MS = 120;
@@ -234,10 +236,19 @@ export function MotionFooterWordmark() {
       wakeChargeLoop: wakeOverpullChargeLoop,
     });
 
-    const scheduleRelease = (stretch: number, discrete = false) => {
-      const delay = isAtCap(stretch) ? CAP_IDLE_MS : discrete ? WHEEL_RELEASE_DISCRETE_MS : WHEEL_RELEASE_MS;
-      const release = isAtCap(stretch) ? releaseFromCap : springToRest;
-      overpull.scheduleRelease(release, delay);
+    const scheduleRelease = (stretch: number, discrete = false, touch = false) => {
+      const atCap = isAtCap(stretch);
+      let delay: number;
+      if (touch) {
+        delay = atCap ? TOUCH_CAP_IDLE_MS : TOUCH_RELEASE_MS;
+      } else if (atCap) {
+        delay = CAP_IDLE_MS;
+      } else if (discrete) {
+        delay = WHEEL_RELEASE_DISCRETE_MS;
+      } else {
+        delay = WHEEL_RELEASE_MS;
+      }
+      overpull.scheduleRelease(atCap ? releaseFromCap : springToRest, delay, atCap, touch);
     };
 
     const syncStretchToRawPull = (smooth: boolean) => {
@@ -336,16 +347,19 @@ export function MotionFooterWordmark() {
 
       overpull.noteWheelDelta(delta);
 
-      if (overpull.isWheelMomentumCoast(delta, inertiaDelta, discrete)) {
-        velocityRef.current *= 0.4;
-        return;
-      }
-
       const baseStretch = stretchFromRawPull(rawPullRef.current);
       const atCap = isAtCap(baseStretch);
 
-      if (isCapInertiaDelta(inertiaDelta, atCap) && !isPullingRef.current && !overpull.isCharging()) {
-        scheduleRelease(stretchFromRawPull(rawPullRef.current));
+      if (overpull.isWheelMomentumCoast(delta, inertiaDelta, discrete)) {
+        velocityRef.current *= 0.4;
+        if (atCap) {
+          scheduleRelease(baseStretch);
+        }
+        return;
+      }
+
+      if (isCapInertiaDelta(inertiaDelta, atCap) && !isPullingRef.current) {
+        scheduleRelease(baseStretch);
         return;
       }
 
@@ -365,7 +379,7 @@ export function MotionFooterWordmark() {
     let viewportSettleTimer: ReturnType<typeof setTimeout> | undefined;
 
     const clearStretchFromViewportChange = () => {
-      if (isPullingRef.current) {
+      if (isPullingRef.current || overpull.isLaunching()) {
         return;
       }
 
@@ -382,6 +396,7 @@ export function MotionFooterWordmark() {
     };
 
     const onTouchStart = (event: TouchEvent) => {
+      overpull.noteTouchStart();
       touchStartY = event.touches[0]?.clientY ?? 0;
       lastTouchY = touchStartY;
     };
@@ -411,25 +426,25 @@ export function MotionFooterWordmark() {
       }
     };
 
-    const onTouchEnd = () => {
+    const finishTouch = () => {
+      overpull.noteTouchEnd();
       const stretch = stretchFromRawPull(rawPullRef.current);
+      const touchEndResult = overpull.handleTouchEnd(stretch);
 
-      if (overpull.handleTouchEnd(stretch) === 'latched') {
+      if (touchEndResult === 'latched') {
         return;
       }
 
-      if (isAtCap(stretch)) {
-        releaseFromCap();
-        return;
-      }
-
-      springToRest();
+      scheduleRelease(stretch, false, true);
     };
+
+    const onTouchEnd = () => finishTouch();
+    const onTouchCancel = () => finishTouch();
 
     const onViewportChange = () => {
       touchStartY = lastTouchY;
 
-      if (!isPullingRef.current) {
+      if (!isPullingRef.current && !overpull.isLaunching()) {
         ignorePullUntil = performance.now() + VIEWPORT_SETTLE_MS;
         clearStretchFromViewportChange();
       }
@@ -447,6 +462,7 @@ export function MotionFooterWordmark() {
     window.addEventListener('touchstart', onTouchStart, { passive: true });
     window.addEventListener('touchmove', onTouchMove, { passive: true });
     window.addEventListener('touchend', onTouchEnd, { passive: true });
+    window.addEventListener('touchcancel', onTouchCancel, { passive: true });
 
     if (isCoarsePointer) {
       window.visualViewport?.addEventListener('resize', onViewportChange);
@@ -467,6 +483,7 @@ export function MotionFooterWordmark() {
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('touchend', onTouchEnd);
+      window.removeEventListener('touchcancel', onTouchCancel);
       if (isCoarsePointer) {
         window.visualViewport?.removeEventListener('resize', onViewportChange);
         window.visualViewport?.removeEventListener('scroll', onViewportChange);
