@@ -76,7 +76,7 @@ export type FooterOverpull = {
   isCharging: () => boolean;
   clearLatch: () => void;
   clearPull: () => void;
-  markPull: (delta: number) => void;
+  markPull: (delta: number, discrete?: boolean) => void;
   addImpulse: (stretch: number) => void;
   noteWheelDelta: (delta: number) => void;
   noteTouchMove: () => void;
@@ -85,7 +85,8 @@ export type FooterOverpull = {
   isWheelMomentumCoast: (delta: number, inertiaDelta: number, discrete: boolean) => boolean;
   handleWheelDuringLaunch: (delta: number) => boolean;
   handleTouchEnd: (stretch: number) => 'latched' | 'continue';
-  scheduleRelease: (release: () => void, delayMs: number, atCap?: boolean, touch?: boolean) => void;
+  handleWheelIdle: (stretch: number) => 'latched' | 'continue';
+  scheduleRelease: (release: () => void, delayMs: number, atCap?: boolean, touch?: boolean, discrete?: boolean) => void;
   tick: (now: number) => void;
   shouldRunChargeLoop: () => boolean;
   stopLaunch: () => void;
@@ -108,6 +109,7 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
   let latchedAt = 0;
   let lastWheelAt = 0;
   let lastTouchMoveAt = 0;
+  let lastPullDiscrete = false;
   let creepOffset = 0;
   let compressControl: AnimationPlaybackControls | null = null;
   let scrollControl: AnimationPlaybackControls | null = null;
@@ -119,6 +121,7 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
 
   const clearPull = () => {
     pulling = false;
+    lastPullDiscrete = false;
   };
 
   const stopLaunch = () => {
@@ -136,7 +139,7 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
   };
 
   const tryTriggerLaunch = () => {
-    if (charge >= OVERPULL_CHARGE_MS) {
+    if (charge >= OVERPULL_CHARGE_MS && (!lastPullDiscrete || latched)) {
       triggerLaunch();
     }
   };
@@ -262,7 +265,21 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
     return pull.isPulling.current && stretchPx.get() >= stretchThreshold;
   };
 
-  const scheduleRelease = (release: () => void, delayMs: number, atCap = false, touch = false) => {
+  const tryEnterLatchFromStretch = (stretch: number, discrete = false) => {
+    const chargeReady = charge >= OVERPULL_LATCH_ENTER_CHARGE_MS;
+    const willLatch = stretch >= stretchThreshold && (discrete || chargeReady);
+    if (willLatch) {
+      latched = true;
+      latchedAt = performance.now();
+      callbacks.clearReleaseTimer();
+      wakeChargeLoop();
+      return 'latched' as const;
+    }
+    clearLatch();
+    return 'continue' as const;
+  };
+
+  const scheduleRelease = (release: () => void, delayMs: number, atCap = false, touch = false, discrete = false) => {
     if (latched && !atCap) {
       return;
     }
@@ -273,10 +290,10 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
 
     callbacks.clearReleaseTimer();
 
-    if (isCharging() && !atCap) {
+    if (isCharging() && !atCap && !discrete) {
       callbacks.scheduleReleaseTimer(() => {
         if (isCharging()) {
-          scheduleRelease(release, delayMs, atCap, touch);
+          scheduleRelease(release, delayMs, atCap, touch, discrete);
           return;
         }
         clearPull();
@@ -302,6 +319,11 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
         callbacks.scheduleReleaseTimer(tryRelease, inputIdleMs - msSinceInput);
         return;
       }
+      if (discrete) {
+        if (tryEnterLatchFromStretch(stretchPx.get(), true) === 'latched') {
+          return;
+        }
+      }
       clearPull();
       release();
     };
@@ -314,12 +336,13 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
     isCharging,
     clearLatch,
     clearPull,
-    markPull: (delta: number) => {
+    markPull: (delta: number, discrete = false) => {
       if (delta < OVERPULL_PULL_DELTA_MIN) {
         return;
       }
       pulling = true;
       lastPullAt = performance.now();
+      lastPullDiscrete = discrete;
       clearLatch();
       wakeChargeLoop();
     },
@@ -327,11 +350,10 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
       if (launching) {
         return;
       }
-      if (stretch < stretchThreshold) {
+      if (stretch < stretchThreshold || !latched) {
         return;
       }
       charge += OVERPULL_IMPULSE_BUMP_MS;
-      tryTriggerLaunch();
       wakeChargeLoop();
     },
     noteWheelDelta: (delta: number) => {
@@ -374,19 +396,8 @@ export function createFooterOverpull(options: CreateFooterOverpullOptions): Foot
       }
       return true;
     },
-    handleTouchEnd: (stretch: number) => {
-      const willLatch = stretch >= stretchThreshold && charge >= OVERPULL_LATCH_ENTER_CHARGE_MS;
-
-      if (willLatch) {
-        latched = true;
-        latchedAt = performance.now();
-        callbacks.clearReleaseTimer();
-        wakeChargeLoop();
-        return 'latched';
-      }
-      clearLatch();
-      return 'continue';
-    },
+    handleTouchEnd: (stretch: number) => tryEnterLatchFromStretch(stretch),
+    handleWheelIdle: (stretch: number) => tryEnterLatchFromStretch(stretch),
     scheduleRelease,
     tick: (now: number) => {
       if (launching) {

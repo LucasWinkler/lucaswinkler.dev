@@ -248,7 +248,7 @@ export function MotionFooterWordmark() {
       } else {
         delay = WHEEL_RELEASE_MS;
       }
-      overpull.scheduleRelease(atCap ? releaseFromCap : springToRest, delay, atCap, touch);
+      overpull.scheduleRelease(atCap ? releaseFromCap : springToRest, delay, atCap, touch, discrete);
     };
 
     const syncStretchToRawPull = (smooth: boolean) => {
@@ -268,7 +268,7 @@ export function MotionFooterWordmark() {
 
       if (direction > 0) {
         isPullingRef.current = true;
-        overpull.markPull(DISCRETE_WHEEL_PULL_PX);
+        overpull.markPull(DISCRETE_WHEEL_PULL_PX, true);
         const factor = pullResistanceFactor(stretchFromRawPull(rawPullRef.current));
         rawPullRef.current += DISCRETE_WHEEL_PULL_PX * WHEEL_PULL_GAIN * factor;
       } else if (isPullingRef.current) {
