@@ -17,54 +17,8 @@ export function initHeaderSync(): void {
   let ticking = false;
   let stickyVisible = false;
   let insetOffset = parseFloat(getComputedStyle(heroSection).paddingBottom) || 0;
-  let hideAccessibilityTimer: ReturnType<typeof setTimeout> | undefined;
-  let onBarTransitionEnd: ((event: TransitionEvent) => void) | undefined;
-  const headerBar = stickyHeader.querySelector<HTMLElement>('.site-header__bar');
   const controller = new AbortController();
   const { signal } = controller;
-
-  const clearHideAccessibility = () => {
-    if (hideAccessibilityTimer !== undefined) {
-      clearTimeout(hideAccessibilityTimer);
-      hideAccessibilityTimer = undefined;
-    }
-
-    if (headerBar && onBarTransitionEnd) {
-      headerBar.removeEventListener('transitionend', onBarTransitionEnd);
-      onBarTransitionEnd = undefined;
-    }
-  };
-
-  const applyHideAccessibility = () => {
-    stickyHeader.setAttribute('inert', '');
-  };
-
-  const scheduleHideAccessibility = () => {
-    clearHideAccessibility();
-
-    const finishHideAccessibility = () => {
-      if (stickyHeader.dataset.visible !== 'false') {
-        return;
-      }
-
-      clearHideAccessibility();
-      applyHideAccessibility();
-    };
-
-    onBarTransitionEnd = (event: TransitionEvent) => {
-      if (event.target !== headerBar || event.propertyName !== 'opacity') {
-        return;
-      }
-
-      finishHideAccessibility();
-    };
-
-    if (headerBar) {
-      headerBar.addEventListener('transitionend', onBarTransitionEnd);
-    }
-
-    hideAccessibilityTimer = setTimeout(finishHideAccessibility, 400);
-  };
 
   const setStickyVisible = (visible: boolean) => {
     if (visible === stickyVisible) {
@@ -76,7 +30,6 @@ export function initHeaderSync(): void {
     closeAllHeaderMenus();
 
     if (visible) {
-      clearHideAccessibility();
       stickyHeader.dataset.visible = 'true';
       stickyHeader.removeAttribute('inert');
       heroHeader?.setAttribute('inert', '');
@@ -84,8 +37,8 @@ export function initHeaderSync(): void {
     }
 
     stickyHeader.dataset.visible = 'false';
+    stickyHeader.setAttribute('inert', '');
     heroHeader?.removeAttribute('inert');
-    scheduleHideAccessibility();
   };
 
   const syncHeader = () => {
@@ -131,7 +84,6 @@ export function initHeaderSync(): void {
   );
 
   cleanup = () => {
-    clearHideAccessibility();
     controller.abort();
   };
 }

@@ -26,7 +26,7 @@ export function MotionApproachBridge({ items }: MotionApproachBridgeProps) {
               : { duration: revealGridDuration, ease: fadeEase, delay: index * revealGridStagger }
           }
           style={{ backfaceVisibility: 'hidden' }}>
-          <p className='type-eyebrow-label m-0 text-text-muted'>{item.label}</p>
+          <h3 className='type-eyebrow-label m-0 text-text-muted'>{item.label}</h3>
           <p className='type-ui m-0 text-pretty text-text'>{item.line}</p>
         </motion.div>
       ))}

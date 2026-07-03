@@ -1,4 +1,16 @@
-const navSections = ['selected-work', 'experience'];
+import { navItems } from '@/data/nav';
+
+const navSections = navItems
+  .map(item => {
+    const hashIndex = item.href.indexOf('#');
+
+    if (hashIndex < 0) {
+      return null;
+    }
+
+    return item.href.slice(hashIndex + 1);
+  })
+  .filter((sectionId): sectionId is string => sectionId !== null);
 
 let cleanup: (() => void) | undefined;
 

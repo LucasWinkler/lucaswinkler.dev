@@ -25,6 +25,50 @@ function setHeroMenuMorph(bar: HTMLElement, open: boolean): void {
   heroHeader.classList.toggle('is-menu-open', open);
 }
 
+function getMenuFocusables(panel: HTMLElement, toggle: HTMLButtonElement): HTMLElement[] {
+  const panelLinks = [...panel.querySelectorAll<HTMLElement>('a[href]')];
+
+  return [toggle, ...panelLinks];
+}
+
+function setPanelAccessibility(panel: HTMLElement, open: boolean): void {
+  if (open) {
+    panel.removeAttribute('inert');
+    panel.removeAttribute('aria-hidden');
+    return;
+  }
+
+  panel.setAttribute('inert', '');
+  panel.setAttribute('aria-hidden', 'true');
+}
+
+function focusFirstMenuLink(panel: HTMLElement): void {
+  const firstLink = panel.querySelector<HTMLElement>('a[href]');
+  firstLink?.focus();
+}
+
+function handleMenuKeyDown(event: KeyboardEvent, panel: HTMLElement, toggle: HTMLButtonElement): void {
+  if (event.key !== 'Tab' || !panel.classList.contains('is-open')) {
+    return;
+  }
+
+  const focusables = getMenuFocusables(panel, toggle);
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  const active = document.activeElement;
+
+  if (event.shiftKey && active === first) {
+    event.preventDefault();
+    last.focus();
+    return;
+  }
+
+  if (!event.shiftKey && active === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
 function closeMenu(panel: HTMLElement, toggle: HTMLButtonElement): void {
   if (!panel.classList.contains('is-open')) {
     return;
@@ -33,6 +77,8 @@ function closeMenu(panel: HTMLElement, toggle: HTMLButtonElement): void {
   panel.classList.remove('is-open');
   panel.classList.add('is-closing');
   toggle.setAttribute('aria-expanded', 'false');
+  setPanelAccessibility(panel, false);
+  toggle.focus();
 
   const bar = panel.closest<HTMLElement>('.site-header__bar');
 
@@ -69,12 +115,15 @@ function openMenu(panel: HTMLElement, toggle: HTMLButtonElement): void {
   panel.classList.remove('is-closing');
   panel.classList.add('is-open');
   toggle.setAttribute('aria-expanded', 'true');
+  setPanelAccessibility(panel, true);
 
   const bar = panel.closest<HTMLElement>('.site-header__bar');
 
   if (bar) {
     setHeroMenuMorph(bar, true);
   }
+
+  focusFirstMenuLink(panel);
 }
 
 export function closeAllHeaderMenus(): void {
@@ -104,6 +153,8 @@ export function initHeaderMenu(): void {
       return;
     }
 
+    setPanelAccessibility(panel, false);
+
     toggle.addEventListener(
       'click',
       event => {
@@ -117,6 +168,14 @@ export function initHeaderMenu(): void {
 
         closeAllHeaderMenus();
         openMenu(panel, toggle);
+      },
+      { signal },
+    );
+
+    bar.addEventListener(
+      'keydown',
+      event => {
+        handleMenuKeyDown(event, panel, toggle);
       },
       { signal },
     );

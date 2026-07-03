@@ -86,13 +86,7 @@ const introEnterIndex = headlineWordsByLine.flat().length;
                       <>
                         {wordIndex > 0 ? ' ' : ''}
                         <span class='hero-enter hero-enter--word inline-block' style={`--hero-enter-i: ${enterIndex}`}>
-                          {isAccent ? (
-                            <HeroHeadlineAccent client:visible word={accentWord}>
-                              <span class='type-hero-accent'>{accentWord}</span>
-                            </HeroHeadlineAccent>
-                          ) : (
-                            text
-                          )}
+                          {isAccent ? <HeroHeadlineAccent client:visible word={accentWord} /> : text}
                         </span>
                       </>
                     );

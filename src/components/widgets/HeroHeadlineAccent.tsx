@@ -57,7 +57,7 @@ export function HeroHeadlineAccent({ word }: HeroHeadlineAccentProps) {
   };
 
   return (
-    <span className='type-hero-accent hero-headline-accent' aria-label={word} onMouseEnter={startWave}>
+    <span className='type-hero-accent hero-headline-accent' onMouseEnter={startWave}>
       <span className='hero-headline-accent__sizer' aria-hidden='true'>
         {letters.map((letter, index) => (
           <span key={`sizer-${index}-${letter}`} className='hero-headline-accent__letter'>
@@ -65,7 +65,7 @@ export function HeroHeadlineAccent({ word }: HeroHeadlineAccentProps) {
           </span>
         ))}
       </span>
-      <span className='hero-headline-accent__letters' aria-hidden='true'>
+      <span className='hero-headline-accent__letters'>
         {letters.map((letter, index) => {
           const waveTiming = getLetterWaveTiming(index, letters.length);
 

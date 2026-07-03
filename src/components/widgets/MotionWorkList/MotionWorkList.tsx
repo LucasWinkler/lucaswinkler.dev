@@ -89,7 +89,7 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
   }, [isDesktopLayout, items.length]);
 
   useEffect(() => {
-    if (isDesktopLayout || !activeId) {
+    if (!activeId) {
       return;
     }
 
@@ -98,7 +98,7 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
     if (item) {
       setLiveMessage(`${item.brand} details expanded`);
     }
-  }, [activeId, isDesktopLayout, items]);
+  }, [activeId, items]);
 
   const activeIndex = activeId === null ? -1 : items.findIndex(item => item.id === activeId);
   const hoveredIndex = hoveredId ? items.findIndex(item => item.id === hoveredId) : -1;
