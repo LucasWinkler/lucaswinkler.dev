@@ -9,7 +9,7 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
-  site: 'https://www.lucaswinkler.dev',
+  site: 'https://lucaswinkler.dev',
   trailingSlash: 'never',
   integrations: [
     react(),

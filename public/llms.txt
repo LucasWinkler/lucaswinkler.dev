@@ -4,13 +4,13 @@
 
 ## Primary
 
-- [Homepage](https://www.lucaswinkler.dev/): Portfolio overview
+- [Homepage](https://lucaswinkler.dev/): Portfolio overview
 
 ## Sections
 
-- [Selected Work](https://www.lucaswinkler.dev/#selected-work): Recent projects
-- [Experience](https://www.lucaswinkler.dev/#experience): Work history
-- [Approach](https://www.lucaswinkler.dev/#approach): Development approach
+- [Selected Work](https://lucaswinkler.dev/#selected-work): Recent projects
+- [Experience](https://lucaswinkler.dev/#experience): Work history
+- [Approach](https://lucaswinkler.dev/#approach): Development approach
 
 ## Contact
 

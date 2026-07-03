@@ -19,4 +19,4 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-Sitemap: https://www.lucaswinkler.dev/sitemap-index.xml
+Sitemap: https://lucaswinkler.dev/sitemap-index.xml

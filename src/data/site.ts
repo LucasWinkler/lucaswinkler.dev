@@ -1,6 +1,6 @@
 import { siteName } from '@/data/nav';
 
-export const siteUrl = 'https://www.lucaswinkler.dev';
+export const siteUrl = 'https://lucaswinkler.dev';
 
 export { siteName };
 
