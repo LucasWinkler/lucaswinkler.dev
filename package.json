@@ -22,29 +22,29 @@
   "dependencies": {
     "@astrojs/react": "^6.0.0",
     "@astrojs/sitemap": "^3.7.3",
-    "@tailwindcss/vite": "^4.3.1",
+    "@tailwindcss/vite": "^4.3.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vercel/analytics": "^2.0.1",
-    "astro": "^7.0.3",
-    "motion": "^12.42.0",
+    "astro": "^7.0.5",
+    "motion": "^12.42.2",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "sharp": "^0.35.2",
-    "tailwindcss": "^4.3.1"
+    "sharp": "^0.35.3",
+    "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.5.0",
-    "eslint-plugin-astro": "^2.1.0",
+    "eslint": "^10.6.0",
+    "eslint-plugin-astro": "^2.1.1",
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "globals": "^17.7.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.8",
-    "prettier": "3.8.4",
+    "prettier": "3.9.4",
     "prettier-plugin-astro": "0.14.1",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.62.0"
+    "typescript-eslint": "^8.62.1"
   }
 }
