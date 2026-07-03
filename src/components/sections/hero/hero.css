@@ -257,17 +257,19 @@
 
 @media (width >= 40rem) {
   .hero-shell {
-    min-height: min(100svh, calc(var(--hero-panel-max-h) + (var(--hero-inset-y) * 2)));
+    min-height: 100vh;
+    min-height: 100svh;
   }
 
   .hero-panel {
     display: block;
-    min-height: min(var(--hero-panel-min-h), var(--hero-panel-max-h));
+    min-height: var(--hero-panel-min-h);
+    max-height: none;
   }
 
   .hero-panel__content {
     flex: unset;
-    min-height: min(var(--hero-panel-min-h), var(--hero-panel-max-h));
+    min-height: var(--hero-panel-min-h);
     --space-hero-bottom: clamp(var(--hero-content-inset), calc(var(--hero-content-inset) * 1.35), 5rem);
     padding-top: calc(3rem + env(safe-area-inset-top, 0px));
   }
