@@ -12,9 +12,10 @@ const heroImageOptions = {
   fit: 'cover' as const,
 };
 
-const [heroAvif, heroWebp, heroSrc] = await Promise.all([
+const [heroAvif, heroWebp, heroLqip, heroSrc] = await Promise.all([
   getImage({ ...heroImageOptions, format: 'avif' }),
   getImage({ ...heroImageOptions, format: 'webp' }),
+  getImage({ ...heroImageOptions, format: 'webp', width: 128 }),
   getImage({ ...heroImageOptions, format: 'webp', width: 960 }),
 ]);
 
@@ -22,11 +23,21 @@ const { width, height } = heroWebp.attributes;
 ---
 
 <section class='error-hero-shell' aria-labelledby='error-heading'>
-  <div class='error-hero-panel relative isolate overflow-hidden' transition:name='hero-panel'>
+  <link
+    rel='preload'
+    as='image'
+    imagesrcset={heroAvif.srcSet.attribute}
+    imagesizes='100vw'
+    type='image/avif'
+    fetchpriority='high'
+  />
+
+  <div class='error-hero-panel relative isolate overflow-hidden'>
     <HeaderHero brandHref='/' />
 
     <div class='error-hero-panel__media absolute inset-0' aria-hidden='true'>
-      <picture class='absolute inset-0 block'>
+      <div class='error-hero-panel__lqip' style={`background-image: url(${heroLqip.src})`} aria-hidden='true'></div>
+      <picture class='error-hero-panel__picture absolute inset-0 block'>
         <source srcset={heroAvif.srcSet.attribute} sizes='100vw' type='image/avif' />
         <source srcset={heroWebp.srcSet.attribute} sizes='100vw' type='image/webp' />
         <img
@@ -38,7 +49,9 @@ const { width, height } = heroWebp.attributes;
           alt=''
           loading='eager'
           decoding='async'
+          fetchpriority='high'
           class='error-hero-panel__image'
+          data-hero-image
         />
       </picture>
       <div class='error-hero-panel__scrim pointer-events-none absolute inset-0 z-[1]'></div>

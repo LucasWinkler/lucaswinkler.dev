@@ -5,7 +5,7 @@ export function initHeroImage(): void {
     return;
   }
 
-  const media = img.closest('.hero-panel__media');
+  const media = img.closest('.hero-panel__media, .error-hero-panel__media');
 
   if (media?.classList.contains('is-loaded')) {
     return;

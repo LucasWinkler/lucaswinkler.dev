@@ -40,7 +40,7 @@ const introEnterIndex = headlineWordsByLine.flat().length;
     fetchpriority='high'
   />
 
-  <div class='hero-panel relative isolate overflow-hidden' transition:name='hero-panel'>
+  <div class='hero-panel relative isolate overflow-hidden'>
     <HeaderHero />
 
     <div class='hero-panel__media absolute inset-0'>
@@ -86,7 +86,11 @@ const introEnterIndex = headlineWordsByLine.flat().length;
                       <>
                         {wordIndex > 0 ? ' ' : ''}
                         <span class='hero-enter hero-enter--word inline-block' style={`--hero-enter-i: ${enterIndex}`}>
-                          {isAccent ? <HeroHeadlineAccent client:visible word={accentWord} /> : text}
+                          {isAccent ? (
+                            <HeroHeadlineAccent client:media='(hover: hover) and (pointer: fine)' word={accentWord} />
+                          ) : (
+                            text
+                          )}
                         </span>
                       </>
                     );

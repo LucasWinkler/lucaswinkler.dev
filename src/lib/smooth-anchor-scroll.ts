@@ -54,7 +54,6 @@ function scrollToHashFromUrl(): void {
 
 export function initSmoothAnchorScroll(): void {
   scrollToHashFromUrl();
-  document.addEventListener('astro:page-load', scrollToHashFromUrl);
 
   const clickScrollBehavior: ScrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     ? 'auto'

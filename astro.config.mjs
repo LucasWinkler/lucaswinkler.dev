@@ -11,6 +11,7 @@ export default defineConfig({
   output: 'static',
   site: 'https://lucaswinkler.dev',
   trailingSlash: 'never',
+  compressHTML: true,
 
   image: {
     service: {
@@ -63,7 +64,7 @@ export default defineConfig({
           {
             weight: '400 700',
             style: 'italic',
-            src: ['./src/assets/fonts/LibreBaskerville-Italic-VariableFont_wght.ttf'],
+            src: ['./src/assets/fonts/LibreBaskerville-Italic-VariableFont_wght.woff2'],
             display: 'swap',
           },
         ],
