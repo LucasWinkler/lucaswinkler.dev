@@ -9,7 +9,12 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: clamp(var(--hero-panel-mobile-min-h), 58svh, calc(100svh - (var(--hero-inset-y) * 2)));
+  min-height: clamp(
+    var(--hero-panel-mobile-min-h),
+    58svh,
+    min(calc(100svh - (var(--hero-inset-y) * 2)), var(--hero-panel-max-h))
+  );
+  max-height: var(--hero-panel-max-h);
   border-radius: var(--radius-hero);
   box-shadow: var(--shadow-panel);
   transform: translateZ(0);
@@ -232,30 +237,37 @@
 
 @media (width < 40rem) and (min-height: 36rem) {
   .hero-panel {
-    min-height: clamp(var(--hero-panel-mobile-min-h), 62svh, calc(100svh - (var(--hero-inset-y) * 2)));
+    min-height: clamp(
+      var(--hero-panel-mobile-min-h),
+      62svh,
+      min(calc(100svh - (var(--hero-inset-y) * 2)), var(--hero-panel-max-h))
+    );
   }
 }
 
 @media (width < 40rem) and (min-height: 43.75rem) {
   .hero-panel {
-    min-height: clamp(var(--hero-panel-mobile-min-h), 66svh, calc(100svh - (var(--hero-inset-y) * 2)));
+    min-height: clamp(
+      var(--hero-panel-mobile-min-h),
+      66svh,
+      min(calc(100svh - (var(--hero-inset-y) * 2)), var(--hero-panel-max-h))
+    );
   }
 }
 
 @media (width >= 40rem) {
   .hero-shell {
-    min-height: 100vh;
-    min-height: 100svh;
+    min-height: min(100svh, calc(var(--hero-panel-max-h) + (var(--hero-inset-y) * 2)));
   }
 
   .hero-panel {
     display: block;
-    min-height: var(--hero-panel-min-h);
+    min-height: min(var(--hero-panel-min-h), var(--hero-panel-max-h));
   }
 
   .hero-panel__content {
     flex: unset;
-    min-height: var(--hero-panel-min-h);
+    min-height: min(var(--hero-panel-min-h), var(--hero-panel-max-h));
     --space-hero-bottom: clamp(var(--hero-content-inset), calc(var(--hero-content-inset) * 1.35), 5rem);
     padding-top: calc(3rem + env(safe-area-inset-top, 0px));
   }

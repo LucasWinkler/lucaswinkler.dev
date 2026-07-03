@@ -138,6 +138,7 @@
   --hero-inset-y: clamp(0.75rem, 2.5vw, 1.25rem);
   --hero-panel-min-h: calc(100vh - (var(--hero-inset-y) * 2));
   --hero-panel-min-h: calc(100svh - (var(--hero-inset-y) * 2));
+  --hero-panel-max-h: 37.5rem;
   --hero-panel-mobile-min-h: 22.8125rem;
 
   --shadow-panel: 0 0 0 1px oklch(0 0 0 / 0.06), 0 1px 2px -1px oklch(0 0 0 / 0.06), 0 2px 4px 0 oklch(0 0 0 / 0.04);
