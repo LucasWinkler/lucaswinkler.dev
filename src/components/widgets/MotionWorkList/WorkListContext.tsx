@@ -4,6 +4,7 @@ import { focusVisible } from '@/lib/focus';
 
 type WorkListContextValue = {
   isMobileLayout: boolean;
+  layoutReady: boolean;
   shouldReduceMotion: boolean;
   isHovering: boolean;
   itemCount: number;
@@ -24,6 +25,7 @@ type WorkListProviderProps = {
   activeId: string | null;
   hoveredId: string | null;
   isMobileLayout: boolean;
+  layoutReady: boolean;
   shouldReduceMotion: boolean;
   isHovering: boolean;
   itemCount: number;
@@ -37,6 +39,7 @@ export function WorkListProvider({
   activeId,
   hoveredId,
   isMobileLayout,
+  layoutReady,
   shouldReduceMotion,
   isHovering,
   itemCount,
@@ -99,6 +102,7 @@ export function WorkListProvider({
   const value = useMemo(
     (): WorkListContextValue => ({
       isMobileLayout,
+      layoutReady,
       shouldReduceMotion,
       isHovering,
       itemCount,
@@ -116,6 +120,7 @@ export function WorkListProvider({
       activeId,
       hoveredId,
       isMobileLayout,
+      layoutReady,
       shouldReduceMotion,
       isHovering,
       itemCount,

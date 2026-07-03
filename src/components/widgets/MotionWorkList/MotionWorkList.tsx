@@ -62,6 +62,13 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
   const [liveMessage, setLiveMessage] = useState('');
   const shouldReduceMotion = useReducedMotion();
   const isDesktopLayout = useMediaQuery(minWidth('md'));
+  const layoutReady = useMemo(() => {
+    if (typeof window === 'undefined') {
+      return false;
+    }
+
+    return window.matchMedia(minWidth('md')).matches === isDesktopLayout;
+  }, [isDesktopLayout]);
   const listRef = useRef<HTMLDivElement>(null);
   const itemIds = useMemo(() => items.map(item => item.id), [items]);
   const reduceMotion = shouldReduceMotion ?? false;
@@ -128,6 +135,7 @@ export function MotionWorkList({ items }: MotionWorkListProps) {
       activeId={activeId}
       hoveredId={hoveredId}
       isMobileLayout={!isDesktopLayout}
+      layoutReady={layoutReady}
       shouldReduceMotion={reduceMotion}
       isHovering={hoveredIndex >= 0}
       itemCount={items.length}

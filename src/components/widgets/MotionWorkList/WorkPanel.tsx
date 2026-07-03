@@ -119,6 +119,7 @@ function getContentStyle(isActive: boolean, delay: number, shouldReduceMotion: b
 export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: WorkPanelProps) {
   const {
     isMobileLayout,
+    layoutReady,
     shouldReduceMotion,
     isHovering,
     itemCount,
@@ -135,7 +136,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
 
   const panelActive = isActive(item.id);
   const panelHovered = isHovered(item.id);
-  const isExpanded = isMobileLayout || panelActive;
+  const isExpanded = panelActive || (isMobileLayout && layoutReady);
   const revealMotion = shouldReduceMotion || isMobileLayout;
   const mediaScale = isMobileLayout ? 1 : getMediaScale(panelActive, panelHovered);
   const panelStyle = {
