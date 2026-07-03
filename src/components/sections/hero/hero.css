@@ -146,8 +146,8 @@
 
 .hero-intro__logo {
   display: block;
-  height: 0.88em;
-  aspect-ratio: 349 / 125;
+  height: var(--hero-logo-height, 0.88em);
+  aspect-ratio: var(--hero-logo-aspect, 349 / 125);
   width: auto;
   background-color: var(--color-hero-text);
   transform: translateY(-0.04em);

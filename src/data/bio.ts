@@ -18,6 +18,7 @@ export const heroEmployer = {
 export const heroClient = {
   name: 'GolfNorth',
   url: 'https://golfnorth.ca',
+  logo: '/images/golfnorth-white.svg',
 } as const;
 
 export const hero = {

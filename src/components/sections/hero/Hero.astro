@@ -117,11 +117,12 @@ const introEnterIndex = headlineWordsByLine.flat().length;
             {hero.intro.middle}
             <a
               href={heroClient.url}
-              class='hero-intro__link focus-ring-inverse'
+              class='hero-intro__employer focus-ring-inverse'
               target='_blank'
               rel='noopener noreferrer'
-              aria-label={`${heroClient.name} (opens in new tab)`}>
-              {heroClient.name}
+              aria-label={`${heroClient.name} (opens in new tab)`}
+              style={`--hero-employer-logo: url(${heroClient.logo}); --hero-logo-aspect: 209 / 19; --hero-logo-height: 0.52em`}>
+              <span class='hero-intro__logo' aria-hidden='true'></span>
             </a>
             {hero.intro.after}
           </p>
