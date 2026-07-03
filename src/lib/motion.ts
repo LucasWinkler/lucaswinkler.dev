@@ -11,5 +11,5 @@ export const revealItemStagger = 0.11;
 export const revealViewport = {
   once: true,
   amount: 0.25,
-  margin: '0px 0px 12% 0px',
+  margin: '0px 0px -10% 0px',
 } as const;
