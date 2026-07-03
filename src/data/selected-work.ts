@@ -5,8 +5,6 @@ import teeonCoverImage from '@/assets/images/teeon-cover.png';
 
 import type { SelectedWorkItem } from '@/types/work';
 
-export const selectedWorkIntro = 'Marketing sites across the GolfNorth portfolio, built from the ground up.';
-
 export const selectedWork: SelectedWorkItem[] = [
   {
     id: 'tee-on',

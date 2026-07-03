@@ -7,27 +7,25 @@ import type { SelectedWorkItem } from '@/types/work';
 
 type MotionSelectedWorkSectionProps = {
   title: string;
-  intro: string;
   items: SelectedWorkItem[];
 };
 
-export function MotionSelectedWorkSection({ title, intro, items }: MotionSelectedWorkSectionProps) {
+export function MotionSelectedWorkSection({ title, items }: MotionSelectedWorkSectionProps) {
   const shouldReduceMotion = useReducedMotion() ?? false;
 
   return (
     <>
       <motion.div
-        className='mb-(--space-section-header) flex flex-col gap-4'
+        className='mb-(--space-section-header)'
         initial={shouldReduceMotion ? false : { opacity: 0, y: '0.75rem' }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.6 }}
         transition={shouldReduceMotion ? noMotion : { duration: revealSectionDuration, ease: fadeEase }}
         style={{ backfaceVisibility: 'hidden' }}>
-        <header className='flex flex-col gap-6'>
+        <header>
           <h2 id='selected-work-heading' className='scroll-anchor type-section-title m-0 max-w-[12ch] text-balance'>
             {title}
           </h2>
-          <p className='type-section-lead m-0 max-w-[34ch] text-pretty text-text/75'>{intro}</p>
         </header>
       </motion.div>
 

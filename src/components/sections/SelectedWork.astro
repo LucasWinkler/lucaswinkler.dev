@@ -1,6 +1,6 @@
 ---
 import { MotionSelectedWorkSection } from '@/components/widgets/MotionSelectedWorkSection';
-import { selectedWork, selectedWorkIntro } from '@/data/selected-work';
+import { selectedWork } from '@/data/selected-work';
 ---
 
 <section
@@ -8,6 +8,6 @@ import { selectedWork, selectedWorkIntro } from '@/data/selected-work';
   class='py-(--space-section-y) px-(--section-padding-x)'
   aria-labelledby='selected-work-heading'>
   <div class='section-inner'>
-    <MotionSelectedWorkSection client:visible title='Recent Work' intro={selectedWorkIntro} items={selectedWork} />
+    <MotionSelectedWorkSection client:visible title='Selected Work' items={selectedWork} />
   </div>
 </section>
