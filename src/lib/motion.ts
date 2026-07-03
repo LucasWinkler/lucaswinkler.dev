@@ -7,3 +7,9 @@ export const revealGridDuration = 1.05;
 export const revealGridStagger = 0.14;
 export const revealItemDuration = 0.88;
 export const revealItemStagger = 0.11;
+
+export const revealViewport = {
+  once: true,
+  amount: 0.25,
+  margin: '0px 0px 12% 0px',
+} as const;

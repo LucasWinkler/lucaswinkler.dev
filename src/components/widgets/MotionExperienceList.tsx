@@ -1,7 +1,8 @@
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 
 import { formatDateRangeParts, sortReverseChronological, toIsoDate } from '@/lib/experience';
-import { fadeEase, noMotion, revealItemDuration, revealItemStagger } from '@/lib/motion';
+import { fadeEase, revealItemDuration, revealItemStagger } from '@/lib/motion';
+import { useScrollReveal } from '@/hooks/use-scroll-reveal';
 
 import type { EducationItem, ExperienceItem } from '@/types/experience';
 import type { ReactNode } from 'react';
@@ -24,7 +25,6 @@ type RowProps = {
   subtitle: string;
   detail?: string;
   hasTopBorder: boolean;
-  shouldReduceMotion: boolean;
 };
 
 function ExperienceRow({
@@ -38,8 +38,12 @@ function ExperienceRow({
   subtitle,
   detail,
   hasTopBorder,
-  shouldReduceMotion,
 }: RowProps) {
+  const reveal = useScrollReveal<HTMLLIElement>({
+    y: '1rem',
+    transition: { duration: revealItemDuration, ease: fadeEase, delay: index * revealItemStagger },
+  });
+
   const leftClassName = 'type-caption m-0 max-w-42 shrink-0 whitespace-nowrap text-text-muted tabular-nums';
 
   const leftContent =
@@ -55,15 +59,14 @@ function ExperienceRow({
 
   return (
     <motion.li
+      ref={reveal.ref}
       className={`flex items-baseline justify-between gap-10 py-(--space-row-y) ${hasTopBorder ? 'border-t border-border' : ''}`}
-      initial={shouldReduceMotion ? false : { opacity: 0, y: '1rem' }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.55 }}
-      transition={
-        shouldReduceMotion
-          ? noMotion
-          : { duration: revealItemDuration, ease: fadeEase, delay: index * revealItemStagger }
-      }
+      initial={reveal.initial}
+      animate={reveal.animate}
+      whileInView={reveal.whileInView}
+      viewport={reveal.viewport}
+      transition={reveal.transition}
+      onViewportEnter={reveal.onViewportEnter}
       style={{ backfaceVisibility: 'hidden' }}>
       {leftContent}
       <div className='min-w-0 flex-1 text-right'>
@@ -91,7 +94,6 @@ function ExperienceSection({ label, isFirst = false, children }: SectionProps) {
 }
 
 export function MotionExperienceList({ experience, education = [] }: MotionExperienceListProps) {
-  const shouldReduceMotion = useReducedMotion() ?? false;
   const orderedExperience = sortReverseChronological(experience);
   const hasEducation = education.length > 0;
 
@@ -113,7 +115,6 @@ export function MotionExperienceList({ experience, education = [] }: MotionExper
               title={item.company}
               subtitle={item.role}
               detail={item.location}
-              shouldReduceMotion={shouldReduceMotion}
             />
           );
         })}
@@ -129,7 +130,6 @@ export function MotionExperienceList({ experience, education = [] }: MotionExper
               left={item.location}
               title={item.institution}
               subtitle={item.credential}
-              shouldReduceMotion={shouldReduceMotion}
             />
           ))}
         </ExperienceSection>
