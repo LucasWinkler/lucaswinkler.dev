@@ -1,0 +1,14 @@
+---
+import { MotionApproachBridge } from '@/components/widgets/MotionApproachBridge';
+import { approach } from '@/data/approach';
+---
+
+<section
+  id='approach'
+  class='px-(--section-padding-x) pb-(--space-section-header) pt-(--space-section-header)'
+  aria-labelledby='approach-heading'>
+  <div class='section-inner'>
+    <h2 id='approach-heading' class='sr-only'>Approach</h2>
+    <MotionApproachBridge client:visible items={approach} />
+  </div>
+</section>

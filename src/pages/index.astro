@@ -1,0 +1,21 @@
+---
+import HeaderSticky from '@/components/common/header/HeaderSticky.astro';
+import Approach from '@/components/sections/Approach.astro';
+import ContactCta from '@/components/sections/ContactCta.astro';
+import Experience from '@/components/sections/Experience.astro';
+import Footer from '@/components/sections/Footer.astro';
+import Hero from '@/components/sections/hero/Hero.astro';
+import SelectedWork from '@/components/sections/SelectedWork.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { siteDescription } from '@/data/bio';
+---
+
+<BaseLayout title='Lucas Winkler — Software Developer' description={siteDescription} skipTarget='#hero-heading'>
+  <HeaderSticky slot='before-content' />
+  <Hero />
+  <Approach />
+  <SelectedWork />
+  <Experience />
+  <ContactCta />
+  <Footer slot='after-content' />
+</BaseLayout>

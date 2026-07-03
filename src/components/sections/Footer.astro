@@ -1,0 +1,44 @@
+---
+import './footer.css';
+
+import { MotionFooterWordmark } from '@/components/widgets/MotionFooterWordmark';
+import { footerLinks } from '@/data/footer';
+import { siteName } from '@/data/nav';
+
+const year = new Date().getFullYear();
+---
+
+<footer class='overflow-visible px-(--section-padding-x) pt-(--space-section-header) pb-0' aria-label='Site footer'>
+  <div class='section-inner'>
+    <div class='footer-meta mb-(--space-row-y) flex flex-wrap items-center justify-between gap-x-6 gap-y-3'>
+      <p class='type-caption text-text-muted'>
+        &copy; {year}{' '}
+        <span translate='no'>{siteName}</span>
+      </p>
+      <nav aria-label='Footer'>
+        <ul class='m-0 flex flex-wrap list-none items-center gap-x-6 gap-y-3 p-0'>
+          {
+            footerLinks.map(link => {
+              const isExternal = link.href.startsWith('http');
+
+              return (
+                <li>
+                  <a
+                    class='type-nav -mx-1 touch-manipulation select-none rounded-sm px-1 py-2 text-text-muted outline-none transition-[color,box-shadow,transform] duration-(--duration-quick) ease-(--ease-out) hover:text-text focus-visible:text-text focus-ring active:scale-(--scale-large)'
+                    href={link.href}
+                    target={isExternal ? '_blank' : undefined}
+                    rel={isExternal ? 'noopener noreferrer' : undefined}
+                    aria-label={isExternal ? `${link.label} (opens in new tab)` : undefined}>
+                    {link.label}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </nav>
+    </div>
+
+    <MotionFooterWordmark client:visible />
+  </div>
+</footer>

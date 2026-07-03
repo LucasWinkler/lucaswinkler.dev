@@ -1,0 +1,19 @@
+.work-list {
+  --space-work-panel-inset: var(--space-work-panel-inset-sm);
+  --radius-panel: calc(var(--space-work-panel-inset) + var(--radius-work-logo-target));
+  --radius-work-logo: max(0px, calc(var(--radius-panel) - var(--space-work-panel-inset)));
+}
+
+@media (width >= 48rem) {
+  .work-list .work-panel-shell {
+    transition: flex-grow var(--duration-work-panel) var(--ease-out);
+  }
+}
+
+@media (width >= 56.25rem) {
+  .work-list {
+    --space-work-panel-inset: unset;
+    --radius-panel: unset;
+    --radius-work-logo: unset;
+  }
+}

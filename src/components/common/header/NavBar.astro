@@ -1,0 +1,111 @@
+---
+import IconEmail from '@/components/ui/icons/IconEmail.astro';
+import IconGitHub from '@/components/ui/icons/IconGitHub.astro';
+import { contactLinks } from '@/data/contact';
+import { navItems, siteName } from '@/data/nav';
+
+interface Props {
+  brandHref?: string;
+  menuId?: string;
+}
+
+const { brandHref = '/#hero', menuId = 'default' } = Astro.props;
+
+const menuPanelId = `site-header-menu-${menuId}`;
+
+const headerLinkBaseClass =
+  'type-nav select-none py-2 font-medium transition-[opacity,background-color,color] duration-(--duration-quick) ease-(--ease-out)';
+
+const headerLinkClass = `site-header__link ${headerLinkBaseClass}`;
+const headerIconLinkBaseClass =
+  'type-nav select-none font-medium transition-[opacity,background-color,color] duration-(--duration-quick) ease-(--ease-out)';
+const headerIconLinkClass = `site-header__link ${headerIconLinkBaseClass} site-header__link--icon`;
+const headerMenuLinkClass = `site-header__menu-link ${headerLinkBaseClass} block w-full text-left`;
+
+const menuLinks = [
+  ...navItems.map(item => ({ label: item.label, href: item.href })),
+  ...contactLinks.map(item => ({ label: item.label, href: item.href })),
+];
+---
+
+<div class='site-header__bar'>
+  <div class='site-header__inner mx-auto flex max-w-full min-h-(--header-inner-min-h) items-center'>
+    <a
+      href={brandHref}
+      class='site-header__brand type-nav shrink-0 py-2 -mx-1 font-semibold tracking-(--tracking-snug) transition-opacity duration-(--duration-quick) ease-(--ease-out) hover:opacity-80'
+      translate='no'>
+      {siteName}
+    </a>
+
+    <nav aria-label='Primary' class='site-header__nav site-header__nav--desktop shrink-0'>
+      <ul class='site-header__nav-list m-0 flex shrink-0 list-none items-stretch p-0'>
+        {
+          navItems.map(item => (
+            <li class='shrink-0'>
+              <a href={item.href} class={headerLinkClass}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        {
+          contactLinks.map(link => {
+            const isExternal = link.href.startsWith('http');
+            const ariaLabel = isExternal ? `${link.label} (opens in new tab)` : link.label;
+
+            return (
+              <li class='shrink-0'>
+                <a
+                  href={link.href}
+                  class={headerIconLinkClass}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                  aria-label={ariaLabel}>
+                  {link.label === 'Email' ? <IconEmail /> : <IconGitHub />}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <div class='site-header__menu shrink-0'>
+      <button
+        type='button'
+        class='site-header__menu-toggle type-nav touch-manipulation select-none'
+        aria-expanded='false'
+        aria-controls={menuPanelId}
+        aria-haspopup='menu'>
+        <span class='site-header__menu-icon' aria-hidden='true'>
+          <span class='site-header__menu-line'></span>
+          <span class='site-header__menu-line'></span>
+          <span class='site-header__menu-line'></span>
+        </span>
+        <span class='sr-only'>Menu</span>
+      </button>
+    </div>
+  </div>
+  <nav id={menuPanelId} class='site-header__menu-panel t-dropdown' data-origin='top-right' aria-label='Site navigation'>
+    <ul class='site-header__menu-list m-0 list-none p-0'>
+      {
+        menuLinks.map(link => {
+          const isExternal = link.href.startsWith('http');
+
+          return (
+            <li>
+              <a
+                href={link.href}
+                class={headerMenuLinkClass}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+                aria-label={isExternal ? `${link.label} (opens in new tab)` : undefined}>
+                {link.label}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </nav>
+</div>

@@ -1,0 +1,11 @@
+---
+import { MotionExperienceSection } from '@/components/widgets/MotionExperienceSection';
+import { education } from '@/data/education';
+import { experience } from '@/data/experience';
+---
+
+<section id='experience' class='py-(--space-section-y) px-(--section-padding-x)' aria-labelledby='experience-heading'>
+  <div class='section-inner'>
+    <MotionExperienceSection client:visible title='Experience' experience={experience} education={education} />
+  </div>
+</section>
