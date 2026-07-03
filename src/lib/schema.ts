@@ -1,83 +1,88 @@
-import { config } from "@/config";
+import { experience } from '@/data/experience';
+import { selectedWork } from '@/data/selected-work';
+import { email, githubUrl, jobTitle, knowsAbout, localeLanguage, ogImagePath, siteName, siteUrl } from '@/data/site';
 
-export const generatePersonSchema = () => {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: config.name,
-    description: config.appDescription,
-    jobTitle: "Full-Stack Developer",
-    nationality: "Canadian",
-    gender: "Male",
-    email: config.contactEmail,
-    url: config.baseUrl,
-    sameAs: [
-      "https://github.com/lucaswinkler",
-      "https://www.linkedin.com/in/lucas-winkler/",
-      "https://x.com/lucasjwinkler",
-      "https://dev.to/lucaswinkler",
-    ],
-    address: {
-      "@type": "PostalAddress",
-      addressRegion: "Ontario",
-      addressCountry: "CA",
-    },
-    image: {
-      "@type": "ImageObject",
-      contentUrl: `${config.baseUrl}/images/portrait.webp`,
-      creator: {
-        "@type": "Person",
-        name: config.name,
-      },
-      creditText: config.name,
-    },
-    alumniOf: [
-      {
-        "@type": "CollegeOrUniversity",
-        name: "McMaster University",
-        sameAs: "https://en.wikipedia.org/wiki/McMaster_University",
-      },
-      {
-        "@type": "CollegeOrUniversity",
-        name: "Conestoga College",
-        sameAs: "https://en.wikipedia.org/wiki/Conestoga_College",
-      },
-    ],
-    knowsAbout: [
-      "Web Development",
-      "Full-Stack Development",
-      "Front-End Development",
-      "Back-End Development",
-      "React",
-      "Next.js",
-      "Node.js",
-      "Tailwind CSS",
-      "TypeScript",
-      "JavaScript",
-      "HTML",
-      "CSS",
-      "C#",
-      "PostgreSQL",
-    ],
-  };
+type SchemaInput = {
+  title: string;
+  description: string;
+  canonicalUrl: string;
 };
 
-export const generateWebSiteSchema = () => {
+function formatExperienceDate(date: string): string {
+  return `${date}-01`;
+}
+
+export function buildProfileSchema({ title, description, canonicalUrl }: SchemaInput) {
+  const websiteId = `${siteUrl}/#website`;
+  const personId = `${siteUrl}/#person`;
+  const webpageId = `${canonicalUrl}#webpage`;
+  const ogImageUrl = new URL(ogImagePath, siteUrl).href;
+  const currentEmployer = experience.find(item => item.end === null);
+
+  const workExperience = experience.map(item => ({
+    '@type': 'OrganizationRole' as const,
+    roleName: item.role,
+    startDate: formatExperienceDate(item.start),
+    ...(item.end ? { endDate: formatExperienceDate(item.end) } : {}),
+    worksFor: {
+      '@type': 'Organization' as const,
+      name: item.company,
+    },
+  }));
+
   return {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: config.appName,
-    url: config.baseUrl,
-    description: config.appDescription,
-    author: {
-      "@type": "Person",
-      name: config.name,
-    },
-    inLanguage: "en-CA",
-    copyrightYear: config.copyrightYear,
-    creator: {
-      "@type": "Person",
-      name: config.name,
-    },
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': websiteId,
+        name: siteName,
+        url: siteUrl,
+        inLanguage: localeLanguage,
+      },
+      {
+        '@type': 'Person',
+        '@id': personId,
+        name: siteName,
+        url: siteUrl,
+        jobTitle,
+        description,
+        email,
+        image: ogImageUrl,
+        sameAs: [githubUrl],
+        knowsAbout: [...knowsAbout],
+        ...(currentEmployer
+          ? {
+              worksFor: {
+                '@type': 'Organization',
+                name: currentEmployer.company,
+              },
+            }
+          : {}),
+        workExperience,
+      },
+      {
+        '@type': 'ProfilePage',
+        '@id': webpageId,
+        url: canonicalUrl,
+        name: title,
+        description,
+        isPartOf: { '@id': websiteId },
+        mainEntity: { '@id': personId },
+      },
+      {
+        '@type': 'ItemList',
+        name: 'Selected Work',
+        itemListElement: selectedWork.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'WebSite',
+            name: item.brand,
+            url: item.url,
+          },
+        })),
+      },
+    ],
   };
-};
+}

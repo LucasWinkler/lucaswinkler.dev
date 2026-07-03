@@ -1,0 +1,63 @@
+---
+import '@/styles/global.css';
+
+import Analytics from '@vercel/analytics/astro';
+import { Font } from 'astro:assets';
+import { ClientRouter } from 'astro:transitions';
+
+import Seo from '@/components/common/Seo.astro';
+import { appleTouchIconPath, themeColor } from '@/data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+  skipTarget?: string;
+  noindex?: boolean;
+  includeSchema?: boolean;
+}
+
+const {
+  title = 'Lucas Winkler',
+  description = '',
+  canonicalPath,
+  skipTarget = '#content',
+  noindex = false,
+  includeSchema = true,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang='en' transition:animate='none'>
+  <head>
+    <meta charset='utf-8' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <link rel='icon' href='/favicon.ico' />
+    <link rel='apple-touch-icon' href={appleTouchIconPath} />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <meta name='theme-color' content={themeColor} />
+    <meta name='generator' content={Astro.generator} />
+    {noindex ? <meta name='robots' content='noindex, nofollow' /> : null}
+    {description ? <meta name='description' content={description} /> : null}
+    <Seo title={title} description={description} canonicalPath={canonicalPath} includeSchema={includeSchema} />
+    <Font cssVariable='--font-inter' preload={[{ style: 'normal' }]} />
+    <Font cssVariable='--font-libre-baskerville' preload={[{ style: 'italic', weight: 400 }]} />
+    <title transition:animate='fade'>{title}</title>
+    <ClientRouter />
+  </head>
+  <body>
+    <a href={skipTarget} class='skip-link'>Skip to content</a>
+    <slot name='before-content' />
+    <main id='content' tabindex='-1' transition:animate='fade'>
+      <slot />
+    </main>
+    <slot name='after-content' />
+    <Analytics />
+    <script>
+      import { initPageScripts } from '@/lib/view-transition-init';
+
+      initPageScripts();
+      document.addEventListener('astro:page-load', initPageScripts);
+    </script>
+  </body>
+</html>

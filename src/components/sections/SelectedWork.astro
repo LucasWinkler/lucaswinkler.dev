@@ -1,0 +1,13 @@
+---
+import { MotionSelectedWorkSection } from '@/components/widgets/MotionSelectedWorkSection';
+import { selectedWork } from '@/data/selected-work';
+---
+
+<section
+  id='selected-work'
+  class='py-(--space-section-y) px-(--section-padding-x)'
+  aria-labelledby='selected-work-heading'>
+  <div class='section-inner'>
+    <MotionSelectedWorkSection client:visible title='Selected Work' items={selectedWork} />
+  </div>
+</section>

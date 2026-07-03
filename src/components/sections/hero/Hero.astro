@@ -1,0 +1,127 @@
+---
+import './hero.css';
+
+import { getImage } from 'astro:assets';
+
+import HeaderHero from '@/components/common/header/HeaderHero.astro';
+import { HeroHeadlineAccent } from '@/components/widgets/HeroHeadlineAccent';
+import { HeroShaderStack } from '@/components/widgets/HeroShaderStack';
+import { hero, heroClient, heroEmployer } from '@/data/bio';
+import { splitEnterWordsByLine } from '@/lib/split-enter';
+import heroImage from '@/assets/images/hero-blue-abstract.png';
+
+const heroImageOptions = {
+  src: heroImage,
+  layout: 'full-width',
+  fit: 'cover',
+};
+
+const [heroAvif, heroWebp, heroLqip, heroSrc] = await Promise.all([
+  getImage({ ...heroImageOptions, format: 'avif' }),
+  getImage({ ...heroImageOptions, format: 'webp' }),
+  getImage({ ...heroImageOptions, format: 'webp', width: 128 }),
+  getImage({ ...heroImageOptions, format: 'webp', width: 640 }),
+]);
+
+const { width, height } = heroWebp.attributes;
+
+const headlineWordsByLine = splitEnterWordsByLine(hero.headlineLines);
+const headlineAccentWords = new Set(hero.headlineAccentWords.map(word => word.toLowerCase()));
+const introEnterIndex = headlineWordsByLine.flat().length;
+---
+
+<section id='hero' class='hero-shell' aria-labelledby='hero-heading'>
+  <link
+    rel='preload'
+    as='image'
+    imagesrcset={heroAvif.srcSet.attribute}
+    imagesizes='100vw'
+    type='image/avif'
+    fetchpriority='high'
+  />
+
+  <div class='hero-panel relative isolate overflow-hidden' transition:name='hero-panel'>
+    <HeaderHero />
+
+    <div class='hero-panel__media absolute inset-0'>
+      <div class='hero-panel__lqip' style={`background-image: url(${heroLqip.src})`} aria-hidden='true'></div>
+      <picture class='hero-panel__picture'>
+        <source srcset={heroAvif.srcSet.attribute} sizes='100vw' type='image/avif' />
+        <source srcset={heroWebp.srcSet.attribute} sizes='100vw' type='image/webp' />
+        <img
+          width={width}
+          height={height}
+          src={heroSrc.src}
+          srcset={heroWebp.srcSet.attribute}
+          sizes='100vw'
+          alt={hero.imageAlt}
+          loading='eager'
+          decoding='async'
+          fetchpriority='high'
+          class='hero-panel__image'
+          data-hero-image
+        />
+      </picture>
+      <HeroShaderStack client:load />
+      <div
+        class='hero-panel__scrim pointer-events-none absolute inset-0 z-[1] bg-linear-to-b from-black/55 via-black/35 to-black/65'
+        aria-hidden='true'>
+      </div>
+    </div>
+
+    <div class='texture-noise-overlay pointer-events-none absolute inset-0 z-[2]' aria-hidden='true'></div>
+
+    <div class='hero-panel__content relative z-[3] flex flex-col justify-end'>
+      <div class='section-inner'>
+        <div class='flex max-w-[56rem] flex-col gap-4 sm:gap-5'>
+          <h1 id='hero-heading' tabindex='-1' class='scroll-anchor type-hero m-0 max-w-[30ch] text-hero-text'>
+            {
+              headlineWordsByLine.map(words => (
+                <span class='block'>
+                  {words.map(({ text, enterIndex }, wordIndex) => {
+                    const accentWord = text.replace(/[^\w]/g, '');
+                    const isAccent = headlineAccentWords.has(accentWord.toLowerCase());
+
+                    return (
+                      <>
+                        {wordIndex > 0 ? ' ' : ''}
+                        <span class='hero-enter hero-enter--word inline-block' style={`--hero-enter-i: ${enterIndex}`}>
+                          {isAccent ? <HeroHeadlineAccent client:visible word={accentWord} /> : text}
+                        </span>
+                      </>
+                    );
+                  })}
+                </span>
+              ))
+            }
+          </h1>
+          <p
+            class='hero-intro type-ui hero-enter hero-enter--intro m-0 max-w-[52ch] text-pretty sm:max-w-[56ch]'
+            style={`--hero-enter-i: ${introEnterIndex}`}>
+            {hero.intro.before}
+            <a
+              href={heroEmployer.url}
+              class='hero-intro__employer focus-ring-inverse'
+              target='_blank'
+              rel='noopener noreferrer'
+              aria-label={`${heroEmployer.name} (opens in new tab)`}
+              style={`--hero-employer-logo: url(${heroEmployer.logo})`}>
+              <span class='hero-intro__logo' aria-hidden='true'></span>
+            </a>
+            {hero.intro.middle}
+            <a
+              href={heroClient.url}
+              class='hero-intro__employer focus-ring-inverse'
+              target='_blank'
+              rel='noopener noreferrer'
+              aria-label={`${heroClient.name} (opens in new tab)`}
+              style={`--hero-employer-logo: url(${heroClient.logo}); --hero-logo-aspect: 209 / 19; --hero-logo-height: 0.52em`}>
+              <span class='hero-intro__logo' aria-hidden='true'></span>
+            </a>
+            {hero.intro.after}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

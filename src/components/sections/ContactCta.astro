@@ -1,0 +1,76 @@
+---
+import IconEmail from '@/components/ui/icons/IconEmail.astro';
+import IconGitHub from '@/components/ui/icons/IconGitHub.astro';
+import { contactLinks } from '@/data/contact';
+
+const emailLink = contactLinks.find(link => link.label === 'Email');
+const githubLink = contactLinks.find(link => link.label === 'GitHub');
+
+if (!emailLink || !githubLink) {
+  throw new Error('Contact links require Email and GitHub entries.');
+}
+---
+
+<section
+  id='contact'
+  class='contact-cta-section border-t border-border px-(--section-padding-x) pt-(--space-section-gap) pb-0'
+  aria-labelledby='contact-heading'>
+  <div class='section-inner'>
+    <h2 id='contact-heading' class='sr-only'>Contact</h2>
+    <p class='type-section-lead contact-cta m-0 text-text-muted'>
+      You can reach me via{' '}
+      <a class='contact-cta__link focus-ring' href={emailLink.href}>
+        <IconEmail />
+        email
+      </a>{' '}
+      or see my code on{' '}
+      <a
+        class='contact-cta__link focus-ring'
+        href={githubLink.href}
+        target='_blank'
+        rel='noopener noreferrer'
+        aria-label='GitHub (opens in new tab)'>
+        <IconGitHub />
+        GitHub
+      </a>
+      .
+    </p>
+  </div>
+</section>
+
+<style>
+  .contact-cta {
+    max-width: none;
+    text-wrap: pretty;
+  }
+
+  .contact-cta__link {
+    display: inline;
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: oklch(from var(--color-text) l c h / 0.28);
+    text-underline-offset: 0.18em;
+    white-space: nowrap;
+    transition:
+      color var(--duration-quick) var(--ease-out),
+      text-decoration-color var(--duration-quick) var(--ease-out);
+  }
+
+  .contact-cta__link :global(svg) {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-inline-end: 0.3em;
+    vertical-align: -0.125em;
+  }
+
+  .contact-cta__link:focus-visible {
+    text-decoration-color: currentColor;
+  }
+
+  @media (hover: hover) {
+    .contact-cta__link:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+</style>

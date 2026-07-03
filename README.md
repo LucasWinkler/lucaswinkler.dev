@@ -1,180 +1,54 @@
-<a id="readme-top"></a>
+<p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/header/surface.svg?logo=false&amp;size=wide&amp;mode=dark&amp;image=https%3A%2F%2Fraw.githubusercontent.com%2FLucasWinkler%2Flucaswinkler.dev%2Frewrite%2Fastro%2Fsrc%2Fassets%2Fimages%2Fhero-blue-abstract.png&amp;overlay=0" /><img alt="lucaswinkler.dev" src="https://shieldcn.dev/header/surface.svg?logo=false&amp;size=wide&amp;mode=light&amp;image=https%3A%2F%2Fraw.githubusercontent.com%2FLucasWinkler%2Flucaswinkler.dev%2Frewrite%2Fastro%2Fsrc%2Fassets%2Fimages%2Fhero-blue-abstract.png&amp;overlay=0" /></picture>
+</p>
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT license][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+Personal portfolio for [lucaswinkler.dev](https://www.lucaswinkler.dev).
 
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/LucasWinkler/lucaswinkler.dev">
-    <img src="src/app/icon.svg" alt="Logo" width="80" height="80">
-  </a>
+<a href="https://www.lucaswinkler.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/badge/lucaswinkler.dev-view-438052.svg?variant=outline&amp;logo=lu%3AExternalLink" /><img alt="Live site" src="https://shieldcn.dev/badge/lucaswinkler.dev-view-438052.svg?variant=outline&amp;mode=light&amp;logo=lu%3AExternalLink" /></picture></a>
+<a href="https://astro.build"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/badge/Astro-7-171717.svg?variant=secondary&amp;logo=astro" /><img alt="Astro" src="https://shieldcn.dev/badge/Astro-7-171717.svg?variant=secondary&amp;mode=light&amp;logo=astro" /></picture></a>
+<a href="https://react.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/badge/React-19-171717.svg?variant=secondary&amp;logo=react" /><img alt="React" src="https://shieldcn.dev/badge/React-19-171717.svg?variant=secondary&amp;mode=light&amp;logo=react" /></picture></a>
+<a href="https://www.typescriptlang.org"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/badge/TypeScript-6-171717.svg?variant=secondary&amp;logo=typescript" /><img alt="TypeScript" src="https://shieldcn.dev/badge/TypeScript-6-171717.svg?variant=secondary&amp;mode=light&amp;logo=typescript" /></picture></a>
+<a href="https://tailwindcss.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/badge/Tailwind-v4-171717.svg?variant=secondary&amp;logo=tailwindcss" /><img alt="Tailwind CSS" src="https://shieldcn.dev/badge/Tailwind-v4-171717.svg?variant=secondary&amp;mode=light&amp;logo=tailwindcss" /></picture></a>
+<a href="https://motion.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/badge/Motion-171717.svg?variant=secondary&amp;logo=framer" /><img alt="Motion" src="https://shieldcn.dev/badge/Motion-171717.svg?variant=secondary&amp;mode=light&amp;logo=framer" /></picture></a>
 
-<h3 align="center">lucaswinkler.dev - v4</h3>
+## Setup
 
-  <p align="center">
-    The fourth iteration of <a href="https://www.lucaswinkler.dev">lucaswinkler.dev</a> built with <a href="https://nextjs.org/">Next.js</a> and hosted on <a href="https://vercel.com">Vercel</a>
-    <br />
-    <br />
-    <br />
-    <a href="https://www.lucaswinkler.dev">View Demo</a>
-    &middot;
-    <a href="https://github.com/LucasWinkler/lucaswinkler.dev/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
-    &middot;
-    <a href="https://github.com/LucasWinkler/lucaswinkler.dev/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
-  </p>
-</div>
+```sh
+pnpm install
+```
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
+Node.js 24.x (`package.json` engines).
 
-<!-- ABOUT THE PROJECT -->
+## Development
 
-## About The Project
+```sh
+pnpm dev
+```
 
-[![Lucas Winkler's Portfolio][product-screenshot]](https://www.lucaswinkler.dev)
+<http://localhost:4321>
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+Cursor background mode: `astro dev --background`
 
-### Built With
+## Build & preview
 
-- [![Next][Next.js]][Next-url]
-- [![React][React.js]][React-url]
-- [![TypeScript][TypeScript]][TypeScript-url]
-- [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
+```sh
+pnpm build
+pnpm preview
+```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+Build runs `astro check` and outputs to `dist/`. Preview serves the production build locally.
 
-<!-- GETTING STARTED -->
+## Quality
 
-## Getting Started
+```sh
+pnpm check   # astro check, eslint, prettier
+pnpm fix     # auto-fix lint and format
+```
 
-To get a local copy up and running follow these simple example steps.
+## Deployment
 
-### Prerequisites
+Pushes to the default branch deploy via Vercel. See `vercel.json`.
 
-- Install pnpm at [https://pnpm.io/installation](https://pnpm.io/installation)
+## Project layout
 
-### Installation
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/LucasWinkler/lucaswinkler.dev.git
-   ```
-2. Install PNPM packages
-   ```sh
-   pnpm install
-   ```
-3. Run the development server
-   ```sh
-   pnpm dev
-   ```
-4. View the project in the browser at [http://localhost:3000](http://localhost:3000)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ROADMAP -->
-
-## Roadmap
-
-- [ ] More background features for depth
-- [ ] Projects page (may not implement this)
-- [ ] Project details page (may not implement this)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
-
-## Contributing
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Top contributors:
-
-<a href="https://github.com/LucasWinkler/lucaswinkler.dev/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=LucasWinkler/lucaswinkler.dev" alt="contrib.rocks image" />
-</a>
-
-<!-- LICENSE -->
-
-## License
-
-Distributed under the MIT license. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTACT -->
-
-## Contact
-
-Lucas Winkler - [@LucasJWinkler](https://twitter.com/LucasJWinkler) - lucaswinkler@gmail.com
-
-Project Link: [https://github.com/LucasWinkler/lucaswinkler.dev](https://github.com/LucasWinkler/lucaswinkler.dev)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
-
-## Acknowledgments
-
-- [andrijaweb](https://github.com/andrijaweb) for the technology section idea on their portfolio: [https://andrijaweb.vercel.app/](https://andrijaweb.vercel.app/)
-- [evilmartians](https://github.com/evilmartians) for the OKLCH colour picker and conversion tool: [https://oklch.com/](https://oklch.com/)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-[contributors-shield]: https://img.shields.io/github/contributors/LucasWinkler/lucaswinkler.dev.svg?style=for-the-badge
-[contributors-url]: https://github.com/LucasWinkler/lucaswinkler.dev/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/LucasWinkler/lucaswinkler.dev.svg?style=for-the-badge
-[forks-url]: https://github.com/LucasWinkler/lucaswinkler.dev/network/members
-[stars-shield]: https://img.shields.io/github/stars/LucasWinkler/lucaswinkler.dev.svg?style=for-the-badge
-[stars-url]: https://github.com/LucasWinkler/lucaswinkler.dev/stargazers
-[issues-shield]: https://img.shields.io/github/issues/LucasWinkler/lucaswinkler.dev.svg?style=for-the-badge
-[issues-url]: https://github.com/LucasWinkler/lucaswinkler.dev/issues
-[license-shield]: https://img.shields.io/github/license/LucasWinkler/lucaswinkler.dev.svg?style=for-the-badge
-[license-url]: https://github.com/LucasWinkler/lucaswinkler.dev/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/lucas-winkler
-[product-screenshot]: public/og.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[TailwindCSS]: https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white
-[TailwindCSS-url]: https://tailwindcss.com/
-[TypeScript]: https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff
-[TypeScript-url]: https://www.typescriptlang.org/
+[AGENTS.md](./AGENTS.md) — folder conventions and contributor guidance.
