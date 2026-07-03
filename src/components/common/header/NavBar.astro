@@ -17,7 +17,9 @@ const headerLinkBaseClass =
   'type-nav select-none py-2 font-medium transition-[opacity,background-color,color] duration-(--duration-quick) ease-(--ease-out)';
 
 const headerLinkClass = `site-header__link ${headerLinkBaseClass}`;
-const headerIconLinkClass = `${headerLinkClass} site-header__link--icon`;
+const headerIconLinkBaseClass =
+  'type-nav select-none font-medium transition-[opacity,background-color,color] duration-(--duration-quick) ease-(--ease-out)';
+const headerIconLinkClass = `site-header__link ${headerIconLinkBaseClass} site-header__link--icon`;
 const headerMenuLinkClass = `site-header__menu-link ${headerLinkBaseClass} block w-full text-left`;
 
 const menuLinks = [

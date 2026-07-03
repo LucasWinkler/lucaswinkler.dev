@@ -380,16 +380,6 @@
   margin-inline: 0;
 }
 
-.site-header--sticky .site-header__link--icon {
-  padding-inline: 0.625rem;
-}
-
-@media (width >= 40rem) {
-  .site-header--sticky .site-header__link--icon {
-    padding-inline: 0.75rem;
-  }
-}
-
 .site-header__brand,
 .site-header__link {
   white-space: nowrap;
@@ -440,13 +430,12 @@
 }
 
 .site-header__link--icon {
-  padding-inline: 0.625rem;
-}
-
-@media (width >= 40rem) {
-  .site-header__link--icon {
-    padding-inline: 0.6875rem;
-  }
+  align-self: center;
+  flex-shrink: 0;
+  aspect-ratio: 1;
+  width: var(--header-inner-min-h);
+  height: var(--header-inner-min-h);
+  padding: 0;
 }
 
 .site-header__link--icon svg {
