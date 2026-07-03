@@ -1,6 +1,10 @@
 ---
-import { locale, ogImageAlt, ogImageHeight, ogImagePath, ogImageWidth, siteName } from '@/data/site';
+import { getImage } from 'astro:assets';
+
+import { locale, ogImageAlt, siteName } from '@/data/site';
 import { buildProfileSchema } from '@/lib/schema';
+import ogImageSrc from '@/assets/images/og.png';
+import { OG_IMAGE_QUALITY } from '@/config/image';
 
 interface Props {
   title: string;
@@ -11,12 +15,26 @@ interface Props {
 
 const { title, description, canonicalPath = Astro.url.pathname, includeSchema = true } = Astro.props;
 const canonical = new URL(canonicalPath, Astro.site);
-const ogImage = new URL(ogImagePath, Astro.site);
+
+const ogImageAsset = await getImage({
+  src: ogImageSrc,
+  format: 'jpeg',
+  width: 1200,
+  height: 630,
+  fit: 'cover',
+  quality: OG_IMAGE_QUALITY,
+});
+
+const ogImage = new URL(ogImageAsset.src, Astro.site);
+const ogImageWidth = ogImageAsset.attributes.width ?? 1200;
+const ogImageHeight = ogImageAsset.attributes.height ?? 630;
+
 const schema = includeSchema
   ? buildProfileSchema({
       title,
       description,
       canonicalUrl: canonical.href,
+      ogImageUrl: ogImage.href,
     })
   : null;
 ---
@@ -32,7 +50,7 @@ const schema = includeSchema
 <meta property='og:image:width' content={String(ogImageWidth)} />
 <meta property='og:image:height' content={String(ogImageHeight)} />
 <meta property='og:image:alt' content={ogImageAlt} />
-<meta property='og:image:type' content='image/png' />
+<meta property='og:image:type' content='image/jpeg' />
 <meta name='twitter:card' content='summary_large_image' />
 <meta name='twitter:title' content={title} />
 <meta name='twitter:description' content={description} />

@@ -1,22 +1,22 @@
 import { experience } from '@/data/experience';
 import { selectedWork } from '@/data/selected-work';
-import { email, githubUrl, jobTitle, knowsAbout, localeLanguage, ogImagePath, siteName, siteUrl } from '@/data/site';
+import { email, githubUrl, jobTitle, knowsAbout, localeLanguage, siteName, siteUrl } from '@/data/site';
 
 type SchemaInput = {
   title: string;
   description: string;
   canonicalUrl: string;
+  ogImageUrl: string;
 };
 
 function formatExperienceDate(date: string): string {
   return `${date}-01`;
 }
 
-export function buildProfileSchema({ title, description, canonicalUrl }: SchemaInput) {
+export function buildProfileSchema({ title, description, canonicalUrl, ogImageUrl }: SchemaInput) {
   const websiteId = `${siteUrl}/#website`;
   const personId = `${siteUrl}/#person`;
   const webpageId = `${canonicalUrl}#webpage`;
-  const ogImageUrl = new URL(ogImagePath, siteUrl).href;
   const currentEmployer = experience.find(item => item.end === null);
 
   const workExperience = experience.map(item => ({

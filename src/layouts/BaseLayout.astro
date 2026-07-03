@@ -2,11 +2,12 @@
 import '@/styles/global.css';
 
 import Analytics from '@vercel/analytics/astro';
-import { Font } from 'astro:assets';
+import { Font, getImage } from 'astro:assets';
 import { ClientRouter } from 'astro:transitions';
 
 import Seo from '@/components/common/Seo.astro';
 import { appleTouchIconPath, themeColor } from '@/data/site';
+import noiseTexture from '@/assets/textures/noise.png';
 
 interface Props {
   title?: string;
@@ -25,10 +26,12 @@ const {
   noindex = false,
   includeSchema = true,
 } = Astro.props;
+
+const noiseTile = await getImage({ src: noiseTexture, format: 'webp' });
 ---
 
 <!doctype html>
-<html lang='en' transition:animate='none'>
+<html lang='en' transition:animate='none' style={`--noise-tile: url(${noiseTile.src})`}>
   <head>
     <meta charset='utf-8' />
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />

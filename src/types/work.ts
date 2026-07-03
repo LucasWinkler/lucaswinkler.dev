@@ -1,3 +1,12 @@
+export type SelectedWorkImage = {
+  src: string;
+  srcSet: string;
+  avifSrcSet: string;
+  sizes: string;
+  width: number;
+  height: number;
+};
+
 export type SelectedWorkItem = {
   id: string;
   brand: string;
@@ -5,9 +14,7 @@ export type SelectedWorkItem = {
   url: string;
   description?: string;
   tech: string[];
-  image?: string;
-  imageWidth?: number;
-  imageHeight?: number;
+  image?: SelectedWorkImage;
   imagePosition?: string;
   logo?: string;
   logoScale?: number;

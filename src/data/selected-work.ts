@@ -4,17 +4,20 @@ import golfNorthCoverImage from '@/assets/images/gn-cover.png';
 import teeonCoverImage from '@/assets/images/teeon-cover.png';
 
 import type { SelectedWorkItem } from '@/types/work';
+import type { ImageMetadata } from 'astro';
 
-export const selectedWork: SelectedWorkItem[] = [
+type SelectedWorkSourceItem = Omit<SelectedWorkItem, 'image'> & {
+  coverImage?: ImageMetadata;
+};
+
+export const selectedWork: SelectedWorkSourceItem[] = [
   {
     id: 'tee-on',
     brand: 'Tee On',
     domain: 'teeon.com',
     url: 'https://www.teeon.com',
     tech: ['React', 'TS', 'SCSS'],
-    image: teeonCoverImage.src,
-    imageWidth: teeonCoverImage.width,
-    imageHeight: teeonCoverImage.height,
+    coverImage: teeonCoverImage,
     logo: '/images/tee-on.svg',
     logoScale: 0.75,
     brandColor: '#4168B1',
@@ -25,9 +28,7 @@ export const selectedWork: SelectedWorkItem[] = [
     domain: 'golfnorthinternational.com',
     url: 'https://golfnorthinternational.com',
     tech: ['Astro', 'TS', 'SCSS'],
-    image: golfNorthCoverImage.src,
-    imageWidth: golfNorthCoverImage.width,
-    imageHeight: golfNorthCoverImage.height,
+    coverImage: golfNorthCoverImage,
     logo: '/images/golfnorth.svg',
     brandColor: '#212221',
   },
@@ -37,9 +38,7 @@ export const selectedWork: SelectedWorkItem[] = [
     domain: '9fore.ca',
     url: 'https://9fore.ca',
     tech: ['Astro', 'TS', 'SCSS'],
-    image: nineForeCoverImage.src,
-    imageWidth: nineForeCoverImage.width,
-    imageHeight: nineForeCoverImage.height,
+    coverImage: nineForeCoverImage,
     logo: '/images/9fore.svg',
     logoScale: 0.75,
     brandColor: '#0F2043',
@@ -50,9 +49,7 @@ export const selectedWork: SelectedWorkItem[] = [
     domain: 'eventcaddy.com',
     url: 'https://www.eventcaddy.com',
     tech: ['Astro', 'TS', 'SCSS'],
-    image: eventcaddyCoverImage.src,
-    imageWidth: eventcaddyCoverImage.width,
-    imageHeight: eventcaddyCoverImage.height,
+    coverImage: eventcaddyCoverImage,
     logo: '/images/eventcaddy.svg',
     brandColor: '#1E241D',
   },

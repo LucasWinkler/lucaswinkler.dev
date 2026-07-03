@@ -11,6 +11,18 @@ export default defineConfig({
   output: 'static',
   site: 'https://lucaswinkler.dev',
   trailingSlash: 'never',
+
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/sharp',
+      config: {
+        webp: { effort: 6 },
+        avif: { effort: 4 },
+        jpeg: { mozjpeg: true },
+      },
+    },
+  },
+
   integrations: [
     react(),
     sitemap({

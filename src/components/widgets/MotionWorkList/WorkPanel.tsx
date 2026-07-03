@@ -62,8 +62,8 @@ function WorkPanelLogo({ variant, src, scale, isExpanded, shouldReduceMotion }: 
           style={scale !== undefined ? { transform: `scale(${scale})` } : undefined}
           src={src}
           alt=''
-          width={32}
-          height={32}
+          width={56}
+          height={56}
           loading='lazy'
           decoding='async'
           onError={hideBrokenImage}
@@ -232,16 +232,23 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
           {item.image ? (
             <div className='pointer-events-none absolute inset-0 origin-center' style={mediaStyle} aria-hidden='true'>
               <div className='absolute inset-[-5%]' style={getImageRevealStyle(isExpanded, revealMotion)}>
-                <img
-                  className='absolute inset-0 h-full w-full max-w-none object-cover outline -outline-offset-1 outline-black/10'
-                  style={item.imagePosition ? { objectPosition: item.imagePosition } : undefined}
-                  src={item.image}
-                  alt=''
-                  {...(item.imageWidth && item.imageHeight ? { width: item.imageWidth, height: item.imageHeight } : {})}
-                  loading='lazy'
-                  decoding='async'
-                  onError={hideBrokenImage}
-                />
+                <picture className='absolute inset-0 block'>
+                  <source srcSet={item.image.avifSrcSet} sizes={item.image.sizes} type='image/avif' />
+                  <source srcSet={item.image.srcSet} sizes={item.image.sizes} type='image/webp' />
+                  <img
+                    className='absolute inset-0 h-full w-full max-w-none object-cover outline -outline-offset-1 outline-black/10'
+                    style={item.imagePosition ? { objectPosition: item.imagePosition } : undefined}
+                    src={item.image.src}
+                    srcSet={item.image.srcSet}
+                    sizes={item.image.sizes}
+                    alt=''
+                    width={item.image.width}
+                    height={item.image.height}
+                    loading='lazy'
+                    decoding='async'
+                    onError={hideBrokenImage}
+                  />
+                </picture>
 
                 <div
                   className='pointer-events-none absolute inset-0 bg-linear-to-b from-black/5 via-transparent to-black/16'

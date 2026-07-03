@@ -8,12 +8,6 @@ export const email = 'hello@lucaswinkler.dev';
 
 export const githubUrl = 'https://github.com/lucaswinkler';
 
-export const ogImagePath = '/og.png';
-
-export const ogImageWidth = 1200;
-
-export const ogImageHeight = 630;
-
 export const ogImageAlt = 'Lucas Winkler — software developer portfolio';
 
 export const appleTouchIconPath = '/apple-touch-icon.png';
