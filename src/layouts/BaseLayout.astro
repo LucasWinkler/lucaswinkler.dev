@@ -48,7 +48,7 @@ const {
   <body>
     <a href={skipTarget} class='skip-link'>Skip to content</a>
     <slot name='before-content' />
-    <main id='content' transition:animate='fade'>
+    <main id='content' tabindex='-1' transition:animate='fade'>
       <slot />
     </main>
     <slot name='after-content' />

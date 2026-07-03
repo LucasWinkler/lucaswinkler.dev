@@ -51,7 +51,10 @@ const { width, height } = heroWebp.attributes;
         <p class='error-hero__display type-display tabular-nums' aria-hidden='true'>404</p>
 
         <div class='flex flex-col gap-4'>
-          <h1 id='error-heading' class='scroll-anchor type-section-title error-hero__headline m-0 text-balance'>
+          <h1
+            id='error-heading'
+            tabindex='-1'
+            class='scroll-anchor type-section-title error-hero__headline m-0 text-balance'>
             <span class='sr-only'>Page not found.</span>
             This page isn&apos;t one of them.
           </h1>
