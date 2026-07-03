@@ -23,9 +23,13 @@ function isSamePageLink(href: string): boolean {
 }
 
 function hashTarget(hash: string): HTMLElement | null {
-  const target = document.querySelector(hash);
+  try {
+    const target = document.querySelector(hash);
 
-  return target instanceof HTMLElement ? target : null;
+    return target instanceof HTMLElement ? target : null;
+  } catch {
+    return null;
+  }
 }
 
 function cleanUrl(): void {
@@ -84,7 +88,6 @@ export function initSmoothAnchorScroll(): void {
       }
 
       event.preventDefault();
-      event.stopImmediatePropagation();
       target.scrollIntoView({ behavior: clickScrollBehavior, block: 'start' });
       cleanUrl();
     },
