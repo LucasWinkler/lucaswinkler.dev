@@ -1,7 +1,7 @@
 ---
 import { getImage } from 'astro:assets';
 
-import { locale, ogImageAlt, siteName } from '@/data/site';
+import { locale, ogImageAlt, siteName, twitterHandle } from '@/data/site';
 import { buildProfileSchema } from '@/lib/schema';
 import ogImageSrc from '@/assets/images/og.png';
 import { OG_IMAGE_QUALITY } from '@/config/image';
@@ -52,6 +52,8 @@ const schema = includeSchema
 <meta property='og:image:alt' content={ogImageAlt} />
 <meta property='og:image:type' content='image/jpeg' />
 <meta name='twitter:card' content='summary_large_image' />
+<meta name='twitter:site' content={`@${twitterHandle}`} />
+<meta name='twitter:creator' content={`@${twitterHandle}`} />
 <meta name='twitter:title' content={title} />
 <meta name='twitter:description' content={description} />
 <meta name='twitter:image' content={ogImage.href} />

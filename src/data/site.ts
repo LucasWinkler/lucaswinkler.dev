@@ -8,6 +8,14 @@ export const email = 'hello@lucaswinkler.dev';
 
 export const githubUrl = 'https://github.com/lucaswinkler';
 
+export const linkedInUrl = 'https://www.linkedin.com/in/lucas-winkler';
+
+export const twitterHandle = 'LucasJWinkler';
+
+export const twitterUrl = 'https://x.com/LucasJWinkler';
+
+export const sameAsUrls = [githubUrl, linkedInUrl, twitterUrl] as const;
+
 export const ogImageAlt = 'Lucas Winkler — software developer portfolio';
 
 export const appleTouchIconPath = '/apple-touch-icon.png';

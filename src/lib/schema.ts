@@ -1,6 +1,6 @@
 import { experience } from '@/data/experience';
 import { selectedWork } from '@/data/selected-work';
-import { email, githubUrl, jobTitle, knowsAbout, localeLanguage, siteName, siteUrl } from '@/data/site';
+import { email, jobTitle, knowsAbout, localeLanguage, sameAsUrls, siteName, siteUrl } from '@/data/site';
 
 type SchemaInput = {
   title: string;
@@ -49,7 +49,7 @@ export function buildProfileSchema({ title, description, canonicalUrl, ogImageUr
         description,
         email,
         image: ogImageUrl,
-        sameAs: [githubUrl],
+        sameAs: [...sameAsUrls],
         knowsAbout: [...knowsAbout],
         ...(currentEmployer
           ? {
@@ -62,7 +62,7 @@ export function buildProfileSchema({ title, description, canonicalUrl, ogImageUr
         workExperience,
       },
       {
-        '@type': 'ProfilePage',
+        '@type': ['ProfilePage', 'WebPage'],
         '@id': webpageId,
         url: canonicalUrl,
         name: title,
