@@ -9,8 +9,9 @@ type SchemaInput = {
   ogImageUrl: string;
 };
 
-function formatExperienceDate(date: string): string {
-  return `${date}-01`;
+function formatExperienceLabel(role: string, company: string, start: string, end: string | null): string {
+  const range = end ? `${start} – ${end}` : `${start} – Present`;
+  return `${role} at ${company} (${range})`;
 }
 
 export function buildProfileSchema({ title, description, canonicalUrl, ogImageUrl }: SchemaInput) {
@@ -18,17 +19,6 @@ export function buildProfileSchema({ title, description, canonicalUrl, ogImageUr
   const personId = `${siteUrl}/#person`;
   const webpageId = `${canonicalUrl}#webpage`;
   const currentEmployer = experience.find(item => item.end === null);
-
-  const workExperience = experience.map(item => ({
-    '@type': 'OrganizationRole' as const,
-    roleName: item.role,
-    startDate: formatExperienceDate(item.start),
-    ...(item.end ? { endDate: formatExperienceDate(item.end) } : {}),
-    worksFor: {
-      '@type': 'Organization' as const,
-      name: item.company,
-    },
-  }));
 
   return {
     '@context': 'https://schema.org',
@@ -59,7 +49,6 @@ export function buildProfileSchema({ title, description, canonicalUrl, ogImageUr
               },
             }
           : {}),
-        workExperience,
       },
       {
         '@type': ['ProfilePage', 'WebPage'],
@@ -69,6 +58,19 @@ export function buildProfileSchema({ title, description, canonicalUrl, ogImageUr
         description,
         isPartOf: { '@id': websiteId },
         mainEntity: { '@id': personId },
+      },
+      {
+        '@type': 'ItemList',
+        name: 'Work Experience',
+        itemListElement: experience.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: formatExperienceLabel(item.role, item.company, item.start, item.end),
+          item: {
+            '@type': 'Organization',
+            name: item.company,
+          },
+        })),
       },
       {
         '@type': 'ItemList',
