@@ -30,7 +30,8 @@ const TOUCH_CAP_IDLE_MS = 24;
 const BOTTOM_HYSTERESIS_PX = 24;
 const BOTTOM_LATCH_ENTER_COARSE_PX = 80;
 const OVERSCROLL_LOCK_ARM_PX = 48;
-const OVERSCROLL_LOCK_DISARM_PX = OVERSCROLL_LOCK_ARM_PX + BOTTOM_HYSTERESIS_PX;
+const OVERSCROLL_LOCK_LOOKAHEAD_MS = 120;
+const OVERSCROLL_LOCK_VELOCITY_ALPHA = 0.5;
 const VIEWPORT_SETTLE_MS = 120;
 const SPRING = { type: 'spring' as const, stiffness: 480, damping: 34, mass: 0.7, bounce: 0 };
 const WHEEL_SMOOTH_SPRING = { type: 'spring' as const, stiffness: 500, damping: 36, mass: 0.55, bounce: 0 };
@@ -145,6 +146,9 @@ export function MotionFooterWordmark() {
     let overpullRafId = 0;
     let overscrollLocked = false;
     let overscrollArmed = false;
+    let overscrollLockVelocity = 0;
+    let lastOverscrollSampleY: number | undefined;
+    let lastOverscrollSampleTime = 0;
 
     // Native overscroll bounce fights the hand-rolled stretch below, so it's only
     // suppressed while we're at the footer and re-enabled everywhere else (e.g. page top).
@@ -161,10 +165,30 @@ export function MotionFooterWordmark() {
     };
 
     const syncOverscrollLock = () => {
+      const now = performance.now();
+      const currentY = window.scrollY;
+
+      if (lastOverscrollSampleY !== undefined) {
+        const dt = now - lastOverscrollSampleTime;
+        if (dt > 0) {
+          const instantVelocity = Math.abs(currentY - lastOverscrollSampleY) / dt;
+          overscrollLockVelocity =
+            overscrollLockVelocity * (1 - OVERSCROLL_LOCK_VELOCITY_ALPHA) +
+            instantVelocity * OVERSCROLL_LOCK_VELOCITY_ALPHA;
+        }
+      }
+      lastOverscrollSampleY = currentY;
+      lastOverscrollSampleTime = now;
+
+      // A fast fling covers more ground per frame than a slow one, so the "how far ahead do we
+      // need to arm" distance scales with current speed instead of staying a fixed pixel count.
+      const armDistance = Math.max(OVERSCROLL_LOCK_ARM_PX, overscrollLockVelocity * OVERSCROLL_LOCK_LOOKAHEAD_MS);
+      const disarmDistance = armDistance + BOTTOM_HYSTERESIS_PX;
+
       const remaining = getRemainingScroll();
-      if (remaining <= OVERSCROLL_LOCK_ARM_PX) {
+      if (remaining <= armDistance) {
         overscrollArmed = true;
-      } else if (remaining > OVERSCROLL_LOCK_DISARM_PX) {
+      } else if (remaining > disarmDistance) {
         overscrollArmed = false;
       }
       setOverscrollLock(overscrollArmed);
