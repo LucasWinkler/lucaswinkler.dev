@@ -29,7 +29,7 @@ export const selectedWork: SelectedWorkSourceItem[] = [
     url: 'https://golfnorthinternational.com',
     tech: ['Astro', 'TS', 'SCSS'],
     coverImage: golfNorthCoverImage,
-    logo: '/images/golfnorth.svg',
+    logo: '/images/golfnorth-international.svg',
     brandColor: '#212221',
   },
   {

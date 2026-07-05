@@ -12,7 +12,7 @@ if (!teeOnWork) {
 export const heroEmployer = {
   name: teeOnWork.brand,
   url: teeOnWork.url,
-  logo: '/images/tee-on-white.svg',
+  logo: '/images/tee-on.svg',
 } as const;
 
 export const heroClient = {
