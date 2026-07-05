@@ -6,7 +6,7 @@ import { useMediaQuery } from '@/lib/useMediaQuery';
 
 const WAVE_DURATION = 0.8;
 const WAVE_STAGGER = 0.09;
-const WEIGHT_REST = 400;
+const WEIGHT_REST = 600;
 const WEIGHT_PEAK = 700;
 
 type LetterWaveTiming = {

@@ -356,9 +356,9 @@
     letter-spacing: var(--tracking-tighter);
     position: relative;
     top: 0.05em;
-    font-weight: 400;
+    font-weight: 600;
     font-feature-settings: normal;
-    font-variation-settings: 'wght' 400;
+    font-variation-settings: 'wght' 600;
   }
 
   .type-section-title {
