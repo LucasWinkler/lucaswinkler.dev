@@ -18,7 +18,7 @@ export const sameAsUrls = [githubUrl, linkedInUrl, twitterUrl] as const;
 
 export const ogImageAlt = 'Lucas Winkler — software developer portfolio';
 
-export const appleTouchIconPath = '/apple-touch-icon.png';
+export const faviconVersion = '20260705';
 
 export const locale = 'en_US';
 
