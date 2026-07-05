@@ -1,4 +1,5 @@
 ---
+import '../hero/hero.css';
 import './error-hero.css';
 
 import { getImage } from 'astro:assets';
@@ -35,9 +36,13 @@ const { width, height } = heroWebp.attributes;
   <div class='error-hero-panel relative isolate overflow-hidden'>
     <HeaderHero brandHref='/' />
 
-    <div class='error-hero-panel__media absolute inset-0' aria-hidden='true'>
-      <div class='error-hero-panel__lqip' style={`background-image: url(${heroLqip.src})`} aria-hidden='true'></div>
-      <picture class='error-hero-panel__picture absolute inset-0 block'>
+    <div class='hero-panel__media hero-panel__media--muted absolute inset-0' aria-hidden='true'>
+      <div
+        class='hero-panel__lqip hero-panel__lqip--muted'
+        style={`background-image: url(${heroLqip.src})`}
+        aria-hidden='true'>
+      </div>
+      <picture class='hero-panel__picture'>
         <source srcset={heroAvif.srcSet.attribute} sizes='100vw' type='image/avif' />
         <source srcset={heroWebp.srcSet.attribute} sizes='100vw' type='image/webp' />
         <img
@@ -50,7 +55,7 @@ const { width, height } = heroWebp.attributes;
           loading='eager'
           decoding='async'
           fetchpriority='high'
-          class='error-hero-panel__image'
+          class='hero-panel__image hero-panel__image--muted'
           data-hero-image
         />
       </picture>

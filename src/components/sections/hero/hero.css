@@ -235,6 +235,19 @@
   transition: opacity var(--hero-media-duration) var(--hero-enter-ease);
 }
 
+.hero-panel__media--muted {
+  background-color: var(--color-neutral-950);
+  transform: translateZ(0);
+}
+
+.hero-panel__lqip--muted {
+  filter: blur(24px) grayscale(1) contrast(1.08) brightness(0.82);
+}
+
+.hero-panel__image--muted {
+  filter: grayscale(1) contrast(1.08) brightness(0.82);
+}
+
 @media (width < 40rem) and (min-height: 36rem) {
   .hero-panel {
     min-height: clamp(

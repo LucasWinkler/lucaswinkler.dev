@@ -1,6 +1,4 @@
 ---
-import './footer.css';
-
 import { MotionFooterWordmark } from '@/components/widgets/MotionFooterWordmark';
 import { footerLinks } from '@/data/footer';
 import { siteName } from '@/data/nav';
@@ -15,8 +13,9 @@ const year = new Date().getFullYear();
         &copy; {year}{' '}
         <span translate='no'>{siteName}</span>
       </p>
-      <nav aria-label='Footer'>
-        <ul class='m-0 flex flex-wrap list-none items-center gap-x-6 gap-y-3 p-0'>
+      <nav aria-label='Footer' class='w-full xs:w-auto'>
+        <ul
+          class='m-0 flex w-full list-none flex-nowrap items-center justify-between gap-0 p-0 xs:w-auto xs:flex-wrap xs:justify-start xs:gap-x-6 xs:gap-y-3'>
           {
             footerLinks.map(link => {
               const isExternal = link.href.startsWith('http');
