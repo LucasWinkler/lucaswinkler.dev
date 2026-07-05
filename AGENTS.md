@@ -2,42 +2,44 @@
 
 Single-page portfolio. Put new code in the folder that matches its role:
 
-| Path                            | Purpose                                                           |
-| ------------------------------- | ----------------------------------------------------------------- |
-| `public/fonts`, `public/images` | Static assets copied as-is (no build processing)                  |
-| `src/assets/images`             | Images optimized via `astro:assets`                               |
-| `src/components/ui`             | Primitives — Button, Badge, Card shell                            |
-| `src/components/widgets`        | Composed blocks reused inside sections — ProjectCard, SocialLinks |
-| `src/components/sections`       | Full scroll sections on the homepage — Hero, About, Contact       |
-| `src/components/common`         | Site chrome — Header, Footer, Nav, SEO                            |
-| `src/data`                      | Typed site content — bio, links, projects list, nav anchors       |
-| `src/layouts`                   | Page shells — BaseLayout                                          |
-| `src/lib`                       | Shared helpers and utilities                                      |
-| `src/pages`                     | Routes. This site is one page: `index.astro`                      |
-| `src/styles`                    | Global CSS and design tokens                                      |
-| `src/types`                     | Shared TypeScript types                                           |
+| Path                            | Purpose                                |
+| ------------------------------- | -------------------------------------- |
+| `public/fonts`, `public/images` | Static assets (no build processing)    |
+| `src/assets/images`             | Images via `astro:assets`              |
+| `src/components/ui`             | Primitives — Button, Badge, Card shell |
+| `src/components/widgets`        | Composed blocks reused in sections     |
+| `src/components/sections`       | Homepage scroll sections               |
+| `src/components/common`         | Header, Footer, Nav, SEO               |
+| `src/data`                      | Typed site content                     |
+| `src/layouts`                   | Page shells — `BaseLayout`             |
+| `src/lib`                       | Shared helpers                         |
+| `src/pages`                     | Routes — one page: `index.astro`       |
+| `src/styles`                    | Global CSS and design tokens           |
+| `src/types`                     | Shared TypeScript types                |
 
 ## Development
-
-When starting the dev server, use background mode:
 
 ```sh
 astro dev --background
 ```
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+Manage with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
-## Documentation
+## Glossary
 
-Design tokens, typography, and page layout: `docs/design-system.md`.
+Look up the source — don't guess conventions.
 
-Full documentation: https://docs.astro.build
+| Topic                                               | Where                                               |
+| --------------------------------------------------- | --------------------------------------------------- |
+| Design tokens, typography presets, global utilities | `src/styles/global.css`                             |
+| Breakpoints (`sm`, `md`, `work`, `lg`)              | `src/lib/breakpoints.ts` + `@theme` in `global.css` |
+| React scroll-reveal timing                          | `src/lib/motion.ts`                                 |
+| Site copy, nav, projects                            | `src/data/`                                         |
+| Fonts                                               | `astro.config.mjs`                                  |
+| Header (sticky morph, dropdown)                     | `src/components/common/header/`                     |
+| Hero panel + enter animation                        | `src/components/sections/hero/`                     |
+| Standard section shell                              | `src/components/sections/Experience.astro`          |
+| Full-bleed work carousel                            | `src/components/widgets/MotionWorkList/`            |
+| Footer layout                                       | `src/components/sections/footer.css`                |
 
-Consult these guides before working on related tasks:
-
-- [Adding pages, dynamic routes, or middleware](https://docs.astro.build/en/guides/routing/)
-- [Working with Astro components](https://docs.astro.build/en/basics/astro-components/)
-- [Using React, Vue, Svelte, or other framework components](https://docs.astro.build/en/guides/framework-components/)
-- [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
-- [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
-- [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+[Astro docs](https://docs.astro.build)

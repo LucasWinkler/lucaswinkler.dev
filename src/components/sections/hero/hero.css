@@ -271,7 +271,9 @@
     flex: unset;
     min-height: var(--hero-panel-min-h);
     --space-hero-bottom: clamp(var(--hero-content-inset), calc(var(--hero-content-inset) * 1.35), 5rem);
-    padding-top: calc(3rem + env(safe-area-inset-top, 0px));
+    padding-top: calc(
+      max(var(--hero-content-inset), calc(env(safe-area-inset-top, 0px) + 0.75rem)) + var(--header-inner-min-h) + 0.5rem
+    );
   }
 }
 

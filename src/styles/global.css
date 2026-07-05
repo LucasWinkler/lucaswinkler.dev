@@ -53,30 +53,17 @@
   --hero-content-inset: var(--section-padding-x);
   --space-hero-bottom: var(--hero-content-inset);
 
-  --duration-stagger: 40ms;
-  --duration-micro: 80ms;
   --duration-quick: 150ms;
   --duration-fast: 250ms;
   --duration-medium: 350ms;
   --duration-slow: 400ms;
-  --duration-very-slow: 500ms;
   --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-in-out: ease-in-out;
-  --ease-linear: linear;
-  --ease-bounce: cubic-bezier(0.34, 1.36, 0.64, 1);
-  --ease-bounce-strong: cubic-bezier(0.34, 3.85, 0.64, 1);
   --distance-micro: 4px;
-  --distance-small: 6px;
   --distance-base: 8px;
-  --distance-medium: 12px;
-  --distance-large: 30px;
   --scale-large: 0.96;
   --scale-medium: 0.97;
   --scale-small: 0.98;
   --scale-tiny: 0.99;
-  --blur-small: 2px;
-  --blur-medium: 3px;
-  --blur-large: 8px;
 
   --ease-out: var(--ease-smooth-out);
   --hero-enter-ease: var(--ease-smooth-out);
@@ -345,7 +332,6 @@
     font-variation-settings: 'opsz' 14;
   }
 
-  .type-eyebrow,
   .type-eyebrow-label {
     font-family: var(--font-inter-text);
     font-feature-settings:
