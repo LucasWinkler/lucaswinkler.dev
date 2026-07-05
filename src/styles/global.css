@@ -145,7 +145,8 @@
 
 @layer base {
   html {
-    overscroll-behavior: none;
+    /* overscroll-behavior-y is toggled at runtime by MotionFooterWordmark so native
+       rubberbanding stays enabled everywhere except while the footer stretch owns the bounce. */
     scroll-behavior: auto;
     scroll-padding-top: calc(var(--header-inner-min-h) + 2rem + env(safe-area-inset-top, 0px));
     -webkit-font-smoothing: antialiased;

@@ -29,6 +29,8 @@ const TOUCH_RELEASE_MS = 36;
 const TOUCH_CAP_IDLE_MS = 24;
 const BOTTOM_HYSTERESIS_PX = 24;
 const BOTTOM_LATCH_ENTER_COARSE_PX = 80;
+const OVERSCROLL_LOCK_ARM_PX = 48;
+const OVERSCROLL_LOCK_DISARM_PX = OVERSCROLL_LOCK_ARM_PX + BOTTOM_HYSTERESIS_PX;
 const VIEWPORT_SETTLE_MS = 120;
 const SPRING = { type: 'spring' as const, stiffness: 480, damping: 34, mass: 0.7, bounce: 0 };
 const WHEEL_SMOOTH_SPRING = { type: 'spring' as const, stiffness: 500, damping: 36, mass: 0.55, bounce: 0 };
@@ -141,8 +143,36 @@ export function MotionFooterWordmark() {
     const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
     let atBottomLatched = false;
     let overpullRafId = 0;
+    let overscrollLocked = false;
+    let overscrollArmed = false;
+
+    // Native overscroll bounce fights the hand-rolled stretch below, so it's only
+    // suppressed while we're at the footer and re-enabled everywhere else (e.g. page top).
+    // Armed well before the exact bottom (not just once atBottom is true): passive wheel/touch
+    // listeners let the browser scroll immediately while this style mutation still has to clear
+    // a style-recalc + compositor round trip, so a fast trackpad burst can outrun a lock that
+    // only engages exactly at the edge.
+    const setOverscrollLock = (locked: boolean) => {
+      if (locked === overscrollLocked) {
+        return;
+      }
+      overscrollLocked = locked;
+      document.documentElement.style.overscrollBehaviorY = locked ? 'none' : '';
+    };
+
+    const syncOverscrollLock = () => {
+      const remaining = getRemainingScroll();
+      if (remaining <= OVERSCROLL_LOCK_ARM_PX) {
+        overscrollArmed = true;
+      } else if (remaining > OVERSCROLL_LOCK_DISARM_PX) {
+        overscrollArmed = false;
+      }
+      setOverscrollLock(overscrollArmed);
+    };
 
     const isAtPageBottom = (): boolean => {
+      syncOverscrollLock();
+
       if (!isCoarsePointer) {
         return window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
       }
@@ -455,16 +485,23 @@ export function MotionFooterWordmark() {
       }, VIEWPORT_SETTLE_MS);
     };
 
+    const onScroll = () => {
+      isAtPageBottom();
+    };
+
     window.addEventListener('wheel', onWheel, { passive: true });
     window.addEventListener('touchstart', onTouchStart, { passive: true });
     window.addEventListener('touchmove', onTouchMove, { passive: true });
     window.addEventListener('touchend', onTouchEnd, { passive: true });
     window.addEventListener('touchcancel', onTouchCancel, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
 
     if (isCoarsePointer) {
       window.visualViewport?.addEventListener('resize', onViewportChange);
       window.visualViewport?.addEventListener('scroll', onViewportChange);
     }
+
+    isAtPageBottom();
 
     return () => {
       if (overpullRafId !== 0) {
@@ -476,11 +513,13 @@ export function MotionFooterWordmark() {
         clearTimeout(viewportSettleTimer);
       }
       setFooterStretch(0);
+      setOverscrollLock(false);
       window.removeEventListener('wheel', onWheel);
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('touchend', onTouchEnd);
       window.removeEventListener('touchcancel', onTouchCancel);
+      window.removeEventListener('scroll', onScroll);
       if (isCoarsePointer) {
         window.visualViewport?.removeEventListener('resize', onViewportChange);
         window.visualViewport?.removeEventListener('scroll', onViewportChange);
