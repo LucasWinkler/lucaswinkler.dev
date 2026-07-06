@@ -99,20 +99,29 @@ function getMediaScale(isActive: boolean, isHovered: boolean): number {
 }
 
 function getContentStyle(isActive: boolean, delay: number, shouldReduceMotion: boolean): CSSProperties {
+  const restTransform = 'translate3d(0, 0, 0)';
+
   if (shouldReduceMotion) {
     return {
       opacity: isActive ? 1 : 0,
-      transform: isActive ? 'translate3d(0, 0, 0)' : 'translate3d(0, var(--distance-micro), 0)',
+      transform: restTransform,
+    };
+  }
+
+  if (isActive) {
+    return {
+      opacity: 1,
+      transform: restTransform,
+      animation: `work-panel-content-enter ${contentDuration} ${contentEase} ${delay}s both`,
     };
   }
 
   return {
-    opacity: isActive ? 1 : 0,
-    transform: isActive ? 'translate3d(0, 0, 0)' : 'translate3d(0, var(--distance-micro), 0)',
-    transitionProperty: 'opacity, transform',
+    opacity: 0,
+    transform: restTransform,
+    transitionProperty: 'opacity',
     transitionDuration: contentDuration,
     transitionTimingFunction: contentEase,
-    transitionDelay: isActive ? `${delay}s` : '0s',
   };
 }
 
