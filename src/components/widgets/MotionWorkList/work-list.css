@@ -5,6 +5,14 @@
 }
 
 @media (width >= 48rem) {
+  .work-list {
+    /* Final content-box width of the expanded panel: it settles at half the
+       list width (activeShare) minus its share of the 3 gaps (0.75rem) and
+       its own padding. Sizing text against this keeps it at its final wrap
+       position while flex-grow animates; overflow is clipped by the panel. */
+    --work-panel-content-width: calc(50cqw - 0.75rem - 2 * var(--space-work-panel-inset));
+  }
+
   .work-list .work-panel-shell {
     transition: flex-grow var(--duration-work-panel) var(--ease-out);
   }

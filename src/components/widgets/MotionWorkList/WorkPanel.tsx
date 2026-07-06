@@ -284,7 +284,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
             inert={!isExpanded}>
             <div className='relative z-1 flex min-w-0 flex-col'>
               <div
-                className='flex max-w-full flex-col gap-1.5 md:max-w-[min(24ch,calc(100%-3.5rem))]'
+                className='flex max-w-full flex-col gap-1.5 md:w-[min(24ch,calc(var(--work-panel-content-width)-3.5rem))] md:max-w-none'
                 style={getContentStyle(isExpanded, 0.05, revealMotion)}>
                 {isExpanded ? (
                   <h3
@@ -320,14 +320,14 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
 
               {item.description ? (
                 <div
-                  className='w-[min(38ch,100%)] work:w-[min(38ch,calc(50cqw-3rem))]'
+                  className='w-[min(38ch,100%)] md:w-[min(38ch,var(--work-panel-content-width))]'
                   style={getContentStyle(isExpanded, 0.12, revealMotion)}>
                   <p className='type-caption m-0 text-white/92 text-pretty'>{item.description}</p>
                 </div>
               ) : null}
 
               <ul
-                className='relative z-1 m-0 mt-3 flex list-none flex-wrap gap-x-2 gap-y-1 p-0'
+                className='relative z-1 m-0 mt-3 flex list-none flex-wrap gap-x-2 gap-y-1 p-0 md:w-(--work-panel-content-width)'
                 aria-label={`${item.brand} tech stack`}
                 style={getContentStyle(isExpanded, item.description ? 0.2 : 0.08, revealMotion)}>
                 {item.tech.map(stack => (
