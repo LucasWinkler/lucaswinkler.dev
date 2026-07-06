@@ -1,7 +1,7 @@
 ---
 import { getImage } from 'astro:assets';
 
-import { locale, ogImageAlt, siteName, twitterHandle } from '@/data/site';
+import { buildCanonicalUrl, locale, ogImageAlt, siteName, twitterHandle } from '@/data/site';
 import { buildProfileSchema } from '@/lib/schema';
 import ogImageSrc from '@/assets/images/og.png';
 import { OG_IMAGE_QUALITY } from '@/config/image';
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const { title, description, canonicalPath = Astro.url.pathname, includeSchema = true } = Astro.props;
-const canonical = new URL(canonicalPath, Astro.site);
+const canonicalHref = buildCanonicalUrl(canonicalPath);
 
 const ogImageAsset = await getImage({
   src: ogImageSrc,
@@ -33,15 +33,15 @@ const schema = includeSchema
   ? buildProfileSchema({
       title,
       description,
-      canonicalUrl: canonical.href,
+      canonicalUrl: canonicalHref,
       ogImageUrl: ogImage.href,
     })
   : null;
 ---
 
-<link rel='canonical' href={canonical.href} />
+<link rel='canonical' href={canonicalHref} />
 <meta property='og:type' content='website' />
-<meta property='og:url' content={canonical.href} />
+<meta property='og:url' content={canonicalHref} />
 <meta property='og:site_name' content={siteName} />
 <meta property='og:locale' content={locale} />
 <meta property='og:title' content={title} />

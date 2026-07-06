@@ -2,6 +2,14 @@ import { siteName } from '@/data/nav';
 
 export const siteUrl = 'https://lucaswinkler.dev';
 
+export function buildCanonicalUrl(pathname: string): string {
+  if (pathname === '/' || pathname === '') {
+    return siteUrl;
+  }
+
+  return `${siteUrl}${pathname.replace(/\/$/, '')}`;
+}
+
 export { siteName };
 
 export const email = 'hello@lucaswinkler.dev';
