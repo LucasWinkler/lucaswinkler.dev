@@ -5,10 +5,8 @@ import Analytics from '@vercel/analytics/astro';
 import { Font, getImage } from 'astro:assets';
 
 import Seo from '@/components/common/Seo.astro';
-import { faviconVersion, themeColor } from '@/data/site';
+import { themeColor } from '@/data/site';
 import noiseTexture from '@/assets/textures/noise.png';
-
-const faviconHref = (path: string) => `${path}?v=${faviconVersion}`;
 
 interface Props {
   title?: string;
@@ -35,10 +33,10 @@ const noiseTile = await getImage({ src: noiseTexture, format: 'webp' });
 <html lang='en' style={`--noise-tile: url(${noiseTile.src})`}>
   <head>
     <meta charset='utf-8' />
-    <link rel='icon' type='image/png' href={faviconHref('/favicon-96x96.png')} sizes='96x96' />
-    <link rel='icon' type='image/svg+xml' href={faviconHref('/favicon.svg')} />
-    <link rel='icon' href={faviconHref('/favicon.ico')} />
-    <link rel='apple-touch-icon' sizes='180x180' href={faviconHref('/apple-touch-icon.png')} />
+    <link rel='icon' type='image/png' href='/favicon-96x96.png' sizes='96x96' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <link rel='shortcut icon' href='/favicon.ico' />
+    <link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png' />
     <meta name='viewport' content='width=device-width, initial-scale=1' />
     <meta name='theme-color' content={themeColor} />
     <meta name='generator' content={Astro.generator} />

@@ -26,8 +26,6 @@ export const sameAsUrls = [githubUrl, linkedInUrl, twitterUrl] as const;
 
 export const ogImageAlt = 'Lucas Winkler — software developer portfolio';
 
-export const faviconVersion = '20260705';
-
 export const locale = 'en_US';
 
 export const localeLanguage = 'en-US';
