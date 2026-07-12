@@ -2,7 +2,7 @@ import { LayoutGroup, motion, type Transition } from 'motion/react';
 import { type CSSProperties, type KeyboardEvent, memo, type SyntheticEvent } from 'react';
 
 import { focusVisible } from '@/lib/focus';
-import { fadeEase as fadeEaseBezier } from '@/lib/motion';
+import { springUi } from '@/lib/motion';
 
 import { contentDuration, contentEase, fadeEase, hoverMediaDuration, mediaDuration } from './constants';
 import { panelEndInsetClass, panelGapClass, panelInsetClass, panelShellClass, panelSurfaceClass } from './styles';
@@ -16,9 +16,8 @@ export type WorkPanelProps = {
   index: number;
 };
 
-const logoEnterEase = [0.33, 1, 0.68, 1] as const;
-const logoEnterLayoutTransition = { duration: 0.52, ease: logoEnterEase };
-const logoExitLayoutTransition = { duration: 0.36, ease: fadeEaseBezier };
+const logoEnterLayoutTransition = springUi;
+const logoExitLayoutTransition = { ...springUi, duration: 0.32 } as const;
 
 const logoShellClass =
   'flex items-center justify-center overflow-hidden bg-white rounded-(--radius-work-logo-sm) md:rounded-(--radius-work-logo)';
@@ -234,7 +233,7 @@ export const WorkPanel = memo(function WorkPanel({ item, flexGrow, index }: Work
       aria-expanded={isMobileLayout ? undefined : panelActive}
       aria-labelledby={isExpanded ? `work-${item.id}-title` : undefined}
       aria-label={isExpanded ? undefined : `Show ${item.brand} details`}
-      className={`${panelShellClass} ${isFirst(index) ? panelInsetClass : panelGapClass} ${isLast(index) ? panelEndInsetClass : ''} focus-ring ${isExpanded ? 'cursor-default' : 'cursor-pointer select-none'}`}
+      className={`${panelShellClass} ${isFirst(index) ? panelInsetClass : panelGapClass} ${isLast(index) ? panelEndInsetClass : ''} focus-ring ${isExpanded ? 'cursor-default' : 'cursor-pointer select-none work-panel-shell--pressable'}`}
       style={{ '--panel-grow': flexGrow } as CSSProperties}>
       <div className={panelSurfaceClass} style={panelStyle}>
         <motion.div layoutRoot className='relative h-full w-full overflow-hidden rounded-(--radius-panel)'>

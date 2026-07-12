@@ -14,11 +14,11 @@ const { brandHref = '/#hero', menuId = 'default' } = Astro.props;
 const menuPanelId = `site-header-menu-${menuId}`;
 
 const headerLinkBaseClass =
-  'type-nav select-none py-2 font-medium transition-[opacity,background-color,color] duration-(--duration-quick) ease-(--ease-out)';
+  'type-nav select-none py-2 font-medium transition-[opacity,background-color,color,transform] duration-(--duration-quick) ease-(--ease-out)';
 
 const headerLinkClass = `site-header__link ${headerLinkBaseClass}`;
 const headerIconLinkBaseClass =
-  'type-nav select-none font-medium transition-[opacity,background-color,color] duration-(--duration-quick) ease-(--ease-out)';
+  'type-nav select-none font-medium transition-[opacity,background-color,color,transform] duration-(--duration-quick) ease-(--ease-out)';
 const headerIconLinkClass = `site-header__link ${headerIconLinkBaseClass} site-header__link--icon`;
 const headerMenuLinkClass = `site-header__menu-link ${headerLinkBaseClass} block w-full text-left`;
 
@@ -32,7 +32,7 @@ const menuLinks = [
   <div class='site-header__inner mx-auto flex max-w-full min-h-(--header-inner-min-h) items-center'>
     <a
       href={brandHref}
-      class='site-header__brand type-nav shrink-0 py-2 -mx-1 font-semibold tracking-(--tracking-snug) transition-opacity duration-(--duration-quick) ease-(--ease-out) hover:opacity-80'
+      class='site-header__brand type-nav shrink-0 py-2 -mx-1 font-semibold tracking-(--tracking-snug) transition-[opacity,transform] duration-(--duration-quick) ease-(--ease-out) hover:opacity-80'
       translate='no'>
       {siteName}
     </a>

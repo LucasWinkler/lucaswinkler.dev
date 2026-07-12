@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 
 import { MotionWorkList } from '@/components/widgets/MotionWorkList/MotionWorkList';
-import { fadeEase, revealSectionDuration } from '@/lib/motion';
+import { springReveal } from '@/lib/motion';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
 
 import type { SelectedWorkItem } from '@/types/work';
@@ -14,7 +14,7 @@ type MotionSelectedWorkSectionProps = {
 export function MotionSelectedWorkSection({ title, items }: MotionSelectedWorkSectionProps) {
   const headerReveal = useScrollReveal<HTMLDivElement>({
     y: '0.75rem',
-    transition: { duration: revealSectionDuration, ease: fadeEase },
+    transition: springReveal,
   });
 
   return (

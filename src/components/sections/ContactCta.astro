@@ -53,7 +53,12 @@ if (!emailLink || !githubLink) {
     white-space: nowrap;
     transition:
       color var(--duration-quick) var(--ease-out),
-      text-decoration-color var(--duration-quick) var(--ease-out);
+      text-decoration-color var(--duration-quick) var(--ease-out),
+      opacity 100ms ease-out;
+  }
+
+  .contact-cta__link:active {
+    opacity: 0.72;
   }
 
   .contact-cta__link :global(svg) {
@@ -71,6 +76,18 @@ if (!emailLink || !githubLink) {
   @media (hover: hover) {
     .contact-cta__link:hover {
       text-decoration-color: currentColor;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-cta__link {
+      transition:
+        color var(--duration-quick) ease,
+        text-decoration-color var(--duration-quick) ease;
+    }
+
+    .contact-cta__link:active {
+      opacity: 1;
     }
   }
 </style>

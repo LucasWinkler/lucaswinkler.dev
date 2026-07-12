@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 
 import { formatDateRangeParts, sortReverseChronological, toIsoDate } from '@/lib/experience';
-import { fadeEase, revealItemDuration, revealItemStagger } from '@/lib/motion';
+import { springReveal } from '@/lib/motion';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
 
 import type { EducationItem, ExperienceItem } from '@/types/experience';
@@ -41,7 +41,7 @@ function ExperienceRow({
 }: RowProps) {
   const reveal = useScrollReveal<HTMLLIElement>({
     y: '1rem',
-    transition: { duration: revealItemDuration, ease: fadeEase, delay: index * revealItemStagger },
+    transition: { ...springReveal, delay: index * 0.06 },
   });
 
   const leftClassName = 'type-caption m-0 max-w-42 shrink-0 whitespace-nowrap text-text-muted tabular-nums';

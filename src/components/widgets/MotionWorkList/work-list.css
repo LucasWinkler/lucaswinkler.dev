@@ -16,6 +16,28 @@
   .work-list .work-panel-shell {
     transition: flex-grow var(--duration-work-panel) var(--ease-out);
   }
+
+  .work-list .work-panel-shell--pressable:active .work-panel {
+    transform: scale(var(--scale-medium));
+  }
+
+  .work-list .work-panel {
+    transition: transform 100ms ease-out;
+  }
+}
+
+@media (width >= 48rem) and (prefers-reduced-motion: reduce) {
+  .work-list .work-panel-shell {
+    transition: none;
+  }
+
+  .work-list .work-panel {
+    transition: none;
+  }
+
+  .work-list .work-panel-shell--pressable:active .work-panel {
+    transform: none;
+  }
 }
 
 @media (width >= 56.25rem) {

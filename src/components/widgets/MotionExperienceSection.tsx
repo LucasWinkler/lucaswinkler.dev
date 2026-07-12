@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 
 import { MotionExperienceList } from '@/components/widgets/MotionExperienceList';
-import { fadeEase, revealSectionDuration } from '@/lib/motion';
+import { springReveal } from '@/lib/motion';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
 
 import type { EducationItem, ExperienceItem } from '@/types/experience';
@@ -15,7 +15,7 @@ type MotionExperienceSectionProps = {
 export function MotionExperienceSection({ title, experience, education }: MotionExperienceSectionProps) {
   const headerReveal = useScrollReveal<HTMLDivElement>({
     y: '0.75rem',
-    transition: { duration: revealSectionDuration, ease: fadeEase },
+    transition: springReveal,
   });
 
   return (

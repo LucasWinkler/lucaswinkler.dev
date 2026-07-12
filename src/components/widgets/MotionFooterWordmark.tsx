@@ -33,7 +33,9 @@ const OVERSCROLL_LOCK_ARM_PX = 48;
 const OVERSCROLL_LOCK_LOOKAHEAD_MS = 120;
 const OVERSCROLL_LOCK_VELOCITY_ALPHA = 0.5;
 const VIEWPORT_SETTLE_MS = 120;
-const SPRING = { type: 'spring' as const, stiffness: 480, damping: 34, mass: 0.7, bounce: 0 };
+const MOMENTUM_VELOCITY_PX = 180;
+const RELEASE_SPRING = { type: 'spring' as const, stiffness: 480, damping: 34, mass: 0.7, bounce: 0 };
+const RELEASE_MOMENTUM_SPRING = { type: 'spring' as const, stiffness: 420, damping: 26, mass: 0.75, bounce: 0.18 };
 const WHEEL_SMOOTH_SPRING = { type: 'spring' as const, stiffness: 500, damping: 36, mass: 0.55, bounce: 0 };
 
 function clamp(value: number, min: number, max: number): number {
@@ -241,13 +243,21 @@ export function MotionFooterWordmark() {
       overpull.clearLatch();
 
       const baseStretch = stretchFromRawPull(rawPullRef.current);
+      const releaseVelocity = stretchPx.getVelocity();
+      const gestureVelocity = velocityRef.current;
       stretchPx.set(Math.min(stretchPx.get(), baseStretch));
 
       resetPullState();
       isReleasingRef.current = true;
       overpull.clearPull();
 
-      void animate(stretchPx, 0, SPRING).then(() => {
+      const hasMomentum = Math.abs(releaseVelocity) > MOMENTUM_VELOCITY_PX || gestureVelocity > MOMENTUM_VELOCITY_PX;
+      const spring = hasMomentum ? RELEASE_MOMENTUM_SPRING : RELEASE_SPRING;
+
+      void animate(stretchPx, 0, {
+        ...spring,
+        velocity: releaseVelocity,
+      }).then(() => {
         isReleasingRef.current = false;
       });
     };

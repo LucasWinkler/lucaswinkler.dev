@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 
-import { fadeEase, revealGridDuration, revealGridStagger } from '@/lib/motion';
+import { springReveal } from '@/lib/motion';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
 
 import type { ApproachItem } from '@/data/approach';
@@ -17,7 +17,7 @@ type MotionApproachCardProps = {
 function MotionApproachCard({ item, index }: MotionApproachCardProps) {
   const reveal = useScrollReveal<HTMLDivElement>({
     y: '0.625rem',
-    transition: { duration: revealGridDuration, ease: fadeEase, delay: index * revealGridStagger },
+    transition: { ...springReveal, delay: index * 0.08 },
   });
 
   return (
