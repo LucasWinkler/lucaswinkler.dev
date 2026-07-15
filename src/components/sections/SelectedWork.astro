@@ -3,11 +3,12 @@ import { getImage } from 'astro:assets';
 
 import { MotionSelectedWorkSection } from '@/components/widgets/MotionSelectedWorkSection';
 import { selectedWork } from '@/data/selected-work';
+import { breakpointRem } from '@/lib/breakpoints';
 
 import type { SelectedWorkImage, SelectedWorkItem } from '@/types/work';
 import type { ImageMetadata } from 'astro';
 
-const workImageSizes = '(max-width: 48rem) calc(100vw - 2.5rem), min(36rem, 50vw)';
+const workImageSizes = `(max-width: ${breakpointRem.md}) calc(min(56vh, 28rem) * 16 / 9 * 1.15), calc(min(52vh, 34rem) * 16 / 9 * 1.15)`;
 
 async function optimizeCoverImage(src: ImageMetadata): Promise<SelectedWorkImage> {
   const options = {
@@ -20,7 +21,7 @@ async function optimizeCoverImage(src: ImageMetadata): Promise<SelectedWorkImage
   const [avif, webp, fallback] = await Promise.all([
     getImage({ ...options, format: 'avif' }),
     getImage({ ...options, format: 'webp' }),
-    getImage({ ...options, format: 'webp', width: 640 }),
+    getImage({ ...options, format: 'webp', width: 1280 }),
   ]);
 
   return {
