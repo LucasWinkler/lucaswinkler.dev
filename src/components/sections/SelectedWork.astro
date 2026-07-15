@@ -3,12 +3,23 @@ import { getImage } from 'astro:assets';
 
 import { MotionSelectedWorkSection } from '@/components/widgets/MotionSelectedWorkSection';
 import { selectedWork } from '@/data/selected-work';
-import { WORK_COVER_IMAGE_QUALITY } from '@/config/image';
+import { breakpointRem } from '@/lib/breakpoints';
 
 import type { SelectedWorkImage, SelectedWorkItem } from '@/types/work';
 import type { ImageMetadata } from 'astro';
 
-const workImageSizes = '(max-width: 48rem) calc((100vw - 2.5rem) * 1.15), min(42rem, 58vw)';
+const COVER_ASPECT = 16 / 9;
+const COVER_OVERSCAN = 1.1;
+const COVER_ACTIVE_SCALE = 1.045;
+const COVER_SIZE_BUFFER = 1.08;
+const DESKTOP_COVER_FACTOR = COVER_OVERSCAN * COVER_ACTIVE_SCALE * COVER_SIZE_BUFFER;
+const MOBILE_COVER_FACTOR = COVER_OVERSCAN * COVER_SIZE_BUFFER;
+
+const workImageSizes = [
+  `(max-width: ${breakpointRem.md}) calc(max(calc(100vw - 2.5rem), min(56vh, 28rem) * ${COVER_ASPECT}) * ${MOBILE_COVER_FACTOR})`,
+  `(max-width: ${breakpointRem.work}) calc(max(min(36rem, 50vw), min(44vh, 22rem) * ${COVER_ASPECT}) * ${DESKTOP_COVER_FACTOR})`,
+  `calc(max(min(36rem, 50vw), min(52vh, 34rem) * ${COVER_ASPECT}) * ${DESKTOP_COVER_FACTOR})`,
+].join(', ');
 
 async function optimizeCoverImage(src: ImageMetadata): Promise<SelectedWorkImage> {
   const options = {
@@ -16,13 +27,12 @@ async function optimizeCoverImage(src: ImageMetadata): Promise<SelectedWorkImage
     layout: 'constrained' as const,
     fit: 'cover' as const,
     sizes: workImageSizes,
-    quality: WORK_COVER_IMAGE_QUALITY,
   };
 
   const [avif, webp, fallback] = await Promise.all([
     getImage({ ...options, format: 'avif' }),
     getImage({ ...options, format: 'webp' }),
-    getImage({ ...options, format: 'webp', width: 960 }),
+    getImage({ ...options, format: 'webp', width: 1280 }),
   ]);
 
   return {
